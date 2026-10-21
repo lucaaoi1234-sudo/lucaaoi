@@ -69,6 +69,17 @@ header{position:sticky;top:0;z-index:50;background:rgba(11,16,45,.92);backdrop-f
 .lvl-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--acc1),var(--acc2));transition:width .35s}
 .icon-btn{width:36px;height:36px;display:grid;place-items:center;background:var(--panel2);border:1.5px solid var(--line);border-radius:12px 12px 12px 4px;font-size:1rem;color:var(--ink2);transition:all .2s}
 .icon-btn:hover{border-color:var(--acc1);color:var(--ice);transform:translateY(-2px) rotate(-4deg);box-shadow:0 6px 14px var(--glow)}
+.mode-switch{display:flex;align-items:center;gap:4px;padding:3px;background:var(--panel2);border:1px solid var(--line);border-radius:999px}
+.mode-btn{border:0;border-radius:999px;background:transparent;color:var(--ink2);font-size:.68rem;font-weight:800;padding:7px 9px;white-space:nowrap;transition:background .2s,color .2s}
+.mode-btn.active{background:var(--acc1);color:#081030}
+.mode-label-compact{display:none}
+body.mobile-lite{background-attachment:scroll;cursor:auto}
+body.mobile-lite #sky,body.mobile-lite #fx{display:none}
+body.mobile-lite header{backdrop-filter:none}
+body.mobile-lite .ticker .track{animation:none}
+body.mobile-lite .reveal{opacity:1;transform:none}
+body.mobile-lite *,body.mobile-lite *::before,body.mobile-lite *::after{animation:none!important;scroll-behavior:auto!important;transition:none!important}
+body.mobile-lite .dot{opacity:1}
 .online{display:flex;align-items:center;gap:7px;font-size:.78rem;font-weight:700;color:var(--ink2);background:var(--panel2);border:1px solid var(--line);padding:8px 12px;border-radius:999px}
 .online b{color:var(--ice)}
 .dot{width:8px;height:8px;border-radius:50%;background:#69e6a6;box-shadow:0 0 10px #69e6a6;animation:pulse 1.6s ease-in-out infinite}
@@ -205,6 +216,21 @@ h1 .ch{display:inline-block;animation:chIn .65s cubic-bezier(.2,1.7,.4,1) both}
 .gp-num.time b{color:var(--acc2)}
 #catchCanvas{width:100%;height:320px;display:block;border:2px dashed var(--line);border-radius:16px;background:rgba(8,12,40,.5);cursor:crosshair;touch-action:manipulation}
 .games-duo{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+#aimCanvas{width:100%;height:390px;display:block;border:2px dashed var(--line);border-radius:16px;background:rgba(8,12,40,.5);cursor:crosshair;touch-action:none}
+.aim-controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px}
+.aim-help{color:var(--ink2);font-size:.8rem}
+.theme-settings{background:var(--panel);border:2px solid var(--line);border-radius:20px 20px 20px 7px;padding:22px;margin-bottom:22px}
+.theme-settings h3{font-family:var(--display);font-size:1rem;color:var(--ice);margin-bottom:6px}
+.theme-settings>p{color:var(--ink2);font-size:.82rem;line-height:1.6;margin-bottom:16px}
+.theme-presets{display:flex;gap:10px;flex-wrap:wrap}
+.theme-preset{display:flex;align-items:center;gap:9px;background:var(--panel2);border:2px solid var(--line);color:var(--ink);padding:9px 13px;border-radius:13px;font-weight:800;font-size:.78rem}
+.theme-preset:hover,.theme-preset.selected{border-color:var(--acc1);box-shadow:0 0 14px var(--glow)}
+.theme-dots{display:flex;gap:4px}
+.theme-dots i{width:14px;height:14px;border-radius:50%;display:block}
+.color-controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px}
+.color-control{display:flex;align-items:center;gap:8px;color:var(--ink2);font-size:.78rem;font-weight:800}
+.color-control input{width:40px;height:36px;padding:2px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;cursor:pointer}
+.aim-msg{min-height:24px;color:var(--acc1);font-size:.86rem;font-weight:800;margin-top:12px}
 .simon-pads{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:340px;margin:auto}
 .simon-pad{background:var(--panel2);border:2px solid var(--line);border-radius:18px 18px 18px 6px;padding:14px;text-align:center;transition:transform .15s,box-shadow .15s,border-color .15s}
 .simon-pad svg{width:74px}
@@ -361,8 +387,10 @@ body.silly *{font-family:'Comic Sans MS','Comic Sans','Chalkboard SE','Segoe Pri
   .book-grid{grid-template-columns:1fr}
   .book-form{position:static}
   .games-duo{grid-template-columns:1fr}
+  #aimCanvas{height:320px}
   .egg-grid{grid-template-columns:1fr}
   .tabs{order:3;width:100%}
+  .mode-switch{order:4;margin-left:auto}
   .online{display:none}
   .lvl-chip{min-width:110px}
 }
@@ -371,6 +399,11 @@ body.silly *{font-family:'Comic Sans MS','Comic Sans','Chalkboard SE','Segoe Pri
   .ring{width:240px;height:240px}
   .nest-bubble{right:-6px;max-width:170px}
   .lvl-chip .lvl-top span{display:none}
+  .hwrap{gap:8px;padding:9px 12px}
+  .mode-switch{gap:2px;padding:2px}
+  .mode-btn{font-size:.65rem;padding:6px 8px}
+  .mode-label-full{display:none}
+  .mode-label-compact{display:inline}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
@@ -394,6 +427,7 @@ body.silly *{font-family:'Comic Sans MS','Comic Sans','Chalkboard SE','Segoe Pri
       <button class="tab active" data-tab="panel-home">🏠 tổ chim</button>
       <button class="tab" data-tab="panel-flock">🐦 bầy chim</button>
       <button class="tab" data-tab="panel-games">🎮 sân chơi</button>
+      <button class="tab" data-tab="panel-aim">🎯 luyện aim</button>
       <button class="tab" data-tab="panel-egg">🥚 ấp trứng</button>
       <button class="tab" data-tab="panel-buttons">🎛️ phòng nút</button>
       <button class="tab" data-tab="panel-book">📖 lưu bút</button>
@@ -413,6 +447,10 @@ body.silly *{font-family:'Comic Sans MS','Comic Sans','Chalkboard SE','Segoe Pri
       <button class="icon-btn" id="btnSound" title="bật/tắt tiếng chíp">🔊</button>
     </div>
     <div class="online"><span class="dot"></span><b id="online">128</b>&nbsp;chim online</div>
+    <div class="mode-switch" role="group" aria-label="Chế độ hiển thị">
+      <button class="mode-btn" type="button" data-ui-mode="pc" aria-pressed="false" aria-label="PC / Laptop" title="Giao diện đầy đủ cho PC và laptop">🖥️ <span class="mode-label-full">PC / Laptop</span><span class="mode-label-compact">PC</span></button>
+      <button class="mode-btn" type="button" data-ui-mode="mobile-lite" aria-pressed="false" aria-label="Mobile nhẹ" title="Giảm hiệu ứng để chạy nhẹ trên điện thoại">📱 <span class="mode-label-full">Mobile nhẹ</span><span class="mode-label-compact">Nhẹ</span></button>
+    </div>
   </div>
 </header>
 
@@ -550,6 +588,32 @@ body.silly *{font-family:'Comic Sans MS','Comic Sans','Chalkboard SE','Segoe Pri
     </div>
   </section>
 
+  <!-- ============ TAB: LUYỆN AIM SHOT ============ -->
+  <section class="panel" id="panel-aim">
+    <div class="sec-head reveal">
+      <span class="kicker">khởi động phản xạ</span>
+      <h2>phòng luyện aim shot</h2>
+      <p>ngắm vào tâm bia và bấm nhanh trong 30 giây. mỗi lần bắn trúng, bia xuất hiện ở một vị trí ngẫu nhiên mới — theo dõi điểm, số lần bắn và độ chính xác của bạn.</p>
+    </div>
+    <div class="game-panel reveal">
+      <div class="gp-top">
+        <div><h3>🎯 aim trainer</h3><div class="gp-sub">bia đứng yên; bắn trúng sẽ chuyển bia tới vị trí ngẫu nhiên mới</div></div>
+        <div class="gp-score">
+          <div class="gp-num"><b id="aimScore">0</b><span>điểm</span></div>
+          <div class="gp-num"><b id="aimAccuracy">0%</b><span>chính xác</span></div>
+          <div class="gp-num time"><b id="aimTime">30</b><span>giây</span></div>
+          <div class="gp-num"><b id="aimBest">0</b><span>kỷ lục</span></div>
+        </div>
+      </div>
+      <canvas id="aimCanvas" aria-label="Khu vực luyện ngắm bắn"></canvas>
+      <div class="aim-controls">
+        <button class="btn btn-primary btn-md" id="btnAim">bắt đầu luyện 🎯</button>
+        <span class="aim-help">Chuột hoặc chạm vào bia để bắn. Bắt đầu lại bất cứ lúc nào.</span>
+      </div>
+      <div class="aim-msg" id="aimMsg" role="status" aria-live="polite">Sẵn sàng chưa? Bấm bắt đầu để vào bài tập.</div>
+    </div>
+  </section>
+
   <!-- ============ TAB 4: ẤP TRỨNG ============ -->
   <section class="panel" id="panel-egg">
     <div class="sec-head reveal">
@@ -603,6 +667,20 @@ body.silly *{font-family:'Comic Sans MS','Comic Sans','Chalkboard SE','Segoe Pri
       <span class="kicker">yêu cầu đã được lắng nghe</span>
       <h2>phòng nút bấm</h2>
       <p>nhiều nút hơn theo yêu cầu — ấn thử hết đi, không hư đâu. hư thì reload.</p>
+    </div>
+    <div class="theme-settings reveal">
+      <h3>🎨 cài đặt gam màu</h3>
+      <p>Chọn một bảng màu có sẵn hoặc tự phối màu nhấn. Lựa chọn được lưu trên thiết bị này.</p>
+      <div class="theme-presets" id="themePresets" aria-label="Chọn bảng màu">
+        <button class="theme-preset" data-theme="0" type="button"><span class="theme-dots"><i style="background:#54c0ff"></i><i style="background:#9b7bff"></i></span>Xanh đêm</button>
+        <button class="theme-preset" data-theme="1" type="button"><span class="theme-dots"><i style="background:#a78bff"></i><i style="background:#6f8bff"></i></span>Tím mộng mơ</button>
+        <button class="theme-preset" data-theme="2" type="button"><span class="theme-dots"><i style="background:#dff1ff"></i><i style="background:#7fd0ff"></i></span>Trắng băng giá</button>
+      </div>
+      <div class="color-controls">
+        <label class="color-control" for="colorAcc1">Màu nhấn chính <input id="colorAcc1" type="color" value="#54c0ff"></label>
+        <label class="color-control" for="colorAcc2">Màu nhấn phụ <input id="colorAcc2" type="color" value="#9b7bff"></label>
+        <button class="btn btn-ghost btn-sm" id="btnThemeReset" type="button">đặt lại mặc định</button>
+      </div>
     </div>
     <div class="tiles">
       <div class="tile reveal" style="--ta:#54c0ff">
@@ -754,12 +832,13 @@ body.silly *{font-family:'Comic Sans MS','Comic Sans','Chalkboard SE','Segoe Pri
     <button class="ctl" data-tab="panel-home">🏠 tổ</button>
     <button class="ctl" data-tab="panel-flock">🐦 bầy</button>
     <button class="ctl" data-tab="panel-games">🎮 chơi</button>
+    <button class="ctl" data-tab="panel-aim">🎯 aim</button>
     <button class="ctl" data-tab="panel-egg">🥚 ấp</button>
     <button class="ctl" data-tab="panel-buttons">🎛️ nút</button>
     <button class="ctl" data-tab="panel-book">📖 sổ</button>
     <button class="ctl" data-tab="panel-troll">🃏 troll</button>
   </div>
-  <p class="foot-line">© 2026 <b>Chim Bé Club v2</b> · 1 file html duy nhất · không framework, chỉ có chim 🐦 · phím <span class="kbd">1</span>–<span class="kbd">7</span> chuyển tab · <span class="kbd">C</span> bắn pháo · <span class="kbd">A</span> thành tựu</p>
+  <p class="foot-line">© 2026 <b>Chim Bé Club v2</b> · 1 file html duy nhất · không framework, chỉ có chim 🐦 · phím <span class="kbd">1</span>–<span class="kbd">8</span> chuyển tab · <span class="kbd">C</span> bắn pháo · <span class="kbd">A</span> thành tựu</p>
 </footer>
 </div><!-- /appWrap -->
 
@@ -821,7 +900,7 @@ body.silly *{font-family:'Comic Sans MS','Comic Sans','Chalkboard SE','Segoe Pri
 /* ================= helpers ================= */
 const $  = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
-const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const PALETTE = ['#54c0ff','#9b7bff','#eaf6ff','#7fd0ff','#b9a6ff','#c9d6ff'];
 const esc = s => s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -829,6 +908,24 @@ const store = {
   get(k, d){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; }catch(e){ return d; } },
   set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
 };
+let uiMode = store.get('chimbe-ui-mode', matchMedia('(max-width: 760px)').matches ? 'mobile-lite' : 'pc');
+if(uiMode !== 'pc' && uiMode !== 'mobile-lite') uiMode = 'pc';
+let RM = prefersReducedMotion || uiMode === 'mobile-lite';
+let skyFrameId = 0;
+function applyUiMode(mode){
+  uiMode = mode;
+  RM = prefersReducedMotion || uiMode === 'mobile-lite';
+  document.body.classList.toggle('mobile-lite', uiMode === 'mobile-lite');
+  $$('[data-ui-mode]').forEach(button => {
+    const active = button.dataset.uiMode === uiMode;
+    button.classList.toggle('active', active);
+    button.setAttribute('aria-pressed', String(active));
+  });
+  store.set('chimbe-ui-mode', uiMode);
+  if(!RM && !skyFrameId) skyFrameId = requestAnimationFrame(loop);
+}
+$$('[data-ui-mode]').forEach(button => button.addEventListener('click', () => applyUiMode(button.dataset.uiMode)));
+applyUiMode(uiMode);
 
 /* ================= stats + seeds + level ================= */
 const stats = { chim:0, gay:0, nut:0 };
@@ -1057,13 +1154,14 @@ function goTab(id){
   $$('.tab').forEach(b => b.classList.toggle('active', b.dataset.tab === id));
   $$('.panel').forEach(p => p.classList.toggle('active', p.id === id));
   window.scrollTo({ top: 0 });
+  if(id === 'panel-aim') requestAnimationFrame(drawAimIdle);
 }
 $('#tabs').addEventListener('click', e => { const b = e.target.closest('.tab'); if(b){ goTab(b.dataset.tab); press(); } });
 $('#footLinks').addEventListener('click', e => { const b = e.target.closest('[data-tab]'); if(b){ goTab(b.dataset.tab); press(); } });
 $('#logoHome').addEventListener('click', e => { e.preventDefault(); goTab('panel-home'); });
 document.addEventListener('keydown', e => {
   if(e.target.matches('input,textarea')) return;
-  const map = {'1':'panel-home','2':'panel-flock','3':'panel-games','4':'panel-egg','5':'panel-buttons','6':'panel-book','7':'panel-troll'};
+  const map = {'1':'panel-home','2':'panel-flock','3':'panel-games','4':'panel-egg','5':'panel-buttons','6':'panel-book','7':'panel-troll','8':'panel-aim'};
   if(map[e.key]) goTab(map[e.key]);
   if(e.key === 'c' || e.key === 'C') burst(innerWidth/2, innerHeight*.4, 90);
   if(e.key === 'a' || e.key === 'A'){ renderAch(); $('#achOv').classList.add('show'); }
@@ -1144,6 +1242,7 @@ function hill(base, amp, f, ph, off, col){
   cx.fill();
 }
 function loop(t){
+  skyFrameId = 0;
   lerpSky();
   /* sky gradient */
   const g = cx.createLinearGradient(0, 0, 0, H);
@@ -1265,9 +1364,9 @@ function loop(t){
     }
   }
   fx.globalAlpha = 1;
-  requestAnimationFrame(loop);
+  if(!RM) skyFrameId = requestAnimationFrame(loop);
 }
-requestAnimationFrame(loop);
+if(!RM && !skyFrameId) skyFrameId = requestAnimationFrame(loop);
 
 /* sky + weather controls */
 $$('.ctl[data-sky]').forEach(b => b.addEventListener('click', () => {
@@ -1493,6 +1592,109 @@ ccv.addEventListener('pointerdown', e => {
   }
 });
 
+/* ================= GAME: aim shot ================= */
+const aimCanvas = $('#aimCanvas'), aimCtx = aimCanvas.getContext('2d');
+const aimState = { running:false, score:0, shots:0, hits:0, time:30, x:0, y:0 };
+let aimBest = store.get('chimbe-aimbest', 0);
+$('#aimBest').textContent = aimBest;
+function sizeAim(){
+  const dpr = Math.min(devicePixelRatio || 1, 2);
+  aimCanvas.width = aimCanvas.clientWidth * dpr;
+  aimCanvas.height = aimCanvas.clientHeight * dpr;
+  aimCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+function drawAimIdle(){
+  if(!aimCanvas.clientWidth) return;
+  sizeAim();
+  const w = aimCanvas.clientWidth, h = aimCanvas.clientHeight;
+  aimCtx.clearRect(0, 0, w, h);
+  aimCtx.fillStyle = 'rgba(159,176,221,.72)';
+  aimCtx.font = '700 15px "Be Vietnam Pro", sans-serif';
+  aimCtx.textAlign = 'center';
+  aimCtx.textBaseline = 'middle';
+  aimCtx.fillText('bấm "bắt đầu luyện" để hiện mục tiêu 🎯', w/2, h/2);
+}
+function renderAim(){
+  const w = aimCanvas.clientWidth, h = aimCanvas.clientHeight;
+  aimCtx.clearRect(0, 0, w, h);
+  aimCtx.save();
+  aimCtx.translate(aimState.x, aimState.y);
+  aimCtx.fillStyle = '#f05b6f';
+  aimCtx.beginPath(); aimCtx.arc(0, 0, 27, 0, Math.PI * 2); aimCtx.fill();
+  aimCtx.fillStyle = '#fff';
+  aimCtx.beginPath(); aimCtx.arc(0, 0, 19, 0, Math.PI * 2); aimCtx.fill();
+  aimCtx.fillStyle = '#f05b6f';
+  aimCtx.beginPath(); aimCtx.arc(0, 0, 11, 0, Math.PI * 2); aimCtx.fill();
+  aimCtx.fillStyle = '#fff';
+  aimCtx.beginPath(); aimCtx.arc(0, 0, 4, 0, Math.PI * 2); aimCtx.fill();
+  aimCtx.restore();
+}
+function updateAimStats(){
+  $('#aimScore').textContent = aimState.score;
+  $('#aimAccuracy').textContent = (aimState.shots ? Math.round(aimState.hits / aimState.shots * 100) : 0) + '%';
+}
+function relocateAimTarget(){
+  const w = aimCanvas.clientWidth, h = aimCanvas.clientHeight;
+  const previousX = aimState.x, previousY = aimState.y;
+  for(let attempt = 0; attempt < 20; attempt++){
+    aimState.x = 28 + Math.random() * Math.max(0, w - 56);
+    aimState.y = 28 + Math.random() * Math.max(0, h - 56);
+    if(Math.hypot(aimState.x - previousX, aimState.y - previousY) >= 150) break;
+  }
+  renderAim();
+}
+function finishAim(){
+  aimState.running = false;
+  $('#btnAim').removeAttribute('disabled');
+  if(aimState.score > aimBest){
+    aimBest = aimState.score;
+    store.set('chimbe-aimbest', aimBest);
+    $('#aimBest').textContent = aimBest;
+  }
+  $('#aimMsg').textContent = 'Hết giờ! ' + aimState.hits + '/' + aimState.shots + ' phát trúng · độ chính xác ' + $('#aimAccuracy').textContent + '. Luyện thêm nhé!';
+  drawAimIdle();
+}
+$('#btnAim').addEventListener('click', () => {
+  press(); chirp(1800);
+  sizeAim();
+  const w = aimCanvas.clientWidth, h = aimCanvas.clientHeight;
+  aimState.running = true;
+  aimState.score = 0; aimState.shots = 0; aimState.hits = 0; aimState.time = 30;
+  aimState.x = w/2; aimState.y = h/2;
+  $('#aimTime').textContent = 30;
+  $('#aimMsg').textContent = 'Bắt đầu! Bắn trúng bia để bia xuất hiện ở vị trí mới.';
+  updateAimStats();
+  $('#btnAim').setAttribute('disabled', '');
+  relocateAimTarget();
+  const timer = setInterval(() => {
+    if(!aimState.running){ clearInterval(timer); return; }
+    aimState.time--;
+    $('#aimTime').textContent = aimState.time;
+    if(aimState.time <= 0){ clearInterval(timer); finishAim(); }
+  }, 1000);
+});
+aimCanvas.addEventListener('pointerdown', e => {
+  if(!aimState.running) return;
+  const r = aimCanvas.getBoundingClientRect();
+  const x = e.clientX - r.left, y = e.clientY - r.top;
+  aimState.shots++;
+  if(Math.hypot(x - aimState.x, y - aimState.y) <= 27){
+    aimState.hits++;
+    aimState.score += 10;
+    relocateAimTarget();
+    chirp(2200);
+    burst(e.clientX, e.clientY, 8);
+  } else {
+    chirp(650);
+  }
+  updateAimStats();
+});
+addEventListener('resize', () => {
+  if(aimState.running){ sizeAim(); relocateAimTarget(); }
+  else if($('#panel-aim').classList.contains('active')) drawAimIdle();
+});
+drawAimIdle();
+
 /* ================= GAME: simon ================= */
 const SIMON = [0, 1, 3, 5];
 let simonSeq = [], simonIdx = 0, simonLock = true, simonRound = 0;
@@ -1698,15 +1900,56 @@ const THEMES = [
   { name:'Tím Mộng Mơ',   acc1:'#a78bff', acc2:'#6f8bff', glow:'rgba(167,139,255,.32)' },
   { name:'Trắng Băng Giá',acc1:'#dff1ff', acc2:'#7fd0ff', glow:'rgba(223,241,255,.28)' }
 ];
-let themeIdx = 0;
+let themeSetting = store.get('chimbe-theme', { idx:0, custom:null });
+if(!themeSetting || typeof themeSetting !== 'object') themeSetting = { idx:0, custom:null };
+let themeIdx = Number.isInteger(themeSetting.idx) && THEMES[themeSetting.idx] ? themeSetting.idx : 0;
+function applyTheme(theme, selectedIdx = null){
+  const rs = document.documentElement.style;
+  rs.setProperty('--acc1', theme.acc1);
+  rs.setProperty('--acc2', theme.acc2);
+  rs.setProperty('--glow', theme.glow || 'rgba(84,192,255,.30)');
+  $('#colorAcc1').value = theme.acc1;
+  $('#colorAcc2').value = theme.acc2;
+  $('#vibeName').textContent = theme.name || 'Tùy chỉnh';
+  $$('#themePresets [data-theme]').forEach(b => b.classList.toggle('selected', Number(b.dataset.theme) === selectedIdx));
+}
+function saveTheme(){
+  store.set('chimbe-theme', themeSetting);
+}
+function setCustomTheme(){
+  const acc1 = $('#colorAcc1').value, acc2 = $('#colorAcc2').value;
+  themeSetting = { idx:themeIdx, custom:{ acc1, acc2 } };
+  applyTheme({ name:'Tùy chỉnh', acc1, acc2, glow:'rgba(84,192,255,.30)' });
+  saveTheme();
+}
+const initialTheme = themeSetting.custom && /^#[0-9a-f]{6}$/i.test(themeSetting.custom.acc1 || '') && /^#[0-9a-f]{6}$/i.test(themeSetting.custom.acc2 || '')
+  ? { name:'Tùy chỉnh', ...themeSetting.custom, glow:'rgba(84,192,255,.30)' }
+  : THEMES[themeIdx];
+applyTheme(initialTheme, themeSetting.custom ? null : themeIdx);
+$('#themePresets').addEventListener('click', e => {
+  const b = e.target.closest('[data-theme]');
+  if(!b) return;
+  press();
+  themeIdx = Number(b.dataset.theme);
+  themeSetting = { idx:themeIdx, custom:null };
+  applyTheme(THEMES[themeIdx], themeIdx);
+  saveTheme();
+});
+$('#colorAcc1').addEventListener('input', setCustomTheme);
+$('#colorAcc2').addEventListener('input', setCustomTheme);
+$('#btnThemeReset').addEventListener('click', () => {
+  press();
+  themeIdx = 0;
+  themeSetting = { idx:0, custom:null };
+  applyTheme(THEMES[0], 0);
+  saveTheme();
+});
 $('#btnVibe').addEventListener('click', () => {
   press(); chirp(1500);
   themeIdx = (themeIdx + 1) % THEMES.length;
-  const t = THEMES[themeIdx], rs = document.documentElement.style;
-  rs.setProperty('--acc1', t.acc1);
-  rs.setProperty('--acc2', t.acc2);
-  rs.setProperty('--glow', t.glow);
-  $('#vibeName').textContent = t.name;
+  themeSetting = { idx:themeIdx, custom:null };
+  applyTheme(THEMES[themeIdx], themeIdx);
+  saveTheme();
 });
 $('#btnSao').addEventListener('click', () => { press(); chirp(2800); starfall(70); });
 const FORTUNES = ['hôm nay bạn sẽ nhặt được 1 hạt... dưới gầm bàn 🌾','một con chim lạ sẽ gáy tên bạn lúc 3 giờ sáng','vận đỏ đang tới... nhưng kẹt xe, tới trễ','đừng tin con chim tím, nó xạo đó','hôm nay thích hợp để... nằm','sắp có người mời bạn ăn, nhưng bạn phải trả tiền','con số may mắn của bạn: 3 lông'];
