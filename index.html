@@ -74,12 +74,23 @@ header{position:sticky;top:0;z-index:50;background:rgba(11,16,45,.92);backdrop-f
 .mode-btn.active{background:var(--acc1);color:#081030}
 .mode-label-compact{display:none}
 body.mobile-lite{background-attachment:scroll;cursor:auto}
+body.mobile-lite #appWrap{width:min(100%,430px);min-height:100vh;margin-inline:auto;overflow:hidden;box-shadow:0 0 0 1px var(--line),0 18px 60px rgba(5,9,35,.45)}
 body.mobile-lite #sky,body.mobile-lite #fx{display:none}
 body.mobile-lite header{backdrop-filter:none}
 body.mobile-lite .ticker .track{animation:none}
 body.mobile-lite .reveal{opacity:1;transform:none}
 body.mobile-lite *,body.mobile-lite *::before,body.mobile-lite *::after{animation:none!important;scroll-behavior:auto!important;transition:none!important}
 body.mobile-lite .dot{opacity:1}
+body.mobile-lite .home-grid,body.mobile-lite .games-duo,body.mobile-lite .egg-grid,body.mobile-lite .book-grid{grid-template-columns:1fr}
+body.mobile-lite .home-grid{gap:8px}
+body.mobile-lite .nest-stage{order:-1;padding-top:10px}
+body.mobile-lite .book-form{position:static}
+body.mobile-lite .tabs{order:3;width:100%}
+body.mobile-lite .mode-switch{order:4;margin-left:auto}
+body.mobile-lite .online{display:none}
+body.mobile-lite .lvl-chip{min-width:110px}
+body.mobile-lite .mode-label-full{display:none}
+body.mobile-lite .mode-label-compact{display:inline}
 .online{display:flex;align-items:center;gap:7px;font-size:.78rem;font-weight:700;color:var(--ink2);background:var(--panel2);border:1px solid var(--line);padding:8px 12px;border-radius:999px}
 .online b{color:var(--ice)}
 .dot{width:8px;height:8px;border-radius:50%;background:#69e6a6;box-shadow:0 0 10px #69e6a6;animation:pulse 1.6s ease-in-out infinite}
@@ -922,6 +933,7 @@ function applyUiMode(mode){
     button.setAttribute('aria-pressed', String(active));
   });
   store.set('chimbe-ui-mode', uiMode);
+  window.dispatchEvent(new Event('resize'));
   if(!RM && !skyFrameId) skyFrameId = requestAnimationFrame(loop);
 }
 $$('[data-ui-mode]').forEach(button => button.addEventListener('click', () => applyUiMode(button.dataset.uiMode)));
