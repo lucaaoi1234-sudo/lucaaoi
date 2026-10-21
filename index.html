@@ -74,7 +74,8 @@ header{position:sticky;top:0;z-index:50;background:rgba(11,16,45,.92);backdrop-f
 .mode-btn.active{background:var(--acc1);color:#081030}
 .mode-label-compact{display:none}
 body.mobile-lite{background-attachment:scroll;cursor:auto}
-body.mobile-lite #appWrap{width:min(100%,430px);min-height:100vh;margin-inline:auto;overflow:hidden;box-shadow:0 0 0 1px var(--line),0 18px 60px rgba(5,9,35,.45)}
+body.mobile-lite #appWrap{width:min(100%,430px);min-height:100vh;margin-inline:auto;overflow:hidden;container-type:inline-size;box-shadow:0 0 0 1px var(--line),0 18px 60px rgba(5,9,35,.45)}
+body.pc-mode #appWrap{width:100%;max-width:none;min-height:100vh;margin:0;overflow:visible;container-type:normal;box-shadow:none}
 body.mobile-lite #sky,body.mobile-lite #fx{display:none}
 body.mobile-lite header{backdrop-filter:none}
 body.mobile-lite .ticker .track{animation:none}
@@ -91,6 +92,25 @@ body.mobile-lite .online{display:none}
 body.mobile-lite .lvl-chip{min-width:110px}
 body.mobile-lite .mode-label-full{display:none}
 body.mobile-lite .mode-label-compact{display:inline}
+body.mobile-lite .btn-big{font-size:.92rem;padding:14px 22px}
+body.mobile-lite .ring{width:240px;height:240px}
+body.mobile-lite .nest-bubble{right:-6px;max-width:170px}
+body.mobile-lite .lvl-chip .lvl-top span{display:none}
+body.mobile-lite .hwrap{gap:8px;padding:9px 12px}
+body.mobile-lite .mode-switch{gap:2px;padding:2px}
+body.mobile-lite .mode-btn{font-size:.65rem;padding:6px 8px}
+body.mobile-lite h1.display{font-size:2.1rem}
+body.mobile-lite .sec-head h2{font-size:1.5rem}
+body.mobile-lite .hack-joke{font-size:1.9rem}
+body.mobile-lite .bomb-num{font-size:6rem}
+body.mobile-lite #bombEnd{font-size:1.5rem}
+@supports (font-size:1cqi){
+  body.mobile-lite h1.display{font-size:clamp(2.1rem,8cqi,3.9rem)}
+  body.mobile-lite .sec-head h2{font-size:clamp(1.5rem,5.6cqi,2.3rem)}
+  body.mobile-lite .hack-joke{font-size:clamp(1.9rem,5.5cqi,3.2rem)}
+  body.mobile-lite .bomb-num{font-size:clamp(6rem,24cqi,13rem)}
+  body.mobile-lite #bombEnd{font-size:clamp(1.5rem,5cqi,2.5rem)}
+}
 .online{display:flex;align-items:center;gap:7px;font-size:.78rem;font-weight:700;color:var(--ink2);background:var(--panel2);border:1px solid var(--line);padding:8px 12px;border-radius:999px}
 .online b{color:var(--ice)}
 .dot{width:8px;height:8px;border-radius:50%;background:#69e6a6;box-shadow:0 0 10px #69e6a6;animation:pulse 1.6s ease-in-out infinite}
@@ -919,6 +939,10 @@ const store = {
   get(k, d){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; }catch(e){ return d; } },
   set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
 };
+const storedCount = (key, fallback = 0) => {
+  const value = store.get(key, fallback);
+  return Number.isSafeInteger(value) && value >= 0 ? value : fallback;
+};
 let uiMode = store.get('chimbe-ui-mode', matchMedia('(max-width: 760px)').matches ? 'mobile-lite' : 'pc');
 if(uiMode !== 'pc' && uiMode !== 'mobile-lite') uiMode = 'pc';
 let RM = prefersReducedMotion || uiMode === 'mobile-lite';
@@ -927,6 +951,7 @@ function applyUiMode(mode){
   uiMode = mode;
   RM = prefersReducedMotion || uiMode === 'mobile-lite';
   document.body.classList.toggle('mobile-lite', uiMode === 'mobile-lite');
+  document.body.classList.toggle('pc-mode', uiMode === 'pc');
   $$('[data-ui-mode]').forEach(button => {
     const active = button.dataset.uiMode === uiMode;
     button.classList.toggle('active', active);
@@ -946,7 +971,7 @@ function setStat(key, val){
   const el = $('#st-' + key);
   if(el){ el.textContent = val; el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop'); }
 }
-let seeds = store.get('chimbe-seeds', 20);
+let seeds = storedCount('chimbe-seeds', 20);
 function renderSeeds(flash){
   $('#hSeeds').textContent = seeds;
   $('#st-seed').textContent = seeds;
@@ -961,8 +986,15 @@ function addSeeds(n){
 }
 const LEVELS = ['Trứng','Chim Non','Chim Thiếu Niên','Chim Trưởng Thành','Đại Bàng','Chim Lửa','Phượng Hoàng Băng'];
 const LVLEMO = ['🥚','🐣','🐤','🐦','🦅','🔥','🧊'];
-let lvlData = store.get('chimbe-lvl', { level:0, xp:0 });
 const xpNeed = l => 40 + l * 55;
+const savedLvlData = store.get('chimbe-lvl', null);
+const savedLevel = savedLvlData && Number.isInteger(savedLvlData.level) ? Math.max(0, Math.min(6, savedLvlData.level)) : 0;
+let lvlData = {
+  level:savedLevel,
+  xp:savedLevel < 6 && savedLvlData && Number.isSafeInteger(savedLvlData.xp)
+    ? Math.max(0, Math.min(xpNeed(savedLevel) - 1, savedLvlData.xp))
+    : 0
+};
 function renderLevel(){
   $('#lvlEmoji').textContent = LVLEMO[Math.min(lvlData.level, 6)];
   $('#lvlName').textContent = LEVELS[Math.min(lvlData.level, 6)];
@@ -1013,7 +1045,8 @@ const ACHS = [
   {id:'grown',e:'🦅',n:'Chim trưởng thành',d:'đạt cấp 4 trở lên'},
   {id:'rich',e:'🌾',n:'Địa chủ',d:'tích luỹ được 100 hạt'}
 ];
-let ACH = new Set(store.get('chimbe-ach', []));
+const savedAchievements = store.get('chimbe-ach', []);
+let ACH = new Set(Array.isArray(savedAchievements) ? savedAchievements.filter(id => ACHS.some(a => a.id === id)) : []);
 function toast(msg){
   const t = document.createElement('div');
   t.className = 'toast'; t.textContent = msg;
@@ -1451,7 +1484,8 @@ $('#btnDem').addEventListener('click', e => {
 });
 
 /* ================= collection + flock ================= */
-let coll = new Set(store.get('chimbe-coll', [0, 1]));
+const savedCollection = store.get('chimbe-coll', [0, 1]);
+let coll = new Set(Array.isArray(savedCollection) ? savedCollection.filter(i => Number.isInteger(i) && i >= 0 && i < FLOCK.length) : [0, 1]);
 function saveColl(){ store.set('chimbe-coll', [...coll]); }
 let flockFilter = 'all';
 function renderFlock(){
@@ -1514,7 +1548,7 @@ function observeReveals(){
 
 /* ================= GAME: bắt chim ================= */
 const ccv = $('#catchCanvas'), ccx = ccv.getContext('2d');
-let catchBest = store.get('chimbe-catchbest', 0);
+let catchBest = storedCount('chimbe-catchbest');
 $('#catchBest').textContent = catchBest;
 const CATCH_EMO = [['🐦',1],['🐤',1],['🕊️',2],['🐧',2],['🦅',3],['🔥',5]];
 const catchState = { running:false, birds:[], score:0, time:30, spawnT:0 };
@@ -1607,7 +1641,7 @@ ccv.addEventListener('pointerdown', e => {
 /* ================= GAME: aim shot ================= */
 const aimCanvas = $('#aimCanvas'), aimCtx = aimCanvas.getContext('2d');
 const aimState = { running:false, score:0, shots:0, hits:0, time:30, x:0, y:0 };
-let aimBest = store.get('chimbe-aimbest', 0);
+let aimBest = storedCount('chimbe-aimbest');
 $('#aimBest').textContent = aimBest;
 function sizeAim(){
   const dpr = Math.min(devicePixelRatio || 1, 2);
@@ -1710,39 +1744,47 @@ drawAimIdle();
 /* ================= GAME: simon ================= */
 const SIMON = [0, 1, 3, 5];
 let simonSeq = [], simonIdx = 0, simonLock = true, simonRound = 0;
-let simonBest = store.get('chimbe-simonbest', 0);
+let simonBest = storedCount('chimbe-simonbest');
+let simonRunId = 0;
 $('#simonBest').textContent = simonBest;
 $('#simonPads').innerHTML = SIMON.map(fi =>
   '<button class="simon-pad" data-fi="' + fi + '" type="button">' + birdSVG(FLOCK[fi]) + '<div class="sp-name">' + FLOCK[fi].ten + '</div></button>'
 ).join('');
-async function simonShow(){
+async function simonShow(runId){
   simonLock = true;
   $('#simonMsg').textContent = '👀 nhìn kỹ nghe kỹ...';
   await sleep(600);
+  if(runId !== simonRunId) return;
   for(const fi of simonSeq){
+    if(runId !== simonRunId) return;
     const pad = $('#simonPads').querySelector('[data-fi="' + fi + '"]');
     pad.classList.add('lit');
     chirp(FLOCK[fi].pitch);
     await sleep(480);
+    if(runId !== simonRunId) return;
     pad.classList.remove('lit');
     await sleep(170);
   }
+  if(runId !== simonRunId) return;
   simonLock = false; simonIdx = 0;
   $('#simonMsg').textContent = '🎤 tới lượt bạn gáy lại!';
 }
-function simonNext(){
+function simonNext(runId){
+  if(runId !== simonRunId) return;
   simonRound++;
   $('#simonRound').textContent = simonRound;
   if(simonRound >= 5) unlock('memory');
   if(simonRound >= 8) unlock('genius');
   simonSeq.push(SIMON[Math.floor(Math.random() * 4)]);
-  simonShow();
+  simonShow(runId);
 }
 $('#btnSimon').addEventListener('click', () => {
   press(); chirp(1500);
+  const runId = ++simonRunId;
+  $$('#simonPads .simon-pad').forEach(pad => pad.classList.remove('lit'));
   simonSeq = []; simonRound = 0;
   $('#simonRound').textContent = 0;
-  simonNext();
+  simonNext(runId);
 });
 $('#simonPads').addEventListener('click', e => {
   const pad = e.target.closest('.simon-pad');
@@ -1755,11 +1797,14 @@ $('#simonPads').addEventListener('click', e => {
   if(fi === simonSeq[simonIdx]){
     simonIdx++;
     if(simonIdx === simonSeq.length){
+      simonLock = true;
       addSeeds(3); addXP(5);
       $('#simonMsg').textContent = '✅ đúng rồi! +3 hạt. vòng tiếp...';
-      setTimeout(simonNext, 800);
+      const runId = simonRunId;
+      setTimeout(() => simonNext(runId), 800);
     }
   } else {
+    simonRunId++;
     simonLock = true;
     if(simonRound > simonBest){ simonBest = simonRound; store.set('chimbe-simonbest', simonBest); $('#simonBest').textContent = simonBest; }
     $('#simonMsg').textContent = '❌ sai bét! dừng ở vòng ' + simonRound + '. gáy lại từ đầu 😤';
@@ -2009,7 +2054,22 @@ const SEED_NOTES = [
   { ten:'Bé Tím',       text:'slot machine ăn hết 40 hạt của tui, trả lại đây 😭', t: Date.now() - 2 * 3600e3, ci: 4, rot: 1.1 },
   { ten:'Chim Ẩn Danh', text:'chíp chíp chíp (dịch: chào cả nhà, cho mình làm quen nha)', t: Date.now() - 40 * 60e3, ci: 0, rot: -.6 }
 ];
-let notes = store.get('chimbe-notes', null) || SEED_NOTES.slice();
+const savedNotes = store.get('chimbe-notes', null);
+let notes = Array.isArray(savedNotes)
+  ? savedNotes.filter(n =>
+      n && typeof n === 'object' &&
+      typeof n.ten === 'string' && typeof n.text === 'string' &&
+      Number.isFinite(n.t) && Math.abs(n.t) <= 8.64e15 &&
+      Number.isInteger(n.ci) && n.ci >= 0 && n.ci < FLOCK.length &&
+      Number.isFinite(n.rot)
+    ).map(n => ({
+      ten:n.ten.slice(0, 24),
+      text:n.text.slice(0, 200),
+      t:n.t,
+      ci:n.ci,
+      rot:Math.max(-1.2, Math.min(1.2, n.rot))
+    }))
+  : SEED_NOTES.slice();
 function fmtTime(t){
   const d = new Date(t);
   return d.toLocaleTimeString('vi-VN', {hour:'2-digit', minute:'2-digit'}) + ' · ' + d.toLocaleDateString('vi-VN');
@@ -2088,20 +2148,26 @@ runBtn.addEventListener('click', () => {
 });
 
 const HACK_LINES = ['> kết nối tới máy nạn nhân... ✓','> vượt qua mật khẩu "123456"... dễ ẹc','> đọc trộm tin nhắn... toàn nói xấu tui hả?? 😤','> up lịch sử tìm kiếm lên group lớp...','> đổi wallpaper thành chim 4K...','> LỖI: máy bạn quá dễ thương để hack'];
-let hackBusy = false, hackAbort = false;
+let hackBusy = false, hackRunId = 0;
 $('#btnHack').addEventListener('click', async () => {
   if(hackBusy) return;
-  hackBusy = true; hackAbort = false; press();
+  hackBusy = true; press();
+  const runId = ++hackRunId;
   const ov = $('#hackOv'), box = $('#hackTxt');
   ov.classList.add('show'); box.innerHTML = '';
   for(const line of HACK_LINES){
-    if(hackAbort) return;
+    if(runId !== hackRunId) return;
     const d = document.createElement('div'); d.className = 'hack-line'; box.appendChild(d);
-    for(const ch of line){ if(hackAbort) return; d.textContent += ch; await sleep(16); }
+    for(const ch of line){
+      if(runId !== hackRunId) return;
+      d.textContent += ch;
+      await sleep(16);
+    }
+    if(runId !== hackRunId) return;
     chirp(420 + Math.random() * 260);
     await sleep(420);
   }
-  if(hackAbort) return;
+  if(runId !== hackRunId) return;
   const j = document.createElement('div');
   j.className = 'hack-joke'; j.textContent = 'ĐÙA THÔI 🐦';
   box.appendChild(j);
@@ -2109,10 +2175,14 @@ $('#btnHack').addEventListener('click', async () => {
   burst(innerWidth/2, innerHeight/2, 90);
   unlock('hacked');
   await sleep(1900);
-  if(hackAbort) return;
+  if(runId !== hackRunId) return;
   ov.classList.remove('show'); hackBusy = false;
 });
-$('#hackOv').addEventListener('click', () => { hackAbort = true; hackBusy = false; $('#hackOv').classList.remove('show'); });
+$('#hackOv').addEventListener('click', () => {
+  hackRunId++;
+  hackBusy = false;
+  $('#hackOv').classList.remove('show');
+});
 
 let bsodBusy = false;
 $('#btnBsod').addEventListener('click', () => {
