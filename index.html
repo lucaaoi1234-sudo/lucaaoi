@@ -22,10 +22,7 @@
 html{scroll-behavior:smooth}
 body{
   font-family:var(--body); color:var(--ink);
-  background:
-    radial-gradient(1100px 600px at 85% -10%, rgba(155,123,255,.16), transparent 60%),
-    radial-gradient(900px 700px at -10% 110%, rgba(84,192,255,.14), transparent 60%),
-    linear-gradient(160deg, var(--bg0) 0%, #0e1440 55%, #171046 100%);
+  background:linear-gradient(160deg, var(--bg0) 0%, #0e1440 55%, #171046 100%);
   background-attachment:fixed;
   min-height:100vh; overflow-x:hidden;
 }
@@ -35,35 +32,50 @@ body{
 ::-webkit-scrollbar-thumb{background:linear-gradient(var(--acc1),var(--acc2));border-radius:8px;border:2px solid #0a0f2c}
 button{font-family:inherit;cursor:pointer}
 :focus-visible{outline:3px solid var(--acc1);outline-offset:3px;border-radius:8px}
-
 #sky{position:fixed;inset:0;z-index:-1;pointer-events:none}
+#fx{position:fixed;inset:0;z-index:60;pointer-events:none}
+body{cursor:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30'><circle cx='13' cy='15' r='11' fill='%2354c0ff' stroke='%230a0f2c' stroke-width='2'/><circle cx='17' cy='11' r='3.4' fill='white'/><circle cx='18' cy='11.2' r='1.7' fill='%23131a3d'/><path d='M23 13.5 L29 15.5 L23 18 Z' fill='%23ffd98e'/><path d='M6 20 Q13 26 19 20 Q13 28 6 20 Z' fill='%239b7bff'/></svg>") 13 15, auto}
 
 /* ============ TICKER ============ */
 .ticker{overflow:hidden;white-space:nowrap;border-bottom:1px solid var(--line);background:rgba(10,15,44,.85);position:relative;z-index:5}
-.ticker .track{display:inline-block;padding:7px 0;font-weight:800;font-size:.78rem;letter-spacing:.18em;color:var(--acc1);animation:marq 26s linear infinite}
+.ticker .track{display:inline-block;padding:7px 0;font-weight:800;font-size:.76rem;letter-spacing:.18em;color:var(--acc1);animation:marq 28s linear infinite}
 .ticker.rev .track{animation-direction:reverse;color:var(--acc2)}
 .ticker .track i{font-style:normal;color:var(--ice);opacity:.85;margin:0 14px}
 @keyframes marq{to{transform:translateX(-50%)}}
 
 /* ============ HEADER ============ */
 header{position:sticky;top:0;z-index:50;background:rgba(11,16,45,.92);backdrop-filter:blur(8px);border-bottom:2px solid var(--line)}
-.hwrap{max-width:1120px;margin:auto;display:flex;align-items:center;gap:18px;padding:12px 20px;flex-wrap:wrap}
+.hwrap{max-width:1180px;margin:auto;display:flex;align-items:center;gap:14px;padding:10px 18px;flex-wrap:wrap}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
-.logo-bird{width:42px;height:42px;display:grid;place-items:center;background:linear-gradient(140deg,var(--acc1),var(--acc2));border-radius:14px 14px 14px 4px;box-shadow:0 6px 16px var(--glow);transition:transform .25s}
+.logo-bird{width:40px;height:40px;display:grid;place-items:center;background:linear-gradient(140deg,var(--acc1),var(--acc2));border-radius:14px 14px 14px 4px;box-shadow:0 6px 16px var(--glow);transition:transform .25s}
 .logo:hover .logo-bird{transform:rotate(-10deg) scale(1.08)}
-.logo-txt{font-family:var(--display);font-size:.95rem;line-height:1.05;letter-spacing:.02em}
-.logo-txt em{font-style:normal;color:var(--acc2);font-size:.8em}
-.tabs{display:flex;gap:6px;background:var(--panel2);border:1px solid var(--line);padding:5px;border-radius:999px;margin:0 auto;overflow-x:auto;max-width:100%}
-.tab{border:0;background:transparent;color:var(--ink2);font-weight:800;font-size:.85rem;padding:9px 16px;border-radius:999px;white-space:nowrap;transition:all .22s}
+.logo-txt{font-family:var(--display);font-size:.88rem;line-height:1.05}
+.logo-txt em{font-style:normal;color:var(--acc2);font-size:.78em}
+.tabs{display:flex;gap:5px;background:var(--panel2);border:1px solid var(--line);padding:4px;border-radius:999px;margin:0 auto;overflow-x:auto;max-width:100%;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{border:0;background:transparent;color:var(--ink2);font-weight:800;font-size:.78rem;padding:8px 13px;border-radius:999px;white-space:nowrap;transition:all .22s}
 .tab:hover{color:var(--ice);transform:translateY(-2px)}
 .tab.active{background:var(--acc1);color:#081030;box-shadow:0 4px 18px var(--glow);transform:scale(1.04)}
-.online{display:flex;align-items:center;gap:8px;font-size:.82rem;font-weight:700;color:var(--ink2);background:var(--panel2);border:1px solid var(--line);padding:8px 14px;border-radius:999px}
+.hcluster{display:flex;align-items:center;gap:8px;margin-left:auto}
+.seed-chip{display:flex;align-items:center;gap:6px;font-size:.82rem;font-weight:800;color:var(--ice);background:var(--panel2);border:1px solid var(--line);padding:7px 12px;border-radius:999px}
+.seed-chip b{font-family:var(--display);color:#d9ef8e;font-size:.95rem;display:inline-block}
+.seed-chip b.pop,.lvl-chip .lvl-emoji.pop{animation:pop .45s cubic-bezier(.2,2,.4,1)}
+@keyframes pop{40%{transform:scale(1.5) rotate(-8deg)}}
+.lvl-chip{display:flex;align-items:center;gap:8px;background:var(--panel2);border:1px solid var(--line);padding:6px 12px;border-radius:14px 14px 14px 4px;min-width:132px}
+.lvl-emoji{font-size:1.25rem}
+.lvl-top{display:flex;justify-content:space-between;gap:8px;font-size:.68rem;font-weight:800;color:var(--ink2)}
+.lvl-top b{color:var(--ice)}
+.lvl-bar{height:6px;border-radius:99px;background:#080d28;margin-top:3px;overflow:hidden}
+.lvl-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--acc1),var(--acc2));transition:width .35s}
+.icon-btn{width:36px;height:36px;display:grid;place-items:center;background:var(--panel2);border:1.5px solid var(--line);border-radius:12px 12px 12px 4px;font-size:1rem;color:var(--ink2);transition:all .2s}
+.icon-btn:hover{border-color:var(--acc1);color:var(--ice);transform:translateY(-2px) rotate(-4deg);box-shadow:0 6px 14px var(--glow)}
+.online{display:flex;align-items:center;gap:7px;font-size:.78rem;font-weight:700;color:var(--ink2);background:var(--panel2);border:1px solid var(--line);padding:8px 12px;border-radius:999px}
 .online b{color:var(--ice)}
-.dot{width:9px;height:9px;border-radius:50%;background:#69e6a6;box-shadow:0 0 10px #69e6a6;animation:pulse 1.6s ease-in-out infinite}
+.dot{width:8px;height:8px;border-radius:50%;background:#69e6a6;box-shadow:0 0 10px #69e6a6;animation:pulse 1.6s ease-in-out infinite}
 @keyframes pulse{50%{opacity:.35;transform:scale(.8)}}
 
 /* ============ LAYOUT ============ */
-main{max-width:1120px;margin:auto;padding:8px 20px 60px;position:relative;z-index:1}
+main{max-width:1180px;margin:auto;padding:8px 20px 60px;position:relative;z-index:1}
 .panel{display:none}
 .panel.active{display:block}
 .panel.active > *{animation:rise .55s cubic-bezier(.2,.9,.3,1) both}
@@ -72,10 +84,12 @@ main{max-width:1120px;margin:auto;padding:8px 20px 60px;position:relative;z-inde
 .panel.active > *:nth-child(4){animation-delay:.24s}
 .panel.active > *:nth-child(5){animation-delay:.32s}
 @keyframes rise{from{opacity:0;transform:translateY(26px)}}
+.reveal{opacity:0;transform:translateY(26px)}
+.reveal.in{opacity:1;transform:none;transition:opacity .7s cubic-bezier(.2,.8,.3,1),transform .7s cubic-bezier(.2,.8,.3,1)}
 
-.kicker{display:inline-flex;align-items:center;gap:8px;font-size:.75rem;font-weight:800;letter-spacing:.28em;text-transform:uppercase;color:var(--acc2);margin:34px 0 14px}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-size:.73rem;font-weight:800;letter-spacing:.28em;text-transform:uppercase;color:var(--acc2);margin:34px 0 14px}
 .kicker::before,.kicker::after{content:"✦";color:var(--acc1)}
-h1.display{font-family:var(--display);font-size:clamp(2.1rem,6.4vw,4rem);line-height:1.08;color:var(--ice);text-shadow:0 0 26px rgba(84,192,255,.35),0 4px 0 rgba(10,14,44,.9);max-width:640px}
+h1.display{font-family:var(--display);font-size:clamp(2.1rem,6.2vw,3.9rem);line-height:1.08;color:var(--ice);text-shadow:0 0 26px rgba(84,192,255,.35),0 4px 0 rgba(10,14,44,.9);max-width:640px}
 h1 .hl{color:var(--acc2);text-shadow:0 0 26px rgba(155,123,255,.5),0 4px 0 rgba(10,14,44,.9)}
 h1 .w{display:inline-block;white-space:nowrap}
 h1 .ch{display:inline-block;animation:chIn .65s cubic-bezier(.2,1.7,.4,1) both}
@@ -84,19 +98,14 @@ h1 .ch{display:inline-block;animation:chIn .65s cubic-bezier(.2,1.7,.4,1) both}
 .sec-head .kicker{margin:0 0 10px}
 .sec-head h2{font-family:var(--display);font-size:clamp(1.5rem,3.6vw,2.3rem);color:var(--ice);display:inline-block;position:relative}
 .sec-head h2::after{content:"";position:absolute;left:0;right:20%;bottom:-8px;height:6px;border-radius:4px;background:linear-gradient(90deg,var(--acc1),var(--acc2));opacity:.9;transform:skewX(-20deg)}
-.sec-head p{color:var(--ink2);margin-top:16px;font-size:.95rem;max-width:560px}
+.sec-head p{color:var(--ink2);margin-top:16px;font-size:.95rem;max-width:600px;line-height:1.6}
 
-/* ============ HOME ============ */
-.home-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:36px;align-items:center;padding-top:6px}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 26px}
-.chip{font-size:.78rem;font-weight:700;color:var(--ink2);border:1.5px dashed var(--line);padding:6px 13px;border-radius:999px;transition:all .2s}
-.chip:hover{border-color:var(--acc1);color:var(--ice);transform:translateY(-2px) rotate(-1.5deg)}
-.btn-row{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
-.btn{display:inline-flex;align-items:center;gap:8px;border:2px solid transparent;font-weight:900;border-radius:999px;transition:transform .18s,box-shadow .18s,background .2s,color .2s;user-select:none}
+/* ============ BUTTONS ============ */
+.btn{display:inline-flex;align-items:center;gap:8px;border:2px solid transparent;font-weight:900;border-radius:999px;transition:transform .18s,box-shadow .18s,background .2s,color .2s,border-color .2s;user-select:none}
 .btn:active{transform:translateY(2px) scale(.96)!important}
-.btn-big{font-family:var(--display);font-size:1.05rem;padding:16px 30px;letter-spacing:.03em}
-.btn-md{font-size:.92rem;padding:13px 22px}
-.btn-sm{font-size:.8rem;padding:9px 16px}
+.btn-big{font-family:var(--display);font-size:1.02rem;padding:16px 30px;letter-spacing:.03em}
+.btn-md{font-size:.9rem;padding:13px 22px}
+.btn-sm{font-size:.78rem;padding:9px 16px}
 .btn-primary{background:var(--acc1);color:#081030;box-shadow:0 8px 24px var(--glow),0 4px 0 rgba(6,10,40,.55)}
 .btn-primary:hover{transform:translateY(-3px) rotate(-1.5deg);box-shadow:0 14px 34px var(--glow),0 6px 0 rgba(6,10,40,.55)}
 .btn-violet{background:var(--acc2);color:#140b33;box-shadow:0 8px 24px rgba(155,123,255,.35),0 4px 0 rgba(6,10,40,.55)}
@@ -105,69 +114,150 @@ h1 .ch{display:inline-block;animation:chIn .65s cubic-bezier(.2,1.7,.4,1) both}
 .btn-ghost:hover{border-color:var(--acc1);color:var(--acc1);transform:translateY(-3px);box-shadow:0 10px 22px rgba(84,192,255,.18)}
 .btn-ice{background:var(--ice);color:#0d1334;box-shadow:0 4px 0 rgba(6,10,40,.55)}
 .btn-ice:hover{transform:translateY(-3px) rotate(-1deg);box-shadow:0 10px 22px rgba(234,246,255,.25),0 6px 0 rgba(6,10,40,.55)}
-.hint{margin-top:14px;font-size:.8rem;color:var(--ink2);font-style:italic}
-.stat-strip{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;margin-top:34px;background:var(--panel);border:2px solid var(--line);border-radius:18px 18px 18px 5px;padding:16px 22px;box-shadow:0 12px 30px rgba(5,9,35,.5)}
-.stat{font-size:.88rem;color:var(--ink2);font-weight:600}
-.stat b{font-family:var(--display);font-size:1.35rem;color:var(--acc1);display:inline-block;margin-right:6px}
+.btn.on{background:var(--acc2);border-color:var(--acc2);color:#140b33}
+.btn[disabled]{opacity:.45;pointer-events:none}
+
+/* ============ HOME ============ */
+.home-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:36px;align-items:center;padding-top:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 26px}
+.chip{font-size:.76rem;font-weight:700;color:var(--ink2);border:1.5px dashed var(--line);padding:6px 13px;border-radius:999px;transition:all .2s}
+.chip:hover{border-color:var(--acc1);color:var(--ice);transform:translateY(-2px) rotate(-1.5deg)}
+.btn-row{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.hint{margin-top:14px;font-size:.79rem;color:var(--ink2);font-style:italic}
+.stat-strip{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin-top:32px;background:var(--panel);border:2px solid var(--line);border-radius:18px 18px 18px 5px;padding:15px 20px;box-shadow:0 12px 30px rgba(5,9,35,.5)}
+.stat{font-size:.84rem;color:var(--ink2);font-weight:600}
+.stat b{font-family:var(--display);font-size:1.25rem;color:var(--acc1);display:inline-block;margin-right:5px}
 .stat:nth-child(5) b{color:var(--acc2)}
 .stat b.pop{animation:pop .4s cubic-bezier(.2,2,.4,1)}
-@keyframes pop{40%{transform:scale(1.5) rotate(-6deg);color:var(--ice)}}
 .sep{color:var(--line)}
 
-/* mascot */
-.stage{position:relative;display:grid;place-items:center;padding:30px 0;cursor:pointer;justify-items:center}
-.ring{position:absolute;width:290px;height:290px;border-radius:50%;border:2px dashed rgba(159,176,221,.4);animation:spin 26s linear infinite}
-.ring::after{content:"";position:absolute;inset:22px;border-radius:50%;border:1px solid rgba(84,192,255,.25);box-shadow:inset 0 0 60px var(--glow)}
-@keyframes spin{to{transform:rotate(360deg)}}
-.stage .big{width:min(230px,60vw);filter:drop-shadow(0 18px 28px rgba(5,9,35,.6));transition:transform .2s}
-.stage:hover .big{transform:scale(1.05) rotate(-2deg)}
-.stage::before{content:"";width:170px;height:22px;margin-top:-6px;border-radius:50%;background:radial-gradient(ellipse,rgba(5,9,35,.55),transparent 70%)}
-.bubble{position:absolute;top:6px;right:-4px;max-width:210px;background:var(--ice);color:#131a46;font-weight:700;font-size:.86rem;padding:11px 15px;border-radius:16px 16px 16px 4px;box-shadow:0 10px 24px rgba(5,9,35,.45);transition:opacity .25s,transform .25s}
-.bubble::after{content:"";position:absolute;bottom:-9px;left:22px;border:10px solid transparent;border-top-color:var(--ice);border-left-color:var(--ice)}
-.bubble.swap{opacity:0;transform:translateY(8px) scale(.9)}
-.stage-cap{font-size:.8rem;color:var(--ink2);text-align:center;margin-top:6px}
+/* sky + weather controls */
+.sky-ctrl{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;align-items:center}
+.sky-ctrl .lab{font-size:.7rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--ink2);margin-right:4px}
+.ctl{border:2px solid var(--line);background:var(--panel2);color:var(--ink2);font-weight:800;font-size:.78rem;padding:8px 14px;border-radius:999px;transition:all .2s}
+.ctl:hover{border-color:var(--acc2);color:var(--ice);transform:translateY(-2px)}
+.ctl.on{border-color:var(--acc1);color:#081030;background:var(--acc1);box-shadow:0 4px 16px var(--glow)}
 
-/* bird svg anims */
+/* nest stage */
+.nest-stage{position:relative;display:grid;place-items:center;padding:24px 0 8px;justify-items:center}
+.ring{position:absolute;width:300px;height:300px;top:6%;border-radius:50%;border:2px dashed rgba(159,176,221,.35);animation:spin 30s linear infinite}
+.ring::after{content:"";position:absolute;inset:24px;border-radius:50%;border:1px solid rgba(84,192,255,.22);box-shadow:inset 0 0 60px var(--glow)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.nest-bubble{position:absolute;top:0;right:2%;max-width:215px;background:var(--ice);color:#131a46;font-weight:700;font-size:.84rem;padding:11px 15px;border-radius:16px 16px 16px 4px;box-shadow:0 10px 24px rgba(5,9,35,.45);transition:opacity .25s,transform .25s;z-index:6}
+.nest-bubble::after{content:"";position:absolute;bottom:-9px;left:22px;border:10px solid transparent;border-top-color:var(--ice);border-left-color:var(--ice)}
+.nest-bubble.swap{opacity:0;transform:translateY(8px) scale(.9)}
+.nest-family{position:relative;width:min(330px,80vw);height:290px;filter:drop-shadow(0 18px 28px rgba(5,9,35,.55))}
 .bird-wrap{display:inline-block}
+.nest-family svg{display:block;width:100%;height:auto}
+.nest-parent{position:absolute;left:4px;top:6px;width:128px;cursor:pointer;transition:transform .2s}
+.nest-parent:hover{transform:scale(1.06) rotate(-3deg)}
+.nest-bowl-back{position:absolute;bottom:0;left:0;width:100%}
+.nest-chick{position:absolute;bottom:64px;width:76px;cursor:pointer;transition:transform .2s}
+.nest-chick:hover{transform:scale(1.08)}
+.nest-chick.c1{left:96px}.nest-chick.c2{left:168px}.nest-chick.c3{left:238px}
+.nest-lip{position:absolute;bottom:0;left:0;width:100%;pointer-events:none}
 .bob{animation:bob 3.2s ease-in-out infinite}
 @keyframes bob{50%{transform:translateY(-7px)}}
-.bird-wrap svg{display:block;width:100%;height:auto}
+.hop{animation:hop .55s cubic-bezier(.3,1.6,.5,1)}
+@keyframes hop{30%{transform:translateY(-30px) rotate(-6deg) scale(1.08)}60%{transform:translateY(0) rotate(2deg)}}
 .wing{transform-box:fill-box;transform-origin:18% 28%;animation:wingIdle 2.8s ease-in-out infinite}
 @keyframes wingIdle{50%{transform:rotate(9deg)}}
 .eye{transform-box:fill-box;transform-origin:center;animation:blink 4.6s infinite}
 @keyframes blink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.06)}}
 .flapping .wing{animation:flapFast .22s ease-in-out 5}
 @keyframes flapFast{50%{transform:rotate(-34deg)}}
+.stage-cap{font-size:.78rem;color:var(--ink2);text-align:center;margin-top:4px}
 
 /* ============ FLOCK ============ */
 .flock{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
 .bird-card{background:var(--panel);border:2px solid var(--line);border-radius:20px 20px 20px 6px;padding:24px 20px 20px;text-align:center;transform:rotate(var(--rot,0deg));transition:transform .25s,border-color .25s,box-shadow .25s;position:relative;overflow:hidden}
 .bird-card::before{content:"";position:absolute;inset:auto -30% -55% -30%;height:70%;background:radial-gradient(ellipse,rgba(84,192,255,.12),transparent 70%);pointer-events:none}
 .bird-card:hover{transform:rotate(0deg) translateY(-8px);border-color:var(--acc1);box-shadow:0 18px 40px rgba(5,9,35,.55),0 0 0 4px rgba(84,192,255,.12)}
-.bird-card .bird-wrap{width:118px;margin-bottom:10px}
-.bird-card h3{font-family:var(--display);font-size:1rem;color:var(--ice);letter-spacing:.03em}
-.trait{font-size:.82rem;color:var(--ink2);margin:8px 0 16px;min-height:34px}
+.bird-card .bird-wrap{width:112px;margin-bottom:8px}
+.bird-card h3{font-family:var(--display);font-size:.95rem;color:var(--ice);letter-spacing:.03em}
+.trait{font-size:.8rem;color:var(--ink2);margin:8px 0 14px;min-height:34px}
 .card-btns{display:flex;gap:8px;justify-content:center}
-.btn.on{background:var(--acc2);border-color:var(--acc2);color:#140b33}
+.own-badge{position:absolute;top:12px;left:12px;font-size:.66rem;font-weight:900;letter-spacing:.06em;padding:4px 10px;border-radius:999px;border:1.5px solid var(--line)}
+.own-badge.yes{color:#69e6a6;border-color:#2f5d48;background:rgba(105,230,166,.08)}
+.own-badge.no{color:var(--ink2);background:rgba(159,176,221,.07)}
 
-/* ============ TILES ============ */
+/* ============ GAMES ============ */
+.game-panel{background:var(--panel);border:2px solid var(--line);border-radius:22px 22px 22px 7px;padding:24px;box-shadow:0 14px 34px rgba(5,9,35,.45);margin-bottom:22px;position:relative;overflow:hidden}
+.game-panel::after{content:"";position:absolute;inset:auto -20% -65% -20%;height:80%;background:radial-gradient(ellipse,rgba(155,123,255,.1),transparent 70%);pointer-events:none}
+.gp-top{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:16px;position:relative;z-index:1}
+.gp-top h3{font-family:var(--display);font-size:1.05rem;color:var(--ice)}
+.gp-top .gp-sub{font-size:.78rem;color:var(--ink2)}
+.gp-score{margin-left:auto;display:flex;align-items:center;gap:18px}
+.gp-num{text-align:center}
+.gp-num b{font-family:var(--display);font-size:1.7rem;color:var(--acc1);display:block;line-height:1}
+.gp-num span{font-size:.62rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)}
+.gp-num.time b{color:var(--acc2)}
+#catchCanvas{width:100%;height:320px;display:block;border:2px dashed var(--line);border-radius:16px;background:rgba(8,12,40,.5);cursor:crosshair;touch-action:manipulation}
+.games-duo{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.simon-pads{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:340px;margin:auto}
+.simon-pad{background:var(--panel2);border:2px solid var(--line);border-radius:18px 18px 18px 6px;padding:14px;text-align:center;transition:transform .15s,box-shadow .15s,border-color .15s}
+.simon-pad svg{width:74px}
+.simon-pad:hover{border-color:var(--acc1)}
+.simon-pad.lit{transform:scale(1.09);border-color:var(--acc1);box-shadow:0 0 26px var(--glow);background:#17204f}
+.simon-pad .sp-name{font-size:.68rem;font-weight:800;color:var(--ink2);margin-top:2px}
+.simon-msg,.slot-msg{min-height:22px;font-weight:800;font-size:.85rem;color:var(--acc1);margin-top:14px;text-align:center}
+.slot-row{display:flex;justify-content:center;gap:12px;margin:18px 0}
+.reel{width:72px;height:58px;overflow:hidden;border:2px solid var(--line);border-radius:14px 14px 14px 5px;background:var(--panel2);box-shadow:inset 0 8px 14px rgba(4,7,28,.6)}
+.strip{display:flex;flex-direction:column}
+.slot-item{height:58px;display:grid;place-items:center;font-size:32px}
+.slot-cost{font-size:.72rem;color:var(--ink2);text-align:center}
+
+/* ============ EGG ============ */
+.egg-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}
+.egg-zone{position:relative;display:grid;place-items:center;padding:20px 0}
+.egg-svg{width:min(240px,64vw);cursor:pointer;transition:filter .3s;filter:drop-shadow(0 16px 26px rgba(5,9,35,.55))}
+.egg-svg:hover{filter:drop-shadow(0 20px 34px rgba(84,192,255,.35))}
+.egg-shake{animation:eggShake .3s}
+@keyframes eggShake{25%{transform:rotate(-6deg)}75%{transform:rotate(6deg)}}
+.crack{opacity:0;transition:opacity .25s}
+.egg-stage-1 .cr1{opacity:1}
+.egg-stage-2 .cr1,.egg-stage-2 .cr2{opacity:1}
+.egg-stage-3 .cr1,.egg-stage-3 .cr2,.egg-stage-3 .cr3{opacity:1}
+.shell-top,.shell-bot{transition:transform .8s cubic-bezier(.5,1.6,.4,1),opacity .8s}
+.hatched .shell-top{transform:translate(-26px,-58px) rotate(-26deg);opacity:0}
+.hatched .shell-bot{transform:translateY(30px);opacity:0}
+.hatch-baby{position:absolute;left:50%;top:52%;width:130px;transform:translate(-50%,-50%) scale(0);transition:transform .7s cubic-bezier(.2,1.8,.4,1)}
+.hatched .hatch-baby{transform:translate(-50%,-50%) scale(1)}
+.egg-info h3{font-family:var(--display);font-size:1.1rem;color:var(--ice);margin-bottom:10px}
+.egg-info p{color:var(--ink2);font-size:.9rem;line-height:1.7;margin-bottom:12px}
+.egg-prog{height:14px;border-radius:99px;background:var(--panel2);border:2px solid var(--line);overflow:hidden;margin:14px 0}
+.egg-prog i{display:block;height:100%;width:0;background:repeating-linear-gradient(45deg,var(--acc1) 0 10px,var(--acc2) 10px 20px);transition:width .15s}
+.egg-result{font-weight:800;color:var(--ice);min-height:26px;margin:10px 0 16px}
+.coll-mini{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+.coll-mini span{width:38px;height:38px;display:grid;place-items:center;border-radius:50%;border:2px solid var(--line);background:var(--panel2);overflow:hidden;transition:all .25s}
+.coll-mini span svg{width:32px}
+.coll-mini span.got{border-color:#69e6a6;box-shadow:0 0 12px rgba(105,230,166,.3)}
+.coll-mini span.miss{filter:grayscale(1) brightness(.5)}
+
+/* ============ TILES (lab + troll) ============ */
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:18px}
 .tile{background:var(--panel);border:2px solid var(--ta,#3a477f);border-radius:16px 16px 16px 5px;padding:22px 20px;display:flex;flex-direction:column;gap:8px;transition:transform .22s,box-shadow .22s;box-shadow:0 10px 24px rgba(5,9,35,.4)}
 .tile:hover{transform:translateY(-6px) rotate(-.6deg);box-shadow:0 18px 38px rgba(5,9,35,.6),0 0 24px -6px var(--ta)}
-.tile-ico{font-size:1.7rem;width:52px;height:52px;display:grid;place-items:center;background:rgba(255,255,255,.05);border:1.5px solid var(--ta);border-radius:14px 14px 14px 4px;margin-bottom:4px}
-.tile h3{font-family:var(--display);font-size:.92rem;color:var(--ice);letter-spacing:.02em}
-.tile p{font-size:.8rem;color:var(--ink2);flex:1}
+.tile-ico{font-size:1.6rem;width:50px;height:50px;display:grid;place-items:center;background:rgba(255,255,255,.05);border:1.5px solid var(--ta);border-radius:14px 14px 14px 4px;margin-bottom:4px}
+.tile h3{font-family:var(--display);font-size:.88rem;color:var(--ice);letter-spacing:.02em}
+.tile p{font-size:.79rem;color:var(--ink2);flex:1;line-height:1.55}
 .tile .btn{align-self:flex-start}
 .prog{height:12px;border-radius:999px;background:var(--panel2);border:1.5px solid var(--line);overflow:hidden;margin-top:6px}
 .prog i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--acc1),var(--acc2));transition:width .18s}
-.msg{font-size:.78rem;font-weight:700;min-height:18px;color:var(--acc1)}
+.msg{font-size:.77rem;font-weight:700;min-height:18px;color:var(--acc1)}
+.tile.wide{grid-column:1/-1}
+.playground{position:relative;height:190px;border:2px dashed var(--line);border-radius:14px;margin-top:12px;overflow:hidden;background:rgba(255,255,255,.02)}
+#runBtn{position:absolute;left:14px;top:14px;transition:left .16s cubic-bezier(.2,1.6,.4,1),top .16s cubic-bezier(.2,1.6,.4,1),transform .2s}
+.run-count{font-size:.74rem;color:var(--ink2);margin-top:10px;font-style:italic}
+.gift-shake{animation:giftShake .5s ease-in-out 2}
+@keyframes giftShake{25%{transform:rotate(-7deg) scale(1.06)}75%{transform:rotate(7deg) scale(1.06)}}
 
 /* ============ GUESTBOOK ============ */
 .book-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:26px;align-items:start}
 .book-form{background:var(--panel);border:2px solid var(--line);border-radius:20px 20px 6px 20px;padding:24px;position:sticky;top:96px}
-.book-form label{display:block;font-size:.75rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);margin:14px 0 6px}
+.book-form label{display:block;font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);margin:14px 0 6px}
 .book-form label:first-child{margin-top:0}
-.book-form input,.book-form textarea{width:100%;background:var(--panel2);border:2px solid var(--line);border-radius:12px;color:var(--ink);font-family:var(--body);font-size:.92rem;padding:12px 14px;transition:border-color .2s,box-shadow .2s;resize:vertical}
+.book-form input,.book-form textarea{width:100%;background:var(--panel2);border:2px solid var(--line);border-radius:12px;color:var(--ink);font-family:var(--body);font-size:.9rem;padding:12px 14px;transition:border-color .2s,box-shadow .2s;resize:vertical}
 .book-form input:focus,.book-form textarea:focus{outline:none;border-color:var(--acc1);box-shadow:0 0 0 4px rgba(84,192,255,.15)}
 .book-form .btn{margin-top:18px;width:100%;justify-content:center}
 .notes{display:flex;flex-direction:column;gap:14px}
@@ -178,8 +268,8 @@ h1 .ch{display:inline-block;animation:chIn .65s cubic-bezier(.2,1.7,.4,1) both}
 .note-body{flex:1;min-width:0}
 .note-top{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
 .note-top b{font-weight:800;color:var(--acc1)}
-.note-top time{font-size:.72rem;color:var(--ink2)}
-.note-body p{font-size:.9rem;margin-top:5px;line-height:1.55;word-wrap:break-word}
+.note-top time{font-size:.7rem;color:var(--ink2)}
+.note-body p{font-size:.88rem;margin-top:5px;line-height:1.55;word-wrap:break-word}
 .note-x{position:absolute;top:10px;right:12px;border:0;background:transparent;color:var(--ink2);font-size:.85rem;opacity:0;transition:opacity .2s,color .2s,transform .2s}
 .note:hover .note-x{opacity:1}
 .note-x:hover{color:#ff8fa3;transform:scale(1.25)}
@@ -187,94 +277,93 @@ h1 .ch{display:inline-block;animation:chIn .65s cubic-bezier(.2,1.7,.4,1) both}
 
 /* ============ FOOTER ============ */
 footer{position:relative;z-index:1;border-top:2px solid var(--line);background:rgba(10,15,44,.9)}
-.foot-line{text-align:center;padding:18px 16px 26px;font-size:.8rem;color:var(--ink2)}
+.foot-links{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:18px 16px 4px}
+.foot-line{text-align:center;padding:14px 16px 24px;font-size:.78rem;color:var(--ink2);line-height:1.9}
 .foot-line b{color:var(--ice)}
-.kbd{display:inline-block;min-width:20px;text-align:center;background:var(--panel2);border:1.5px solid var(--line);border-bottom-width:3px;border-radius:6px;padding:1px 6px;font-weight:800;color:var(--ice);font-size:.72rem}
-.shake{animation:shake .45s}
-@keyframes shake{10%,90%{transform:translate(-4px,1px)}20%,80%{transform:translate(6px,-2px) rotate(.4deg)}30%,70%{transform:translate(-9px,2px) rotate(-.5deg)}40%,60%{transform:translate(9px,-1px)}50%{transform:translate(-6px,2px) rotate(.4deg)}}
+.kbd{display:inline-block;min-width:20px;text-align:center;background:var(--panel2);border:1.5px solid var(--line);border-bottom-width:3px;border-radius:6px;padding:1px 6px;font-weight:800;color:var(--ice);font-size:.7rem}
 
-@media (max-width:900px){
-  .home-grid{grid-template-columns:1fr;gap:8px}
-  .stage{order:-1;padding-top:14px}
-  .book-grid{grid-template-columns:1fr}
-  .book-form{position:static}
-  .tabs{order:3;width:100%;justify-content:flex-start}
-  .online{margin-left:auto}
-}
-@media (max-width:560px){
-  .btn-big{font-size:.95rem;padding:14px 22px}
-  .ring{width:230px;height:230px}
-  .bubble{right:-8px;max-width:170px}
-}
-@media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
-}
-
-/* ============ FX CANVAS + CHIM CURSOR ============ */
-#fx{position:fixed;inset:0;z-index:60;pointer-events:none}
-body{cursor:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30'><circle cx='13' cy='15' r='11' fill='%2354c0ff' stroke='%230a0f2c' stroke-width='2'/><circle cx='17' cy='11' r='3.4' fill='white'/><circle cx='18' cy='11.2' r='1.7' fill='%23131a3d'/><path d='M23 13.5 L29 15.5 L23 18 Z' fill='%23ffd98e'/><path d='M6 20 Q13 26 19 20 Q13 28 6 20 Z' fill='%239b7bff'/></svg>") 13 15, auto}
-
-/* lật web + font kinh dị */
-#appWrap{transition:transform .9s cubic-bezier(.75,-.2,.25,1.2)}
-body.flipped #appWrap{transform:rotate(180deg)}
-body.silly *{font-family:'Comic Sans MS','Comic Sans','Chalkboard SE','Segoe Print',cursive!important}
-body.silly h1,body.silly h2,body.silly h3{letter-spacing:0}
-
-/* toast thành tựu */
+/* ============ FX UI ============ */
 #toasts{position:fixed;left:18px;bottom:18px;z-index:500;display:flex;flex-direction:column;gap:10px;pointer-events:none}
-.toast{background:#131a46;border:2px solid var(--acc1);border-left:6px solid var(--acc2);border-radius:12px 12px 12px 4px;padding:12px 16px;font-weight:700;font-size:.85rem;color:var(--ice);box-shadow:0 12px 30px rgba(5,9,35,.6);max-width:330px;animation:toastIn .45s cubic-bezier(.2,1.4,.4,1) both}
+.toast{background:#131a46;border:2px solid var(--acc1);border-left:6px solid var(--acc2);border-radius:12px 12px 12px 4px;padding:12px 16px;font-weight:700;font-size:.84rem;color:var(--ice);box-shadow:0 12px 30px rgba(5,9,35,.6);max-width:340px;animation:toastIn .45s cubic-bezier(.2,1.4,.4,1) both}
 .toast.bye{animation:toastOut .35s both}
 @keyframes toastIn{from{opacity:0;transform:translateX(-50px) scale(.85)}}
 @keyframes toastOut{to{opacity:0;transform:translateY(14px) scale(.95)}}
-
-/* popup hydra */
 #popLayer{position:fixed;inset:0;z-index:380;pointer-events:none}
 .tpop{position:absolute;pointer-events:auto;width:242px;background:var(--panel);border:2px solid var(--acc1);border-radius:14px 14px 4px 14px;box-shadow:0 16px 40px rgba(5,9,35,.65);animation:popSpawn .4s cubic-bezier(.2,1.6,.4,1) both}
-.tpop-bar{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(90deg,var(--acc1),var(--acc2));padding:6px 10px;font-weight:900;font-size:.72rem;color:#081030;border-radius:11px 11px 0 0;letter-spacing:.04em}
+.tpop-bar{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(90deg,var(--acc1),var(--acc2));padding:6px 10px;font-weight:900;font-size:.7rem;color:#081030;border-radius:11px 11px 0 0;letter-spacing:.04em}
 .tpop-x{border:0;background:rgba(8,16,48,.22);color:#081030;width:20px;height:20px;border-radius:6px;font-weight:900;line-height:1;transition:transform .15s,background .15s,color .15s}
 .tpop-x:hover{transform:scale(1.2) rotate(90deg);background:rgba(8,16,48,.4);color:#fff}
 .tpop-body{padding:14px}
-.tpop-body p{font-size:.85rem;margin-bottom:12px;line-height:1.5}
+.tpop-body p{font-size:.84rem;margin-bottom:12px;line-height:1.5}
 @keyframes popSpawn{from{opacity:0;transform:scale(.4) rotate(-8deg)}}
 
-/* overlays troll */
+/* overlays */
 .ov{position:fixed;inset:0;z-index:420;display:none;place-items:center;padding:22px;text-align:center}
 .ov.show{display:grid}
 .hack-box{border:2px solid #1c3a6e;background:#050b1f;padding:26px;border-radius:14px;box-shadow:0 0 70px rgba(84,192,255,.28);max-width:640px;width:100%}
-.hack-top{display:flex;align-items:center;gap:6px;color:#3f6db3;font-family:'Courier New',monospace;font-size:.72rem;margin-bottom:16px;letter-spacing:.06em}
+.hack-top{display:flex;align-items:center;gap:6px;color:#3f6db3;font-family:'Courier New',monospace;font-size:.7rem;margin-bottom:16px;letter-spacing:.06em}
 .hdot{width:10px;height:10px;border-radius:50%;background:#24406e;flex:none}
-#hackTxt{font-family:'Courier New',monospace;color:#6ee7ff;text-shadow:0 0 9px rgba(110,231,255,.55);font-size:.92rem;line-height:2;text-align:left;min-height:220px}
+#hackTxt{font-family:'Courier New',monospace;color:#6ee7ff;text-shadow:0 0 9px rgba(110,231,255,.55);font-size:.9rem;line-height:2;text-align:left;min-height:220px}
 .hack-line{white-space:pre-wrap}
 .hack-joke{font-family:var(--display);font-size:clamp(1.9rem,5.5vw,3.2rem);color:var(--ice);text-align:center;margin-top:14px;text-shadow:0 0 34px rgba(84,192,255,.7);animation:rise .5s both}
-.hack-hint{color:#3f6db3;font-size:.68rem;margin-top:16px;font-family:var(--body)}
+.hack-hint{color:#3f6db3;font-size:.68rem;margin-top:16px}
 #bsodOv{background:#0b57d0;z-index:440;cursor:default}
 .bsod-inner{max-width:660px;text-align:left;color:#eaf3ff}
-.bsod-face{font-size:5.4rem;line-height:1}
-.bsod-inner h2{font-size:1.5rem;margin:20px 0 12px;font-weight:800}
-.bsod-inner p{font-size:.94rem;line-height:1.75}
+.bsod-face{font-size:5.2rem;line-height:1}
+.bsod-inner h2{font-size:1.45rem;margin:20px 0 12px;font-weight:800}
+.bsod-inner p{font-size:.92rem;line-height:1.75}
 #bombOv{background:rgba(6,9,32,.95);z-index:430}
-.bomb-label{color:var(--ink2);letter-spacing:.34em;font-weight:800;text-transform:uppercase;font-size:.8rem;margin-bottom:10px}
+.bomb-label{color:var(--ink2);letter-spacing:.34em;font-weight:800;text-transform:uppercase;font-size:.78rem;margin-bottom:10px}
 .bomb-num{font-family:var(--display);font-size:clamp(6rem,24vw,13rem);color:var(--ice);text-shadow:0 0 50px rgba(155,123,255,.65);line-height:1}
 .bomb-num.tick{animation:bombTick .85s}
 @keyframes bombTick{0%{transform:scale(1.3);color:var(--acc2)}}
 #bombEnd{display:none;font-family:var(--display);font-size:clamp(1.5rem,5vw,2.5rem);color:var(--ice);animation:rise .5s both}
-
-/* cookie thính */
+#achOv{background:rgba(6,9,32,.88);z-index:450;backdrop-filter:blur(6px)}
+.ach-box{background:var(--panel);border:2px solid var(--acc2);border-radius:22px 22px 7px 22px;max-width:760px;width:100%;max-height:82vh;overflow-y:auto;padding:26px;text-align:left}
+.ach-box h2{font-family:var(--display);font-size:1.3rem;color:var(--ice);margin-bottom:4px}
+.ach-count{font-size:.78rem;color:var(--ink2);margin-bottom:18px}
+.ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.ach-item{display:flex;gap:12px;align-items:center;background:var(--panel2);border:2px solid var(--line);border-radius:14px 14px 14px 5px;padding:12px 14px;transition:transform .2s}
+.ach-item:hover{transform:translateY(-3px)}
+.ach-item .ae{font-size:1.5rem;flex:none}
+.ach-item b{display:block;font-size:.8rem;color:var(--ice)}
+.ach-item small{font-size:.68rem;color:var(--ink2);line-height:1.4;display:block}
+.ach-item.locked{opacity:.42;filter:grayscale(.7)}
+.ach-item.got{border-color:#69e6a6}
 #cookieModal{position:fixed;left:18px;bottom:18px;z-index:460;display:none;background:var(--panel);border:2px solid var(--acc2);border-radius:18px 18px 18px 5px;padding:20px 22px;max-width:360px;box-shadow:0 18px 50px rgba(5,9,35,.75)}
 #cookieModal.show{display:block;animation:toastIn .5s cubic-bezier(.2,1.4,.4,1) both}
-.ck-title{font-family:var(--display);font-size:1.02rem;margin:10px 0 8px;color:var(--ice)}
-.ck-text{font-size:.85rem;color:var(--ink2);line-height:1.65}
+.ck-title{font-family:var(--display);font-size:1rem;margin:10px 0 8px;color:var(--ice)}
+.ck-text{font-size:.84rem;color:var(--ink2);line-height:1.65}
 .ck-text b{color:var(--acc1)}
 .ck-btns{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
-.ck-note{font-size:.68rem;color:var(--ink2);margin-top:12px;font-style:italic;opacity:.75}
+.ck-note{font-size:.66rem;color:var(--ink2);margin-top:12px;font-style:italic;opacity:.75}
 
-/* tile troll */
-.tile.wide{grid-column:1/-1}
-.playground{position:relative;height:190px;border:2px dashed var(--line);border-radius:14px;margin-top:12px;overflow:hidden;background:rgba(255,255,255,.02)}
-#runBtn{position:absolute;left:14px;top:14px;transition:left .16s cubic-bezier(.2,1.6,.4,1),top .16s cubic-bezier(.2,1.6,.4,1),transform .2s}
-.run-count{font-size:.75rem;color:var(--ink2);margin-top:10px;font-style:italic}
-.gift-shake{animation:giftShake .5s ease-in-out 2}
-@keyframes giftShake{25%{transform:rotate(-7deg) scale(1.06)}75%{transform:rotate(7deg) scale(1.06)}}
+#appWrap{transition:transform .9s cubic-bezier(.75,-.2,.25,1.2)}
+body.flipped #appWrap{transform:rotate(180deg)}
+body.silly *{font-family:'Comic Sans MS','Comic Sans','Chalkboard SE','Segoe Print',cursive!important}
+.shake{animation:shake .45s}
+@keyframes shake{10%,90%{transform:translate(-4px,1px)}20%,80%{transform:translate(6px,-2px) rotate(.4deg)}30%,70%{transform:translate(-9px,2px) rotate(-.5deg)}40%,60%{transform:translate(9px,-1px)}50%{transform:translate(-6px,2px) rotate(.4deg)}}
+
+@media (max-width:940px){
+  .home-grid{grid-template-columns:1fr;gap:8px}
+  .nest-stage{order:-1;padding-top:10px}
+  .book-grid{grid-template-columns:1fr}
+  .book-form{position:static}
+  .games-duo{grid-template-columns:1fr}
+  .egg-grid{grid-template-columns:1fr}
+  .tabs{order:3;width:100%}
+  .online{display:none}
+  .lvl-chip{min-width:110px}
+}
+@media (max-width:560px){
+  .btn-big{font-size:.92rem;padding:14px 22px}
+  .ring{width:240px;height:240px}
+  .nest-bubble{right:-6px;max-width:170px}
+  .lvl-chip .lvl-top span{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
 </style>
 </head>
 <body>
@@ -288,32 +377,47 @@ body.silly h1,body.silly h2,body.silly h3{letter-spacing:0}
   <div class="hwrap">
     <a class="logo" href="#" id="logoHome" aria-label="Về trang chủ">
       <span class="logo-bird" id="logoBird"></span>
-      <span class="logo-txt">CHIM BÉ<br><em>CLUB</em></span>
+      <span class="logo-txt">CHIM BÉ<br><em>CLUB v2</em></span>
     </a>
     <nav class="tabs" id="tabs" aria-label="Các tab">
-      <button class="tab active" data-tab="panel-home">🏠 trang chủ</button>
+      <button class="tab active" data-tab="panel-home">🏠 tổ chim</button>
       <button class="tab" data-tab="panel-flock">🐦 bầy chim</button>
+      <button class="tab" data-tab="panel-games">🎮 sân chơi</button>
+      <button class="tab" data-tab="panel-egg">🥚 ấp trứng</button>
       <button class="tab" data-tab="panel-buttons">🎛️ phòng nút</button>
-      <button class="tab" data-tab="panel-book">📖 sổ lưu bút</button>
-      <button class="tab" data-tab="panel-troll">🃏 khu troll</button>
+      <button class="tab" data-tab="panel-book">📖 lưu bút</button>
+      <button class="tab" data-tab="panel-troll">🃏 troll</button>
     </nav>
+    <div class="hcluster">
+      <div class="seed-chip" title="hạt — tiền của chim">🌾 <b id="hSeeds">0</b></div>
+      <div class="lvl-chip" title="cấp độ chim của bạn">
+        <span class="lvl-emoji" id="lvlEmoji">🥚</span>
+        <div style="flex:1">
+          <div class="lvl-top"><b id="lvlName">Trứng</b><span id="lvlPct">0%</span></div>
+          <div class="lvl-bar"><i id="lvlBar"></i></div>
+        </div>
+      </div>
+      <button class="icon-btn" id="btnAch" title="bảng thành tựu">🏆</button>
+      <button class="icon-btn" id="btnWeather" title="đổi thời tiết">☀️</button>
+      <button class="icon-btn" id="btnSound" title="bật/tắt tiếng chíp">🔊</button>
+    </div>
     <div class="online"><span class="dot"></span><b id="online">128</b>&nbsp;chim online</div>
   </div>
 </header>
 
 <main>
-  <!-- ============ TAB 1: HOME ============ -->
+  <!-- ============ TAB 1: TỔ CHIM ============ -->
   <section class="panel active" id="panel-home">
     <div class="home-grid">
       <div>
-        <span class="kicker">bản nâng cấp chính chủ</span>
+        <span class="kicker">v2 — bản nâng cấp to tổ chảng</span>
         <h1 class="display" id="headline">chào mấy thằng <span class="hl">chim bé</span></h1>
         <div class="chips">
-          <span class="chip">✨ nhiều nút hơn</span>
-          <span class="chip">🗂️ 4 tab mới</span>
-          <span class="chip">🎞️ animation mượt</span>
-          <span class="chip">🧊 màu lạnh cóng</span>
-          <span class="chip">🃏 + khu troll mới</span>
+          <span class="chip">🎮 3 minigame</span>
+          <span class="chip">🥚 ấp trứng sưu tầm</span>
+          <span class="chip">🌦️ thời tiết thật ảo</span>
+          <span class="chip">🏆 18 thành tựu</span>
+          <span class="chip">🃏 khu troll nâng cấp</span>
         </div>
         <div class="btn-row">
           <button class="btn btn-primary btn-big" id="btnAnVo">ấn vô 🐦</button>
@@ -321,80 +425,201 @@ body.silly h1,body.silly h2,body.silly h3{letter-spacing:0}
           <button class="btn btn-ghost btn-md" id="btnBay">gọi bầy 🕊️</button>
           <button class="btn btn-ice btn-sm" id="btnDem">đếm chim +1 🐣</button>
         </div>
-        <p class="hint">* nút đầu tiên là cái nút huyền thoại từ bản gốc đó, ấn thử coi còn y nguyên không 😌</p>
+        <p class="hint">* "ấn vô" là cái nút huyền thoại từ bản gốc đó, vẫn y nguyên 😌</p>
+        <div class="sky-ctrl">
+          <span class="lab">giờ</span>
+          <button class="ctl on" data-sky="night">🌙 đêm</button>
+          <button class="ctl" data-sky="dusk">🌆 hoàng hôn</button>
+          <button class="ctl" data-sky="day">☀️ ban ngày</button>
+          <span class="lab" style="margin-left:10px">trời</span>
+          <button class="ctl" data-weather="snow">❄️ tuyết</button>
+          <button class="ctl" data-weather="rain">🌧️ mưa</button>
+        </div>
         <div class="stat-strip">
-          <div class="stat">🐦 <b id="st-chim">0</b> chim đã đếm</div><span class="sep">✦</span>
-          <div class="stat">🔊 <b id="st-gay">0</b> lần gáy</div><span class="sep">✦</span>
-          <div class="stat">👆 <b id="st-nut">0</b> nút đã ấn</div>
+          <div class="stat">🐦 <b id="st-chim">0</b> chim đếm</div><span class="sep">✦</span>
+          <div class="stat">🔊 <b id="st-gay">0</b> gáy</div><span class="sep">✦</span>
+          <div class="stat">👆 <b id="st-nut">0</b> nút</div><span class="sep">✦</span>
+          <div class="stat">🌾 <b id="st-seed">0</b> hạt</div>
         </div>
       </div>
       <div>
-        <div class="stage" id="mascot" title="chọc tui đi">
+        <div class="nest-stage">
           <div class="ring"></div>
-          <div class="bird-wrap big bob" id="mascotBird"></div>
-          <div class="bubble" id="bubble">chíp chíp~ 🐦</div>
+          <div class="nest-bubble" id="nestBubble">chíp chíp~ 🐦</div>
+          <div class="nest-family" id="nestFamily">
+            <div class="bird-wrap nest-parent bob" data-pitch="1500" id="nestParent"></div>
+            <svg class="nest-bowl-back" viewBox="0 0 330 150" aria-hidden="true">
+              <path d="M20 30 Q165 130 310 30 Q310 120 165 128 Q20 120 20 30 Z" fill="#4a3626"/>
+              <path d="M20 30 Q165 118 310 30" fill="none" stroke="#6b4f35" stroke-width="7" stroke-linecap="round"/>
+            </svg>
+            <div class="bird-wrap nest-chick c1" data-pitch="2300"></div>
+            <div class="bird-wrap nest-chick c2" data-pitch="2600"></div>
+            <div class="bird-wrap nest-chick c3" data-pitch="2000"></div>
+            <svg class="nest-lip" viewBox="0 0 330 150" aria-hidden="true">
+              <path d="M20 34 Q165 122 310 34 Q300 96 165 106 Q30 96 20 34 Z" fill="#5d432c"/>
+              <path d="M40 52 Q165 118 290 52" fill="none" stroke="#7c5c3d" stroke-width="5" stroke-linecap="round"/>
+              <path d="M60 74 Q165 122 270 74" fill="none" stroke="#4a3626" stroke-width="4" stroke-linecap="round"/>
+              <path d="M95 92 Q165 118 235 92" fill="none" stroke="#7c5c3d" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <p class="stage-cap">👆 chọc gia đình chim đi — bố mẹ con đủ cả</p>
         </div>
-        <p class="stage-cap">👆 con chim mascot đó, chọc thử đi</p>
       </div>
     </div>
   </section>
 
-  <!-- ============ TAB 2: FLOCK ============ -->
+  <!-- ============ TAB 2: BẦY CHIM ============ -->
   <section class="panel" id="panel-flock">
-    <div class="sec-head">
+    <div class="sec-head reveal">
       <span class="kicker">đội hình ra sân</span>
       <h2>bầy chim của club</h2>
-      <p>6 con 6 tính cách. Chọc cho nó gáy, rồi kết bạn — nó nhớ mặt bạn đó (không nhớ đâu, nhưng cứ tin đi).</p>
+      <p>6 con 6 tính cách. Chọc cho nó gáy, kết bạn với nó — và ấp trứng ở tab 🥚 để sưu tầm đủ bộ.</p>
     </div>
     <div class="flock" id="flock"></div>
   </section>
 
-  <!-- ============ TAB 3: BUTTONS ============ -->
+  <!-- ============ TAB 3: SÂN CHƠI ============ -->
+  <section class="panel" id="panel-games">
+    <div class="sec-head reveal">
+      <span class="kicker">kiếm hạt 🌾 tại đây</span>
+      <h2>sân chơi minigame</h2>
+      <p>chơi game kiếm hạt, rồi đem hạt đi ấp trứng sưu tầm chim. vòng tròn kinh tế chim học hoàn hảo.</p>
+    </div>
+    <div class="game-panel reveal">
+      <div class="gp-top">
+        <div><h3>🏹 bắt chim</h3><div class="gp-sub">30 giây, bấm trúng chim đang bay. 🦅 hiếm = +3 điểm</div></div>
+        <div class="gp-score">
+          <div class="gp-num"><b id="catchScore">0</b><span>điểm</span></div>
+          <div class="gp-num time"><b id="catchTime">30</b><span>giây</span></div>
+          <div class="gp-num"><b id="catchBest">0</b><span>kỷ lục</span></div>
+          <button class="btn btn-primary btn-md" id="btnCatch">bắt đầu!</button>
+        </div>
+      </div>
+      <canvas id="catchCanvas"></canvas>
+    </div>
+    <div class="games-duo">
+      <div class="game-panel reveal">
+        <div class="gp-top">
+          <div><h3>🧠 simon gáy</h3><div class="gp-sub">nhớ thứ tự gáy của bầy chim, rồi gáy lại y chang</div></div>
+          <div class="gp-score">
+            <div class="gp-num"><b id="simonRound">0</b><span>vòng</span></div>
+            <div class="gp-num"><b id="simonBest">0</b><span>kỷ lục</span></div>
+          </div>
+        </div>
+        <div class="simon-pads" id="simonPads"></div>
+        <div style="text-align:center;margin-top:16px">
+          <button class="btn btn-violet btn-md" id="btnSimon">chơi simon 🎵</button>
+        </div>
+        <div class="simon-msg" id="simonMsg"></div>
+      </div>
+      <div class="game-panel reveal">
+        <div class="gp-top">
+          <div><h3>🎰 quay số chim</h3><div class="gp-sub">3 cái trùng = jackpot +30 hạt · 2 trùng = +5 hạt</div></div>
+          <div class="gp-score">
+            <div class="gp-num"><b id="slotBalance">0</b><span>hạt</span></div>
+          </div>
+        </div>
+        <div class="slot-row" id="slotRow">
+          <div class="reel"><div class="strip"></div></div>
+          <div class="reel"><div class="strip"></div></div>
+          <div class="reel"><div class="strip"></div></div>
+        </div>
+        <div style="text-align:center">
+          <button class="btn btn-ice btn-md" id="btnSpin">quay! (−3 🌾)</button>
+          <div class="slot-msg" id="slotMsg"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TAB 4: ẤP TRỨNG ============ -->
+  <section class="panel" id="panel-egg">
+    <div class="sec-head reveal">
+      <span class="kicker">bỉm sữa chim học</span>
+      <h2>lò ấp trứng</h2>
+      <p>bỏ 10 hạt 🌾, gõ 10 cái cho trứng nứt, rồi đón một bé chim ngẫu nhiên về bộ sưu tập. trùng thì được bồi thường 5 hạt.</p>
+    </div>
+    <div class="game-panel reveal">
+      <div class="egg-grid">
+        <div class="egg-zone">
+          <div id="eggWrap">
+            <svg class="egg-svg" id="eggSvg" viewBox="0 0 200 230" aria-label="quả trứng">
+              <g class="shell-bot">
+                <path d="M38 118 L58 132 L76 116 L96 134 L118 115 L138 133 L162 118 C160 172 132 208 100 208 C68 208 40 172 38 118 Z" fill="#e8f4ff" stroke="#b9d8f2" stroke-width="3"/>
+                <circle cx="80" cy="170" r="7" fill="#cfe6fa"/><circle cx="120" cy="185" r="5" fill="#cfe6fa"/>
+              </g>
+              <g class="shell-top">
+                <path d="M100 22 C138 22 162 66 162 112 L138 127 L118 109 L96 128 L76 110 L58 126 L38 112 C38 66 62 22 100 22 Z" fill="#f2faff" stroke="#b9d8f2" stroke-width="3"/>
+                <circle cx="78" cy="60" r="8" fill="#cfe6fa"/><circle cx="118" cy="82" r="6" fill="#cfe6fa"/><circle cx="100" cy="44" r="4.5" fill="#cfe6fa"/>
+                <polyline class="crack cr1" points="60,96 78,84 92,98 110,86" fill="none" stroke="#8fb8dd" stroke-width="3" stroke-linecap="round"/>
+                <polyline class="crack cr2" points="92,98 104,112 126,102 140,112" fill="none" stroke="#8fb8dd" stroke-width="3" stroke-linecap="round"/>
+                <polyline class="crack cr3" points="70,70 84,60 96,72 88,88" fill="none" stroke="#8fb8dd" stroke-width="3" stroke-linecap="round"/>
+              </g>
+            </svg>
+            <div class="hatch-baby" id="hatchBaby"></div>
+          </div>
+        </div>
+        <div class="egg-info">
+          <h3>🐣 bộ sưu tập: <span id="collCount">0</span>/6</h3>
+          <p>mỗi quả trứng là một bí ẩn. có thể là chim băng lạnh lùng, có thể là chim cực quang huyền thoại 1000 năm gặp một lần. hoặc... lại con chim bạn đã có. đời mà.</p>
+          <div class="egg-prog"><i id="eggBar"></i></div>
+          <div style="font-size:.78rem;color:var(--ink2)">số lần gõ: <b id="eggTaps">0</b>/10 · phí: 10 🌾/trứng</div>
+          <div class="egg-result" id="eggResult"></div>
+          <button class="btn btn-primary btn-md" id="btnEgg">gõ trứng! 🔨</button>
+          <button class="btn btn-ghost btn-md" id="btnEggReset" style="display:none">ấp trứng khác 🥚</button>
+          <div class="coll-mini" id="collMini"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TAB 5: PHÒNG NÚT ============ -->
   <section class="panel" id="panel-buttons">
-    <div class="sec-head">
+    <div class="sec-head reveal">
       <span class="kicker">yêu cầu đã được lắng nghe</span>
       <h2>phòng nút bấm</h2>
-      <p>Nhiều nút hơn theo yêu cầu — ấn thử hết đi, không hư đâu. Hư thì reload.</p>
+      <p>nhiều nút hơn theo yêu cầu — ấn thử hết đi, không hư đâu. hư thì reload.</p>
     </div>
     <div class="tiles">
-      <div class="tile" style="--ta:#54c0ff">
+      <div class="tile reveal" style="--ta:#54c0ff">
         <div class="tile-ico">🎉</div><h3>bắn pháo giấy</h3>
         <p>pháo giấy tông lạnh, bắn xong không thấy nóng mà chỉ thấy đẹp.</p>
         <button class="btn btn-primary btn-sm" id="btnPhao">bắn!</button>
       </div>
-      <div class="tile" style="--ta:#9b7bff">
+      <div class="tile reveal" style="--ta:#9b7bff">
         <div class="tile-ico">🫨</div><h3>rung màn hình</h3>
-        <p>rung như chim gặp bão cấp 12. Bám chắc vào con chuột.</p>
+        <p>rung như chim gặp bão cấp 12. bám chắc vào con chuột.</p>
         <button class="btn btn-violet btn-sm" id="btnRung">rung!</button>
       </div>
-      <div class="tile" style="--ta:#7fd0ff">
+      <div class="tile reveal" style="--ta:#7fd0ff">
         <div class="tile-ico">🎨</div><h3>đổi vibe màu</h3>
-        <p>xoay vòng xanh đêm → tím mộng mơ → trắng băng giá. Vibe hiện tại: <b id="vibeName" style="color:var(--acc1)">Xanh Đêm</b></p>
+        <p>xoay vòng xanh đêm → tím mộng mơ → trắng băng giá. vibe hiện tại: <b id="vibeName" style="color:var(--acc1)">Xanh Đêm</b></p>
         <button class="btn btn-ghost btn-sm" id="btnVibe">đổi vibe</button>
       </div>
-      <div class="tile" style="--ta:#c9d6ff">
+      <div class="tile reveal" style="--ta:#c9d6ff">
         <div class="tile-ico">⭐</div><h3>mưa sao băng</h3>
-        <p>ước đi. Không linh đâu nhưng mà đẹp nên cứ ước.</p>
+        <p>ước đi. không linh đâu nhưng mà đẹp nên cứ ước.</p>
         <button class="btn btn-ice btn-sm" id="btnSao">ước!</button>
       </div>
-      <div class="tile" style="--ta:#6d8dff">
+      <div class="tile reveal" style="--ta:#ffd98e">
+        <div class="tile-ico">🔮</div><h3>cầu may mắn</h3>
+        <p>xin một quẻ từ thầy bói chim. độ linh nghiệm: 0.2%.</p>
+        <button class="btn btn-ghost btn-sm" id="btnFortune">xin quẻ</button>
+        <p class="msg" id="fortuneMsg"></p>
+      </div>
+      <div class="tile reveal" style="--ta:#6d8dff">
         <div class="tile-ico">📥</div><h3>tải 1 con chim</h3>
         <p>file .chim chính chủ, dung lượng 3 lông.</p>
         <button class="btn btn-ghost btn-sm" id="btnDl">tải về</button>
         <div class="prog"><i id="dlBar"></i></div>
         <p class="msg" id="dlMsg"></p>
       </div>
-      <div class="tile" style="--ta:#ff8fa3">
+      <div class="tile reveal" style="--ta:#ff8fa3">
         <div class="tile-ico">🚫</div><h3>nút cấm ấn</h3>
         <p>đừng ấn. nghiêm túc đó. ấn là chịu trách nhiệm nha.</p>
         <button class="btn btn-ghost btn-sm" id="btnCam">không ấn đâu</button>
       </div>
-      <div class="tile" style="--ta:#69e6a6">
-        <div class="tile-ico">🔊</div><h3>âm thanh chíp chíp</h3>
-        <p>tắt/bật tiếng gáy của toàn bộ website. Hàng xóm sẽ cảm ơn bạn.</p>
-        <button class="btn btn-ghost btn-sm" id="btnAm">🔊 đang bật</button>
-      </div>
-      <div class="tile" style="--ta:#8fa6e8">
+      <div class="tile reveal" style="--ta:#8fa6e8">
         <div class="tile-ico">♾️</div><h3>nút vô dụng</h3>
         <p>không làm gì cả. thật đấy. đừng tốn thời gian.</p>
         <button class="btn btn-ghost btn-sm" id="btnVd">ấn thử</button>
@@ -403,12 +628,12 @@ body.silly h1,body.silly h2,body.silly h3{letter-spacing:0}
     </div>
   </section>
 
-  <!-- ============ TAB 4: GUESTBOOK ============ -->
+  <!-- ============ TAB 6: LƯU BÚT ============ -->
   <section class="panel" id="panel-book">
-    <div class="sec-head">
+    <div class="sec-head reveal">
       <span class="kicker">góc kỷ niệm</span>
       <h2>sổ lưu bút của bầy</h2>
-      <p>Để lại lời nhắn cho bầy chim. Sổ được cất trong máy bạn (localStorage) nên không ai đọc được đâu, cứ thoải mái.</p>
+      <p>để lại lời nhắn cho bầy chim. sổ cất trong máy bạn (localStorage) nên không ai đọc được đâu, cứ thoải mái.</p>
     </div>
     <div class="book-grid">
       <form class="book-form" id="bookForm">
@@ -425,15 +650,15 @@ body.silly h1,body.silly h2,body.silly h3{letter-spacing:0}
     </div>
   </section>
 
-  <!-- ============ TAB 5: TROLL ============ -->
+  <!-- ============ TAB 7: TROLL ============ -->
   <section class="panel" id="panel-troll">
-    <div class="sec-head">
+    <div class="sec-head reveal">
       <span class="kicker">vũ khí huỷ diệt tình bạn</span>
       <h2>khu troll 😈</h2>
       <p>gửi trang này cho bạn bè rồi ngồi xem phản ứng. mọi thứ ở đây đều vô hại... hầu hết là vậy.</p>
     </div>
     <div class="tiles">
-      <div class="tile wide" style="--ta:#ffd98e">
+      <div class="tile wide reveal" style="--ta:#ffd98e">
         <div class="tile-ico">🏃</div>
         <h3>nút không bao giờ ấn được</h3>
         <p>nó sợ con trỏ của bạn. đuổi bắt thử xem — hụt 15 lần là nó phải đầu hàng.</p>
@@ -442,65 +667,55 @@ body.silly h1,body.silly h2,body.silly h3{letter-spacing:0}
         </div>
         <p class="run-count" id="runCount">số lần hụt: 0</p>
       </div>
-      <div class="tile" style="--ta:#6ee7ff">
-        <div class="tile-ico">💻</div>
-        <h3>hack máy bạn</h3>
+      <div class="tile reveal" style="--ta:#6ee7ff">
+        <div class="tile-ico">💻</div><h3>hack máy bạn</h3>
         <p>giả vờ hack cho nạn nhân xanh mặt chơi. diễn sâu một chút.</p>
         <button class="btn btn-ghost btn-sm" id="btnHack">bắt đầu hack</button>
       </div>
-      <div class="tile" style="--ta:#4d8dff">
-        <div class="tile-ico">🟦</div>
-        <h3>làm sập web</h3>
-        <p>màn hình xanh huyền thoại, phiên bản chim. đảm bảo nạn nhân tin sái cổ.</p>
+      <div class="tile reveal" style="--ta:#4d8dff">
+        <div class="tile-ico">🟦</div><h3>làm sập web</h3>
+        <p>màn hình xanh huyền thoại phiên bản chim. nạn nhân tin sái cổ.</p>
         <button class="btn btn-ghost btn-sm" id="btnBsod">sập!</button>
       </div>
-      <div class="tile" style="--ta:#9b7bff">
-        <div class="tile-ico">🙃</div>
-        <h3>lật ngược cuộc đời</h3>
+      <div class="tile reveal" style="--ta:#9b7bff">
+        <div class="tile-ico">🙃</div><h3>lật ngược cuộc đời</h3>
         <p>cả trang web lộn đầu xuống đất. ấn lại để hoàn hồn.</p>
         <button class="btn btn-violet btn-sm" id="btnFlip">lật!</button>
       </div>
-      <div class="tile" style="--ta:#ff9fc0">
-        <div class="tile-ico">🤡</div>
-        <h3>font kinh dị</h3>
+      <div class="tile reveal" style="--ta:#ff9fc0">
+        <div class="tile-ico">🤡</div><h3>font kinh dị</h3>
         <p>biến cả web thành Comic Sans. đây mới là hình phạt đáng sợ nhất.</p>
         <button class="btn btn-ghost btn-sm" id="btnSilly">bật font ma ám</button>
       </div>
-      <div class="tile" style="--ta:#54c0ff">
-        <div class="tile-ico">💬</div>
-        <h3>popup hydra</h3>
+      <div class="tile reveal" style="--ta:#54c0ff">
+        <div class="tile-ico">💬</div><h3>popup hydra</h3>
         <p>tắt 1 popup, 2 popup khác mọc lên. vẫn có lối thoát... chắc vậy.</p>
         <button class="btn btn-primary btn-sm" id="btnHydra">mở hộp pandora</button>
       </div>
-      <div class="tile" style="--ta:#c9d6ff">
-        <div class="tile-ico">🌪️</div>
-        <h3>bão chim</h3>
+      <div class="tile reveal" style="--ta:#c9d6ff">
+        <div class="tile-ico">🌪️</div><h3>bão chim</h3>
         <p>triệu hồi 15 con chim + mưa lông vũ. hỗn loạn thuần khiết.</p>
         <button class="btn btn-ice btn-sm" id="btnStorm">gọi bão</button>
       </div>
-      <div class="tile" style="--ta:#ff8fa3">
-        <div class="tile-ico">💣</div>
-        <h3>web tự huỷ</h3>
+      <div class="tile reveal" style="--ta:#ff8fa3">
+        <div class="tile-ico">💣</div><h3>web tự huỷ</h3>
         <p>đếm ngược 10 giây nghẹt thở. kết cục thì... tự xem.</p>
         <button class="btn btn-ghost btn-sm" id="btnBomb">kích hoạt</button>
       </div>
-      <div class="tile" style="--ta:#7fd0ff">
-        <div class="tile-ico">📋</div>
-        <h3>copy lời chiêu mộ</h3>
-        <p>copy thông báo kết nạp hội Chim Bé để gửi cho nạn nhân kế tiếp.</p>
+      <div class="tile reveal" style="--ta:#7fd0ff">
+        <div class="tile-ico">📋</div><h3>copy lời chiêu mộ</h3>
+        <p>copy thông báo kết nạp hội Chim Bé để gửi nạn nhân kế tiếp.</p>
         <button class="btn btn-ghost btn-sm" id="btnCopy">copy</button>
       </div>
-      <div class="tile" style="--ta:#b9a6ff">
-        <div class="tile-ico">✨</div>
-        <h3>nút xịn nhất hệ mặt trời</h3>
+      <div class="tile reveal" style="--ta:#b9a6ff">
+        <div class="tile-ico">✨</div><h3>nút xịn nhất hệ mặt trời</h3>
         <p>chờ 5 giây để nhận thứ xịn nhất đời bạn. tin tui.</p>
         <button class="btn btn-violet btn-sm" id="btnXin">chờ thì chờ</button>
         <div class="prog"><i id="xinBar"></i></div>
         <p class="msg" id="xinMsg"></p>
       </div>
-      <div class="tile" style="--ta:#69e6a6">
-        <div class="tile-ico">🎁</div>
-        <h3>quà bí ẩn</h3>
+      <div class="tile reveal" style="--ta:#69e6a6">
+        <div class="tile-ico">🎁</div><h3>quà bí ẩn</h3>
         <p>một món quà chân thành từ tận đáy lòng con chim.</p>
         <button class="btn btn-ghost btn-sm" id="btnGift">mở quà</button>
         <p class="msg" id="giftMsg"></p>
@@ -511,12 +726,30 @@ body.silly h1,body.silly h2,body.silly h3{letter-spacing:0}
 
 <footer>
   <div class="ticker rev" aria-hidden="true"><div class="track" id="tickBot"></div></div>
-  <p class="foot-line">© 2026 <b>Chim Bé Club</b> · 1 file html duy nhất · không framework, chỉ có chim 🐦 · phím <span class="kbd">1</span>–<span class="kbd">5</span> chuyển tab · <span class="kbd">C</span> bắn pháo</p>
+  <div class="foot-links" id="footLinks">
+    <button class="ctl" data-tab="panel-home">🏠 tổ</button>
+    <button class="ctl" data-tab="panel-flock">🐦 bầy</button>
+    <button class="ctl" data-tab="panel-games">🎮 chơi</button>
+    <button class="ctl" data-tab="panel-egg">🥚 ấp</button>
+    <button class="ctl" data-tab="panel-buttons">🎛️ nút</button>
+    <button class="ctl" data-tab="panel-book">📖 sổ</button>
+    <button class="ctl" data-tab="panel-troll">🃏 troll</button>
+  </div>
+  <p class="foot-line">© 2026 <b>Chim Bé Club v2</b> · 1 file html duy nhất · không framework, chỉ có chim 🐦 · phím <span class="kbd">1</span>–<span class="kbd">7</span> chuyển tab · <span class="kbd">C</span> bắn pháo · <span class="kbd">A</span> thành tựu</p>
 </footer>
 </div><!-- /appWrap -->
 
 <div id="toasts" aria-live="polite"></div>
 <div id="popLayer"></div>
+
+<div class="ov" id="achOv">
+  <div class="ach-box">
+    <h2>🏆 bảng thành tựu chim học</h2>
+    <div class="ach-count" id="achCount"></div>
+    <div class="ach-grid" id="achGrid"></div>
+    <div style="text-align:center;margin-top:20px"><button class="btn btn-ghost btn-md" id="btnAchClose">đóng</button></div>
+  </div>
+</div>
 
 <div class="ov" id="hackOv">
   <div class="hack-box">
@@ -533,9 +766,9 @@ body.silly h1,body.silly h2,body.silly h3{letter-spacing:0}
     <p>máy chủ vừa xử lý 1 lỗi nghiêm trọng: ai đó đã ấn nhầm nút trong khu troll. nếu đây là lần đầu bạn thấy màn hình này thì... chúc mừng, bạn vừa bị troll.</p>
     <p style="margin-top:14px"><b id="bsodPct">0%</b> hoàn tất</p>
     <p id="bsodInfo" style="opacity:.75">đang thu thập lông chim (0%)</p>
-    <p style="margin-top:18px;font-size:.78rem;opacity:.6">mã lỗi: CHIM_BE_KHONG_THE_THIEU · stop code: CHIP_CHIP_FOREVER</p>
+    <p style="margin-top:18px;font-size:.76rem;opacity:.6">mã lỗi: CHIM_BE_KHONG_THE_THIEU · stop code: CHIP_CHIP_FOREVER</p>
     <div id="bsodRevive" style="display:none;margin-top:22px">
-      <p style="font-family:var(--display);font-size:1.3rem;margin-bottom:14px">đùa thôi 😌 web vẫn sống nhăn.</p>
+      <p style="font-family:var(--display);font-size:1.25rem;margin-bottom:14px">đùa thôi 😌 web vẫn sống nhăn.</p>
       <button class="btn btn-ice btn-md" id="btnRevive">sống lại 🐣</button>
     </div>
   </div>
@@ -567,24 +800,114 @@ const $$ = s => [...document.querySelectorAll(s)];
 const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const PALETTE = ['#54c0ff','#9b7bff','#eaf6ff','#7fd0ff','#b9a6ff','#c9d6ff'];
 const esc = s => s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const store = {
+  get(k, d){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; }catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+};
 
-/* ================= stats ================= */
+/* ================= stats + seeds + level ================= */
 const stats = { chim:0, gay:0, nut:0 };
 function setStat(key, val){
   stats[key] = val;
   const el = $('#st-' + key);
-  el.textContent = val;
-  el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop');
+  if(el){ el.textContent = val; el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop'); }
+}
+let seeds = store.get('chimbe-seeds', 20);
+function renderSeeds(flash){
+  $('#hSeeds').textContent = seeds;
+  $('#st-seed').textContent = seeds;
+  $('#slotBalance').textContent = seeds;
+  if(flash){ const b = $('#hSeeds'); b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); }
+}
+function addSeeds(n){
+  seeds = Math.max(0, seeds + n);
+  renderSeeds(true);
+  store.set('chimbe-seeds', seeds);
+  if(seeds >= 100) unlock('rich');
+}
+const LEVELS = ['Trứng','Chim Non','Chim Thiếu Niên','Chim Trưởng Thành','Đại Bàng','Chim Lửa','Phượng Hoàng Băng'];
+const LVLEMO = ['🥚','🐣','🐤','🐦','🦅','🔥','🧊'];
+let lvlData = store.get('chimbe-lvl', { level:0, xp:0 });
+const xpNeed = l => 40 + l * 55;
+function renderLevel(){
+  $('#lvlEmoji').textContent = LVLEMO[Math.min(lvlData.level, 6)];
+  $('#lvlName').textContent = LEVELS[Math.min(lvlData.level, 6)];
+  const pct = lvlData.level >= 6 ? 100 : Math.round(lvlData.xp / xpNeed(lvlData.level) * 100);
+  $('#lvlPct').textContent = 'Lv.' + (lvlData.level + 1) + ' · ' + pct + '%';
+  $('#lvlBar').style.width = pct + '%';
+}
+function addXP(n){
+  if(lvlData.level >= 6){ return; }
+  lvlData.xp += n;
+  while(lvlData.level < 6 && lvlData.xp >= xpNeed(lvlData.level)){
+    lvlData.xp -= xpNeed(lvlData.level);
+    lvlData.level++;
+    toast('⬆️ LÊN CẤP! bạn giờ là "' + LEVELS[lvlData.level] + '" ' + LVLEMO[lvlData.level]);
+    chirp(1800); setTimeout(() => chirp(2200), 140); setTimeout(() => chirp(2700), 280);
+    burst(innerWidth/2, innerHeight*.3, 90);
+    if(lvlData.level >= 3) unlock('grown');
+  }
+  renderLevel();
+  store.set('chimbe-lvl', lvlData);
 }
 function press(){
   setStat('nut', stats.nut + 1);
-  if(stats.nut === 1) unlock('curious', '🏆 thành tựu đầu tiên: kẻ tò mò 👀');
+  addXP(1);
+  if(stats.nut === 1) unlock('first');
+  if(stats.nut === 50) unlock('gold');
 }
 
-/* ================= audio: chíp chíp ================= */
+/* ================= achievements ================= */
+const ACHS = [
+  {id:'first',e:'👀',n:'Kẻ tò mò',d:'ấn nút đầu tiên trên web'},
+  {id:'gold',e:'🖐️',n:'Ngón tay vàng',d:'ấn đủ 50 nút'},
+  {id:'bad',e:'💀',n:'Không biết nghe lời',d:'ấn cái nút cấm ấn'},
+  {id:'fast',e:'⚡',n:'Nhanh hơn chim',d:'bắt được nút chạy trốn'},
+  {id:'hacked',e:'💻',n:'Hacker giả trân',d:'xem trọn màn hack máy'},
+  {id:'revive',e:'😇',n:'Chết đi sống lại',d:'hồi sinh từ màn hình xanh'},
+  {id:'flip',e:'🙃',n:'Góc nhìn mới',d:'lật ngược cả trang web'},
+  {id:'surrender',e:'🏳️',n:'Biết người biết ta',d:'đầu hàng popup hydra'},
+  {id:'writer',e:'✍️',n:'Nhà văn chim học',d:'ghi một dòng lưu bút'},
+  {id:'hunter',e:'🏹',n:'Thợ săn tập sự',d:'bắt con chim đầu tiên'},
+  {id:'aim',e:'🎯',n:'Thiện xạ',d:'một ván bắt ≥ 12 chim'},
+  {id:'memory',e:'🧠',n:'Trí nhớ chim',d:'simon gáy tới vòng 5'},
+  {id:'genius',e:'🎓',n:'Thiên tài gáy',d:'simon gáy tới vòng 8'},
+  {id:'lucky',e:'🎰',n:'Thần tài gõ cửa',d:'nổ jackpot quay số'},
+  {id:'parent',e:'🍼',n:'Bỉm sữa',d:'ấp nở quả trứng đầu tiên'},
+  {id:'collector',e:'🗃️',n:'Nhà sưu tầm',d:'sưu tầm đủ 6 loài chim'},
+  {id:'grown',e:'🦅',n:'Chim trưởng thành',d:'đạt cấp 4 trở lên'},
+  {id:'rich',e:'🌾',n:'Địa chủ',d:'tích luỹ được 100 hạt'}
+];
+let ACH = new Set(store.get('chimbe-ach', []));
+function toast(msg){
+  const t = document.createElement('div');
+  t.className = 'toast'; t.textContent = msg;
+  $('#toasts').appendChild(t);
+  setTimeout(() => { t.classList.add('bye'); setTimeout(() => t.remove(), 380); }, 3600);
+}
+function unlock(id){
+  if(ACH.has(id)) return;
+  ACH.add(id);
+  store.set('chimbe-ach', [...ACH]);
+  const a = ACHS.find(x => x.id === id);
+  if(a) toast('🏆 thành tựu mới: ' + a.e + ' ' + a.n + '!');
+  chirp(2500);
+}
+function renderAch(){
+  $('#achGrid').innerHTML = ACHS.map(a =>
+    '<div class="ach-item ' + (ACH.has(a.id) ? 'got' : 'locked') + '"><span class="ae">' + (ACH.has(a.id) ? a.e : '🔒') + '</span><span><b>' + a.n + '</b><small>' + a.d + '</small></span></div>'
+  ).join('');
+  $('#achCount').textContent = 'đã mở khoá ' + ACH.size + '/' + ACHS.length + ' — còn thiếu thì chơi tiếp đi 🐦';
+}
+$('#btnAch').addEventListener('click', () => { press(); renderAch(); $('#achOv').classList.add('show'); });
+$('#btnAchClose').addEventListener('click', () => $('#achOv').classList.remove('show'));
+$('#achOv').addEventListener('click', e => { if(e.target.id === 'achOv') $('#achOv').classList.remove('show'); });
+
+/* ================= audio ================= */
 let actx = null, soundOn = true;
 function chirp(base){
-  if(!soundOn) { setStat('gay', stats.gay + 1); return; }
+  if(!soundOn){ setStat('gay', stats.gay + 1); return; }
   try{
     actx = actx || new (window.AudioContext || window.webkitAudioContext)();
     if(actx.state === 'suspended') actx.resume();
@@ -604,8 +927,10 @@ function chirp(base){
     setStat('gay', stats.gay + 1);
   }catch(e){}
 }
+function syncSoundBtn(){ $('#btnSound').textContent = soundOn ? '🔊' : '🔇'; }
+$('#btnSound').addEventListener('click', () => { soundOn = !soundOn; syncSoundBtn(); if(soundOn) chirp(2000); });
 
-/* ================= bird SVG factory ================= */
+/* ================= birds ================= */
 function birdSVG(c){
   return '<svg viewBox="0 0 120 110" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">'
     + '<path d="M26 62 L7 51 L15 64 L5 74 L27 71 Z" fill="' + c.wing + '"/>'
@@ -621,11 +946,26 @@ function birdSVG(c){
     + '<circle cx="73" cy="63" r="4.2" fill="#ff9fc0" opacity=".5"/>'
     + '</svg>';
 }
-const MASCOT = { body:'#8ad8ff', wing:'#5f7bff', belly:'#e3f6ff', crest:'#d9f2ff' };
-$('#logoBird').innerHTML = '<span style="width:26px;display:block">' + birdSVG({body:'#0d1334',wing:'#0d1334',belly:'#0d1334',crest:'#0d1334'}) + '</span>';
-$('#mascotBird').innerHTML = birdSVG(MASCOT);
+const FLOCK = [
+  { ten:'Chim Băng',      trait:'lạnh như tiền, dễ thương như kem',        body:'#8ad8ff', wing:'#4f9fff', belly:'#ddf3ff', crest:'#c2ecff', pitch:1900 },
+  { ten:'Chim Tím',       trait:'mộng mơ, hay gáy lúc nửa đêm',            body:'#a78bfa', wing:'#7c5cff', belly:'#e6ddff', crest:'#cdbfff', pitch:1600 },
+  { ten:'Chim Xanh Đêm',  trait:'trầm tính nhưng quậy ngầm',               body:'#5b7cfa', wing:'#3d55d8', belly:'#cdd7ff', crest:'#8ea4ff', pitch:1400 },
+  { ten:'Chim Sương',     trait:'mỏng manh, cần được ôm',                  body:'#c7d6ff', wing:'#8fa6e8', belly:'#f2f6ff', crest:'#ffffff', pitch:2200 },
+  { ten:'Chim Chàm',      trait:'anh cả của bầy, giọng gáy rất trầm',      body:'#6d8dff', wing:'#4a63d0', belly:'#d8dfff', crest:'#9fb4ff', pitch:1100 },
+  { ten:'Chim Cực Quang', trait:'huyền thoại, 1000 năm mới gặp 1 lần',     body:'#9aa7ff', wing:'#5fe0ff', belly:'#e9f8ff', crest:'#baffff', pitch:2600 }
+];
+$('#logoBird').innerHTML = '<span style="width:24px;display:block">' + birdSVG({body:'#0d1334',wing:'#0d1334',belly:'#0d1334',crest:'#0d1334'}) + '</span>';
 
-/* ================= headline letters ================= */
+/* nest family */
+$('#nestParent').innerHTML = birdSVG({ body:'#8ad8ff', wing:'#5f7bff', belly:'#e3f6ff', crest:'#d9f2ff' });
+const CHICKS = [
+  { body:'#ffe9a8', wing:'#ffc95e', belly:'#fff7dd', crest:'#ffd98e' },
+  { body:'#bfe9ff', wing:'#7fc2ff', belly:'#eaf7ff', crest:'#d9f2ff' },
+  { body:'#dccfff', wing:'#a98bff', belly:'#f1ebff', crest:'#cbbfff' }
+];
+$$('.nest-chick').forEach((el, i) => { el.innerHTML = birdSVG(CHICKS[i]); });
+
+/* headline letters */
 (function(){
   const el = $('#headline'); let idx = 0;
   const build = node => {
@@ -649,8 +989,8 @@ $('#mascotBird').innerHTML = birdSVG(MASCOT);
   build(el);
 })();
 
-/* ================= tickers ================= */
-const tickText = '🐦 CHÀO MẤY THẰNG CHIM BÉ <i>✦</i> CHÍP CHÍP <i>✦</i> ẤN NÚT ĐI <i>✦</i> BẦY CHIM ĐANG CHỜ <i>✦</i> WEB 1 FILE HTML CHÍNH HÃNG <i>✦</i> LẠNH NHƯNG MÀ ẤM <i>✦</i> ';
+/* tickers */
+const tickText = '🐦 CHÀO MẤY THẰNG CHIM BÉ <i>✦</i> V2 CÓ MINIGAME RỒI <i>✦</i> ẤP TRỨNG SƯU TẦM CHIM <i>✦</i> KIẾM HẠT 🌾 ĐỂ NUÔI CHIM <i>✦</i> CHÍP CHÍP <i>✦</i> ẤN NÚT ĐI <i>✦</i> 1 FILE HTML CHÍNH HÃNG <i>✦</i> ';
 $('#tickTop').innerHTML = tickText.repeat(3) + tickText.repeat(3);
 $('#tickBot').innerHTML = tickText.repeat(3) + tickText.repeat(3);
 
@@ -658,20 +998,20 @@ $('#tickBot').innerHTML = tickText.repeat(3) + tickText.repeat(3);
 function goTab(id){
   $$('.tab').forEach(b => b.classList.toggle('active', b.dataset.tab === id));
   $$('.panel').forEach(p => p.classList.toggle('active', p.id === id));
+  window.scrollTo({ top: 0 });
 }
-$('#tabs').addEventListener('click', e => {
-  const b = e.target.closest('.tab');
-  if(b){ goTab(b.dataset.tab); press(); }
-});
+$('#tabs').addEventListener('click', e => { const b = e.target.closest('.tab'); if(b){ goTab(b.dataset.tab); press(); } });
+$('#footLinks').addEventListener('click', e => { const b = e.target.closest('[data-tab]'); if(b){ goTab(b.dataset.tab); press(); } });
 $('#logoHome').addEventListener('click', e => { e.preventDefault(); goTab('panel-home'); });
 document.addEventListener('keydown', e => {
   if(e.target.matches('input,textarea')) return;
-  const map = {'1':'panel-home','2':'panel-flock','3':'panel-buttons','4':'panel-book','5':'panel-troll'};
+  const map = {'1':'panel-home','2':'panel-flock','3':'panel-games','4':'panel-egg','5':'panel-buttons','6':'panel-book','7':'panel-troll'};
   if(map[e.key]) goTab(map[e.key]);
   if(e.key === 'c' || e.key === 'C') burst(innerWidth/2, innerHeight*.4, 90);
+  if(e.key === 'a' || e.key === 'A'){ renderAch(); $('#achOv').classList.add('show'); }
 });
 
-/* ================= canvas sky: stars + moon + birds + particles ================= */
+/* ================= canvas sky ================= */
 const cv = $('#sky'), cx = cv.getContext('2d');
 const fcv = $('#fx'), fx = fcv.getContext('2d');
 let W, H;
@@ -687,73 +1027,127 @@ function resize(){
 }
 resize(); addEventListener('resize', resize);
 
-const stars = Array.from({length: 110}, () => ({
-  x: Math.random(), y: Math.random(), r: .5 + Math.random() * 1.5,
-  ph: Math.random() * 6.28, sp: .5 + Math.random() * 1.6,
-  c: PALETTE[Math.floor(Math.random() * PALETTE.length)]
-}));
+const hx = h => [parseInt(h.slice(1,3),16), parseInt(h.slice(3,5),16), parseInt(h.slice(5,7),16)];
+const mix = (a, b, k) => a.map((v, i) => v + (b[i] - v) * k);
+const rgb = c => 'rgb(' + (c[0]|0) + ',' + (c[1]|0) + ',' + (c[2]|0) + ')';
+const SKYMODES = {
+  night:{ sky:['#070c26','#131a46','#241a52'], hillFar:'#10163d', hillNear:'#0b1030', star:1,    cloud:.10 },
+  dusk: { sky:['#1b1440','#4a2a6e','#a45f9e'], hillFar:'#241a4e', hillNear:'#170f38', star:.35,  cloud:.22 },
+  day:  { sky:['#6fb1e4','#a8d4f2','#e6f4ff'], hillFar:'#3f6ea6', hillNear:'#2c517d', star:0,    cloud:.85 }
+};
+let skyTarget = SKYMODES.night;
+let cur = { sky: SKYMODES.night.sky.map(hx), hillFar: hx(SKYMODES.night.hillFar), hillNear: hx(SKYMODES.night.hillNear), star:1, cloud:.10 };
+function lerpSky(){
+  const k = .035, t = skyTarget;
+  cur.sky = cur.sky.map((c, i) => mix(c, hx(t.sky[i]), k));
+  cur.hillFar = mix(cur.hillFar, hx(t.hillFar), k);
+  cur.hillNear = mix(cur.hillNear, hx(t.hillNear), k);
+  cur.star += (t.star - cur.star) * k;
+  cur.cloud += (t.cloud - cur.cloud) * k;
+}
+const stars = Array.from({length: 110}, () => ({ x: Math.random(), y: Math.random() * .72, r: .5 + Math.random() * 1.5, ph: Math.random() * 6.28, sp: .5 + Math.random() * 1.6, c: PALETTE[Math.floor(Math.random() * PALETTE.length)] }));
+const clouds = Array.from({length: 6}, () => ({ x: Math.random(), y: .08 + Math.random() * .34, s: .6 + Math.random() * 1.2, v: .00002 + Math.random() * .00004 }));
 const flyers = [], parts = [];
+const snowArr = [], rainArr = [];
+let weather = 'clear', mx = .5;
+addEventListener('pointermove', e => { mx = e.clientX / innerWidth; }, { passive: true });
 
 function spawnFlyer(force){
   if(RM) return;
   if(!force && flyers.length > 3) return;
   const dir = Math.random() < .5 ? 1 : -1;
-  flyers.push({
-    x: dir === 1 ? -30 : W + 30, y: H * (.08 + Math.random() * .4),
-    vx: dir * (1 + Math.random() * 1.4), s: .7 + Math.random() * .9,
-    ph: Math.random() * 6.28, fs: 6 + Math.random() * 4, a: .35 + Math.random() * .4
-  });
+  flyers.push({ x: dir === 1 ? -30 : W + 30, y: H * (.06 + Math.random() * .38), vx: dir * (1 + Math.random() * 1.4), s: .7 + Math.random() * .9, ph: Math.random() * 6.28, fs: 6 + Math.random() * 4, a: .3 + Math.random() * .4 });
 }
-setInterval(spawnFlyer, 3800); spawnFlyer();
+setInterval(spawnFlyer, 4200); spawnFlyer();
 
 function burst(x, y, n){
   if(RM) return;
   for(let i = 0; i < n; i++){
     const a = Math.random() * 6.28, v = 3 + Math.random() * 8;
-    parts.push({ t:'c', x, y, vx: Math.cos(a)*v, vy: Math.sin(a)*v - 3, g:.14,
-      rot: Math.random()*6.28, vr: (Math.random()-.5)*.4,
-      size: 4 + Math.random()*6, life: 70 + Math.random()*50, max: 120,
-      c: PALETTE[Math.floor(Math.random()*PALETTE.length)] });
+    parts.push({ t:'c', x, y, vx: Math.cos(a)*v, vy: Math.sin(a)*v - 3, g:.14, rot: Math.random()*6.28, vr: (Math.random()-.5)*.4, size: 4 + Math.random()*6, life: 70 + Math.random()*50, max: 120, c: PALETTE[Math.floor(Math.random()*PALETTE.length)] });
   }
 }
 function starfall(n){
   if(RM) return;
   for(let i = 0; i < n; i++){
-    parts.push({ t:'s', x: Math.random()*W, y: -10 - Math.random()*80,
-      vx: (Math.random()-.5)*.4, vy: .6 + Math.random()*1.6, g:.004,
-      rot: 0, vr: 0, size: 1 + Math.random()*2.4,
-      life: 220 + Math.random()*120, max: 340,
-      c: PALETTE[Math.floor(Math.random()*PALETTE.length)] });
+    parts.push({ t:'s', x: Math.random()*W, y: -10 - Math.random()*80, vx: (Math.random()-.5)*.4, vy: .6 + Math.random()*1.6, g:.004, rot: 0, vr: 0, size: 1 + Math.random()*2.4, life: 220 + Math.random()*120, max: 340, c: PALETTE[Math.floor(Math.random()*PALETTE.length)] });
   }
 }
-
+function hill(base, amp, f, ph, off, col){
+  cx.fillStyle = col;
+  cx.beginPath();
+  cx.moveTo(-20, H + 20);
+  for(let x = -20; x <= W + 20; x += 14){
+    const y = base + Math.sin(x * f + ph) * amp + Math.sin(x * f * 2.7 + ph * 1.7) * amp * .35;
+    cx.lineTo(x + off, y);
+  }
+  cx.lineTo(W + 20, H + 20);
+  cx.closePath();
+  cx.fill();
+}
 function loop(t){
-  cx.clearRect(0, 0, W, H);
-  /* moon */
-  const mx = W - 130, my = 120;
-  const mg = cx.createRadialGradient(mx, my, 8, mx, my, 110);
-  mg.addColorStop(0, 'rgba(224,238,255,0.35)');
-  mg.addColorStop(.4, 'rgba(190,210,255,0.10)');
-  mg.addColorStop(1, 'rgba(190,210,255,0)');
-  cx.fillStyle = mg; cx.beginPath(); cx.arc(mx, my, 110, 0, 6.28); cx.fill();
-  cx.fillStyle = '#e4eeff'; cx.beginPath(); cx.arc(mx, my, 38, 0, 6.28); cx.fill();
-  cx.fillStyle = 'rgba(170,192,235,0.45)';
-  cx.beginPath(); cx.arc(mx-12, my-8, 7, 0, 6.28); cx.fill();
-  cx.beginPath(); cx.arc(mx+10, my+12, 5, 0, 6.28); cx.fill();
-  cx.beginPath(); cx.arc(mx+14, my-14, 3.5, 0, 6.28); cx.fill();
+  lerpSky();
+  /* sky gradient */
+  const g = cx.createLinearGradient(0, 0, 0, H);
+  g.addColorStop(0, rgb(cur.sky[0])); g.addColorStop(.55, rgb(cur.sky[1])); g.addColorStop(1, rgb(cur.sky[2]));
+  cx.fillStyle = g; cx.fillRect(0, 0, W, H);
+  /* sun + moon */
+  const ox = W - 140 + (mx - .5) * -16, oy = 118;
+  if(cur.star < .98){
+    const sa = 1 - cur.star;
+    const sg = cx.createRadialGradient(ox, oy, 6, ox, oy, 120);
+    sg.addColorStop(0, 'rgba(255,246,214,' + (.5 * sa) + ')');
+    sg.addColorStop(1, 'rgba(255,246,214,0)');
+    cx.fillStyle = sg; cx.beginPath(); cx.arc(ox, oy, 120, 0, 6.28); cx.fill();
+    cx.globalAlpha = sa; cx.fillStyle = '#fff6d8';
+    cx.beginPath(); cx.arc(ox, oy, 34, 0, 6.28); cx.fill(); cx.globalAlpha = 1;
+  }
+  if(cur.star > .02){
+    const ma = cur.star;
+    const mg = cx.createRadialGradient(ox, oy, 8, ox, oy, 110);
+    mg.addColorStop(0, 'rgba(224,238,255,' + (.35 * ma) + ')');
+    mg.addColorStop(1, 'rgba(190,210,255,0)');
+    cx.fillStyle = mg; cx.beginPath(); cx.arc(ox, oy, 110, 0, 6.28); cx.fill();
+    cx.globalAlpha = ma; cx.fillStyle = '#e4eeff';
+    cx.beginPath(); cx.arc(ox, oy, 36, 0, 6.28); cx.fill();
+    cx.fillStyle = 'rgba(170,192,235,.45)';
+    cx.beginPath(); cx.arc(ox-12, oy-8, 7, 0, 6.28); cx.fill();
+    cx.beginPath(); cx.arc(ox+10, oy+12, 5, 0, 6.28); cx.fill();
+    cx.globalAlpha = 1;
+  }
   /* stars */
-  for(const s of stars){
-    const tw = RM ? .7 : .45 + .55 * Math.abs(Math.sin(t * .001 * s.sp + s.ph));
-    cx.globalAlpha = tw * .9;
-    cx.fillStyle = s.c;
-    cx.beginPath(); cx.arc(s.x * W, s.y * H, s.r, 0, 6.28); cx.fill();
+  if(cur.star > .02){
+    for(const s of stars){
+      const tw = RM ? .7 : .45 + .55 * Math.abs(Math.sin(t * .001 * s.sp + s.ph));
+      cx.globalAlpha = tw * .9 * cur.star;
+      cx.fillStyle = s.c;
+      cx.beginPath(); cx.arc(s.x * W, s.y * H, s.r, 0, 6.28); cx.fill();
+    }
+    cx.globalAlpha = 1;
+  }
+  /* clouds */
+  for(const c of clouds){
+    c.x += c.v * 16; if(c.x > 1.25) c.x = -.25;
+    const px = c.x * W + (mx - .5) * -22 * c.s, py = c.y * H;
+    cx.globalAlpha = cur.cloud;
+    cx.fillStyle = '#ffffff';
+    cx.beginPath();
+    cx.arc(px, py, 26 * c.s, 0, 6.28);
+    cx.arc(px + 26 * c.s, py + 6 * c.s, 20 * c.s, 0, 6.28);
+    cx.arc(px - 26 * c.s, py + 8 * c.s, 18 * c.s, 0, 6.28);
+    cx.arc(px + 6 * c.s, py - 12 * c.s, 17 * c.s, 0, 6.28);
+    cx.fill();
   }
   cx.globalAlpha = 1;
+  /* hills parallax */
+  hill(H * .82, 26, .006, 1.3, (mx - .5) * -18, rgb(cur.hillFar));
+  hill(H * .9, 30, .004, 4.1, (mx - .5) * -34, rgb(cur.hillNear));
   /* flying birds */
+  const birdCol = cur.star > .5 ? '210,226,255' : '20,40,80';
   for(let i = flyers.length - 1; i >= 0; i--){
     const f = flyers[i]; f.x += f.vx;
     const flap = Math.sin(t * .001 * f.fs * 6 + f.ph);
-    cx.strokeStyle = 'rgba(210,226,255,' + f.a + ')';
+    cx.strokeStyle = 'rgba(' + birdCol + ',' + f.a + ')';
     cx.lineWidth = 2 * f.s; cx.lineCap = 'round';
     cx.beginPath();
     cx.moveTo(f.x - 9*f.s, f.y - flap*5*f.s);
@@ -762,7 +1156,30 @@ function loop(t){
     cx.stroke();
     if(f.x < -50 || f.x > W + 50) flyers.splice(i, 1);
   }
-  /* particles — vẽ trên layer fx nổi */
+  /* weather */
+  if(weather === 'snow'){
+    if(snowArr.length < 130 && !RM) for(let i = 0; i < 2; i++) snowArr.push({ x: Math.random() * W, y: -8, v: .5 + Math.random() * 1.2, r: 1.2 + Math.random() * 2.4, ph: Math.random() * 6.28 });
+    cx.fillStyle = '#f2f8ff';
+    for(let i = snowArr.length - 1; i >= 0; i--){
+      const s = snowArr[i];
+      s.y += s.v; s.x += Math.sin(t * .001 + s.ph) * .5;
+      cx.globalAlpha = .8;
+      cx.beginPath(); cx.arc(s.x, s.y, s.r, 0, 6.28); cx.fill();
+      if(s.y > H + 10) snowArr.splice(i, 1);
+    }
+    cx.globalAlpha = 1;
+  } else snowArr.length = 0;
+  if(weather === 'rain'){
+    if(rainArr.length < 110 && !RM) for(let i = 0; i < 3; i++) rainArr.push({ x: Math.random() * W, y: -12, v: 9 + Math.random() * 7, l: 10 + Math.random() * 12 });
+    cx.strokeStyle = 'rgba(150,200,255,.5)'; cx.lineWidth = 1.4;
+    for(let i = rainArr.length - 1; i >= 0; i--){
+      const r = rainArr[i];
+      r.y += r.v; r.x += 1.4;
+      cx.beginPath(); cx.moveTo(r.x, r.y); cx.lineTo(r.x - 2.5, r.y - r.l); cx.stroke();
+      if(r.y > H + 14) rainArr.splice(i, 1);
+    }
+  } else rainArr.length = 0;
+  /* fx particles (layer trên) */
   fx.clearRect(0, 0, W, H);
   for(let i = parts.length - 1; i >= 0; i--){
     const p = parts[i];
@@ -794,23 +1211,51 @@ function loop(t){
 }
 requestAnimationFrame(loop);
 
-/* ================= speech bubble ================= */
-const PHRASES = ['chíp chíp~ 🐦','chào mấy thằng chim bé','đói hạt quá trời 🌾','ai đó ấn nút đi!','hôm nay trời lạnh ghê 🧊','gáy lên nào 🔊','bạn là khách thứ 1.000.000 (xạo)','đừng chọc tui nha 😤','tui biết bay đó, tin hông?'];
+/* sky + weather controls */
+$$('.ctl[data-sky]').forEach(b => b.addEventListener('click', () => {
+  press();
+  $$('.ctl[data-sky]').forEach(x => x.classList.toggle('on', x === b));
+  skyTarget = SKYMODES[b.dataset.sky];
+  chirp(1600);
+}));
+$$('.ctl[data-weather]').forEach(b => b.addEventListener('click', () => {
+  press();
+  const on = b.classList.contains('on');
+  $$('.ctl[data-weather]').forEach(x => x.classList.remove('on'));
+  weather = on ? 'clear' : b.dataset.weather;
+  if(!on) b.classList.add('on');
+  chirp(on ? 900 : 1300);
+  toast(weather === 'snow' ? '❄️ tuyết rơi rồi, lạnh ghê' : weather === 'rain' ? '🌧️ mưa rồi, chim ướt hết' : '☀️ trời quang mây tạnh');
+}));
+const WSEQ = [['clear','☀️'],['snow','❄️'],['rain','🌧️']];
+let wIdx = 0;
+$('#btnWeather').addEventListener('click', () => {
+  press();
+  wIdx = (wIdx + 1) % WSEQ.length;
+  weather = WSEQ[wIdx][0];
+  $('#btnWeather').textContent = WSEQ[wIdx][1];
+  $$('.ctl[data-weather]').forEach(x => x.classList.toggle('on', x.dataset.weather === weather));
+  chirp(1300);
+});
+
+/* ================= nest interactions ================= */
+const PHRASES = ['chíp chíp~ 🐦','chào mấy thằng chim bé','đói hạt quá trời 🌾','ai đó ấn nút đi!','hôm nay trời lạnh ghê 🧊','gáy lên nào 🔊','bạn là khách thứ 1.000.000 (xạo)','đừng chọc tui nha 😤','tui biết bay đó, tin hông?','tổ ấm nhưng tim lạnh ❄️'];
 let phIdx = 0;
 function say(txt){
-  const b = $('#bubble');
+  const b = $('#nestBubble');
   b.classList.add('swap');
   setTimeout(() => { b.textContent = txt; b.classList.remove('swap'); }, 240);
 }
 setInterval(() => { phIdx = (phIdx + 1) % PHRASES.length; say(PHRASES[phIdx]); }, 4200);
-$('#mascot').addEventListener('click', e => {
-  phIdx = (phIdx + 1) % PHRASES.length; say(PHRASES[phIdx]);
-  chirp(1700 + Math.random() * 700);
-  const m = $('#mascotBird');
-  m.classList.remove('flapping'); void m.offsetWidth; m.classList.add('flapping');
-  const r = $('#mascot').getBoundingClientRect();
-  burst(r.left + r.width/2, r.top + r.height/2, 24);
+$('#nestFamily').addEventListener('click', e => {
+  const bw = e.target.closest('.bird-wrap');
+  if(!bw) return;
   press();
+  chirp(+bw.dataset.pitch + Math.random() * 300);
+  bw.classList.remove('hop'); void bw.offsetWidth; bw.classList.add('hop');
+  phIdx = (phIdx + 1) % PHRASES.length; say(PHRASES[phIdx]);
+  const r = bw.getBoundingClientRect();
+  burst(r.left + r.width/2, r.top + r.height/3, 18);
 });
 
 /* ================= home buttons ================= */
@@ -821,12 +1266,12 @@ $('#btnAnVo').addEventListener('click', e => {
 });
 $('#btnGay').addEventListener('click', () => {
   press(); chirp(1200 + Math.random() * 1400);
-  const m = $('#mascotBird');
+  const m = $('#nestParent');
   m.classList.remove('flapping'); void m.offsetWidth; m.classList.add('flapping');
 });
 $('#btnBay').addEventListener('click', e => {
   press(); chirp(2400);
-  for(let i = 0; i < 4; i++) setTimeout(spawnFlyer, i * 250);
+  for(let i = 0; i < 4; i++) setTimeout(() => spawnFlyer(true), i * 250);
   burst(e.clientX, e.clientY - 40, 40);
   say('bầy ơi tập hợp!! 🕊️');
 });
@@ -836,25 +1281,23 @@ $('#btnDem').addEventListener('click', e => {
   burst(e.clientX, e.clientY, 14);
 });
 
-/* ================= flock ================= */
-const FLOCK = [
-  { ten:'Chim Băng',      trait:'lạnh như tiền, dễ thương như kem',        body:'#8ad8ff', wing:'#4f9fff', belly:'#ddf3ff', crest:'#c2ecff', pitch:1900 },
-  { ten:'Chim Tím',       trait:'mộng mơ, hay gáy lúc nửa đêm',            body:'#a78bfa', wing:'#7c5cff', belly:'#e6ddff', crest:'#cdbfff', pitch:1600 },
-  { ten:'Chim Xanh Đêm',  trait:'trầm tính nhưng quậy ngầm',               body:'#5b7cfa', wing:'#3d55d8', belly:'#cdd7ff', crest:'#8ea4ff', pitch:1400 },
-  { ten:'Chim Sương',     trait:'mỏng manh, cần được ôm',                  body:'#c7d6ff', wing:'#8fa6e8', belly:'#f2f6ff', crest:'#ffffff', pitch:2200 },
-  { ten:'Chim Chàm',      trait:'anh cả của bầy, giọng gáy rất trầm',      body:'#6d8dff', wing:'#4a63d0', belly:'#d8dfff', crest:'#9fb4ff', pitch:1100 },
-  { ten:'Chim Cực Quang', trait:'huyền thoại, 1000 năm mới gặp 1 lần',     body:'#9aa7ff', wing:'#5fe0ff', belly:'#e9f8ff', crest:'#baffff', pitch:2600 }
-];
-$('#flock').innerHTML = FLOCK.map((b, i) =>
-  '<article class="bird-card" style="--rot:' + (i % 2 ? 1.1 : -1.1) + 'deg">'
-  + '<div class="bird-wrap bob" style="animation-delay:' + (i * .35) + 's">' + birdSVG(b) + '</div>'
-  + '<h3>' + b.ten + '</h3>'
-  + '<p class="trait">“' + b.trait + '”</p>'
-  + '<div class="card-btns">'
-  + '<button class="btn btn-sm btn-primary" data-chip="' + i + '">chíp! 🔊</button>'
-  + '<button class="btn btn-sm btn-ghost" data-befriend="' + i + '">kết bạn</button>'
-  + '</div></article>'
-).join('');
+/* ================= collection + flock ================= */
+let coll = new Set(store.get('chimbe-coll', [0, 1]));
+function saveColl(){ store.set('chimbe-coll', [...coll]); }
+function renderFlock(){
+  $('#flock').innerHTML = FLOCK.map((b, i) =>
+    '<article class="bird-card reveal" style="--rot:' + (i % 2 ? 1.1 : -1.1) + 'deg">'
+    + '<span class="own-badge ' + (coll.has(i) ? 'yes' : 'no') + '">' + (coll.has(i) ? '✓ đã sở hữu' : '🔒 ấp trứng đi') + '</span>'
+    + '<div class="bird-wrap bob" style="animation-delay:' + (i * .35) + 's">' + birdSVG(b) + '</div>'
+    + '<h3>' + b.ten + '</h3>'
+    + '<p class="trait">“' + b.trait + '”</p>'
+    + '<div class="card-btns">'
+    + '<button class="btn btn-sm btn-primary" data-chip="' + i + '">chíp! 🔊</button>'
+    + '<button class="btn btn-sm btn-ghost" data-befriend="' + i + '">kết bạn</button>'
+    + '</div></article>'
+  ).join('');
+  observeReveals();
+}
 $('#flock').addEventListener('click', e => {
   const chip = e.target.closest('[data-chip]'), bf = e.target.closest('[data-befriend]');
   if(chip){
@@ -874,8 +1317,291 @@ $('#flock').addEventListener('click', e => {
     }
   }
 });
+function renderCollMini(){
+  $('#collMini').innerHTML = FLOCK.map((b, i) =>
+    '<span class="' + (coll.has(i) ? 'got' : 'miss') + '" title="' + b.ten + '">' + birdSVG(b) + '</span>'
+  ).join('');
+  $('#collCount').textContent = coll.size;
+}
 
-/* ================= button lab ================= */
+/* ================= scroll reveals ================= */
+let io = null;
+function observeReveals(){
+  io = io || new IntersectionObserver(es => es.forEach(en => { if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } }), { threshold: .12 });
+  $$('.reveal:not(.in)').forEach(el => io.observe(el));
+}
+
+/* ================= GAME: bắt chim ================= */
+const ccv = $('#catchCanvas'), ccx = ccv.getContext('2d');
+let catchBest = store.get('chimbe-catchbest', 0);
+$('#catchBest').textContent = catchBest;
+const CATCH_EMO = [['🐦',1],['🐤',1],['🕊️',2],['🐧',2],['🦅',3]];
+const catchState = { running:false, birds:[], score:0, time:30, spawnT:0 };
+function sizeCatch(){
+  const dpr = Math.min(devicePixelRatio || 1, 2);
+  ccv.width = ccv.clientWidth * dpr; ccv.height = ccv.clientHeight * dpr;
+  ccx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+addEventListener('resize', sizeCatch);
+function drawCatchHint(){
+  sizeCatch();
+  ccx.clearRect(0, 0, ccv.clientWidth, ccv.clientHeight);
+  ccx.fillStyle = 'rgba(159,176,221,.6)';
+  ccx.font = '700 15px "Be Vietnam Pro", sans-serif';
+  ccx.textAlign = 'center';
+  ccx.fillText('bấm "bắt đầu!" rồi click chim đang bay 🏹', ccv.clientWidth/2, ccv.clientHeight/2);
+}
+drawCatchHint();
+function catchFrame(){
+  if(!catchState.running) return;
+  const w = ccv.clientWidth, h = ccv.clientHeight;
+  catchState.spawnT--;
+  if(catchState.spawnT <= 0 && catchState.birds.length < 6){
+    catchState.spawnT = 34 + Math.random() * 30;
+    const pick = CATCH_EMO[Math.random() < .12 ? 4 : Math.floor(Math.random() * 4)];
+    const dir = Math.random() < .5 ? 1 : -1;
+    catchState.birds.push({ e: pick[0], v: pick[1], x: dir === 1 ? -24 : w + 24, y: 30 + Math.random() * (h - 70), vx: dir * (1.4 + Math.random() * 2.2), ph: Math.random() * 6.28, r: 19 });
+  }
+  ccx.clearRect(0, 0, w, h);
+  ccx.font = '28px "Segoe UI Emoji", "Apple Color Emoji", sans-serif';
+  ccx.textAlign = 'center'; ccx.textBaseline = 'middle';
+  for(let i = catchState.birds.length - 1; i >= 0; i--){
+    const b = catchState.birds[i];
+    b.x += b.vx; b.ph += .09;
+    const y = b.y + Math.sin(b.ph) * 9;
+    ccx.save();
+    ccx.translate(b.x, y);
+    if(b.vx > 0) ccx.scale(-1, 1);
+    ccx.fillText(b.e, 0, 0);
+    ccx.restore();
+    if(b.x < -40 || b.x > w + 40) catchState.birds.splice(i, 1);
+  }
+  requestAnimationFrame(catchFrame);
+}
+$('#btnCatch').addEventListener('click', () => {
+  if(catchState.running) return;
+  press(); chirp(1800);
+  sizeCatch();
+  catchState.running = true; catchState.birds = []; catchState.score = 0; catchState.time = 30; catchState.spawnT = 0;
+  $('#catchScore').textContent = 0; $('#catchTime').textContent = 30;
+  $('#btnCatch').setAttribute('disabled', '');
+  const timer = setInterval(() => {
+    catchState.time--;
+    $('#catchTime').textContent = catchState.time;
+    if(catchState.time <= 10) chirp(500 + catchState.time * 40);
+    if(catchState.time <= 0){
+      clearInterval(timer);
+      catchState.running = false;
+      $('#btnCatch').removeAttribute('disabled');
+      if(catchState.score > catchBest){ catchBest = catchState.score; store.set('chimbe-catchbest', catchBest); $('#catchBest').textContent = catchBest; }
+      toast('🏹 hết giờ! bắt được ' + catchState.score + ' chim — ' + (catchState.score >= 8 ? 'xịn đó!' : 'chơi lại đi cho giỏi 😌'));
+      chirp(catchState.score >= 8 ? 2400 : 900);
+      if(catchState.score >= 12) unlock('aim');
+      drawCatchHint();
+    }
+  }, 1000);
+  requestAnimationFrame(catchFrame);
+});
+ccv.addEventListener('pointerdown', e => {
+  if(!catchState.running) return;
+  const r = ccv.getBoundingClientRect();
+  const x = e.clientX - r.left, y = e.clientY - r.top;
+  for(let i = 0; i < catchState.birds.length; i++){
+    const b = catchState.birds[i];
+    const by = b.y + Math.sin(b.ph) * 9;
+    if(Math.hypot(b.x - x, by - y) < b.r + 8){
+      catchState.birds.splice(i, 1);
+      catchState.score += b.v;
+      $('#catchScore').textContent = catchState.score;
+      addSeeds(1); addXP(3);
+      if(!ACH.has('hunter')) unlock('hunter');
+      chirp(2200 + Math.random() * 600);
+      burst(e.clientX, e.clientY, 12);
+      return;
+    }
+  }
+});
+
+/* ================= GAME: simon ================= */
+const SIMON = [0, 1, 3, 5];
+let simonSeq = [], simonIdx = 0, simonLock = true, simonRound = 0;
+let simonBest = store.get('chimbe-simonbest', 0);
+$('#simonBest').textContent = simonBest;
+$('#simonPads').innerHTML = SIMON.map(fi =>
+  '<button class="simon-pad" data-fi="' + fi + '" type="button">' + birdSVG(FLOCK[fi]) + '<div class="sp-name">' + FLOCK[fi].ten + '</div></button>'
+).join('');
+async function simonShow(){
+  simonLock = true;
+  $('#simonMsg').textContent = '👀 nhìn kỹ nghe kỹ...';
+  await sleep(600);
+  for(const fi of simonSeq){
+    const pad = $('#simonPads').querySelector('[data-fi="' + fi + '"]');
+    pad.classList.add('lit');
+    chirp(FLOCK[fi].pitch);
+    await sleep(480);
+    pad.classList.remove('lit');
+    await sleep(170);
+  }
+  simonLock = false; simonIdx = 0;
+  $('#simonMsg').textContent = '🎤 tới lượt bạn gáy lại!';
+}
+function simonNext(){
+  simonRound++;
+  $('#simonRound').textContent = simonRound;
+  if(simonRound >= 5) unlock('memory');
+  if(simonRound >= 8) unlock('genius');
+  simonSeq.push(SIMON[Math.floor(Math.random() * 4)]);
+  simonShow();
+}
+$('#btnSimon').addEventListener('click', () => {
+  press(); chirp(1500);
+  simonSeq = []; simonRound = 0;
+  $('#simonRound').textContent = 0;
+  simonNext();
+});
+$('#simonPads').addEventListener('click', e => {
+  const pad = e.target.closest('.simon-pad');
+  if(!pad || simonLock || simonSeq.length === 0) return;
+  press();
+  const fi = +pad.dataset.fi;
+  pad.classList.add('lit');
+  chirp(FLOCK[fi].pitch);
+  setTimeout(() => pad.classList.remove('lit'), 260);
+  if(fi === simonSeq[simonIdx]){
+    simonIdx++;
+    if(simonIdx === simonSeq.length){
+      addSeeds(3); addXP(5);
+      $('#simonMsg').textContent = '✅ đúng rồi! +3 hạt. vòng tiếp...';
+      setTimeout(simonNext, 800);
+    }
+  } else {
+    simonLock = true;
+    if(simonRound > simonBest){ simonBest = simonRound; store.set('chimbe-simonbest', simonBest); $('#simonBest').textContent = simonBest; }
+    $('#simonMsg').textContent = '❌ sai bét! dừng ở vòng ' + simonRound + '. gáy lại từ đầu 😤';
+    chirp(500);
+    simonSeq = []; simonRound = 0;
+    $('#simonRound').textContent = 0;
+  }
+});
+
+/* ================= GAME: quay số ================= */
+const SLOT_EMO = ['🐦','🐣','🕊️','🦅','🥚','🌾'];
+const ITEM = 58, LOOPS = 3;
+const strips = $$('#slotRow .strip');
+strips.forEach(st => {
+  let html = '';
+  for(let i = 0; i < LOOPS * 6 + 6 + 2; i++) html += '<div class="slot-item">' + SLOT_EMO[i % 6] + '</div>';
+  st.innerHTML = html;
+  st.style.transform = 'translateY(' + (-(LOOPS * 6) * ITEM) + 'px)';
+});
+let spinBusy = false;
+$('#btnSpin').addEventListener('click', () => {
+  if(spinBusy) return;
+  if(seeds < 3){ toast('🌾 thiếu hạt! đi bắt chim hoặc chơi simon kiếm thêm đi'); chirp(600); return; }
+  spinBusy = true; press();
+  addSeeds(-3);
+  $('#slotMsg').textContent = '';
+  const r = Math.random();
+  let res;
+  if(r < .13){ const e = Math.floor(Math.random() * 6); res = [e, e, e]; }
+  else if(r < .42){
+    const e = Math.floor(Math.random() * 6);
+    let e2 = Math.floor(Math.random() * 6);
+    if(e2 === e) e2 = (e2 + 1) % 6;
+    const p = Math.floor(Math.random() * 3);
+    res = p === 0 ? [e, e, e2] : p === 1 ? [e, e2, e] : [e2, e, e];
+  }
+  else { res = [0,0,0].map(() => Math.floor(Math.random() * 6)); if(res[0] === res[1] && res[1] === res[2]) res[2] = (res[2] + 1) % 6; }
+  strips.forEach((st, i) => {
+    st.style.transition = 'none';
+    st.style.transform = 'translateY(0px)';
+    void st.offsetHeight;
+    const target = -((LOOPS * 6) + res[i]) * ITEM;
+    st.style.transition = 'transform ' + (1.15 + i * .38) + 's cubic-bezier(.12,.82,.22,1)';
+    st.style.transform = 'translateY(' + target + 'px)';
+    chirp(900 + i * 300);
+  });
+  setTimeout(() => {
+    spinBusy = false;
+    const [a, b, c] = res;
+    if(a === b && b === c){
+      addSeeds(30); addXP(10);
+      $('#slotMsg').textContent = '🎊 JACKPOT! 3 con ' + SLOT_EMO[a] + ' — +30 hạt!!';
+      chirp(2000); setTimeout(() => chirp(2600), 160);
+      const r2 = $('#slotRow').getBoundingClientRect();
+      burst(r2.left + r2.width/2, r2.top + r2.height/2, 110);
+      unlock('lucky');
+    } else if(a === b || b === c || a === c){
+      addSeeds(5); addXP(2);
+      $('#slotMsg').textContent = '✨ 2 con trùng! +5 hạt, suýt thì jackpot';
+      chirp(1900);
+    } else {
+      const lose = ['xui như chim gặp mưa 😭','3 con 3 ngả, không duyên nợ','nhà cái chim cảm ơn bạn 🌾','quay lại đi, lần này chắc trúng (xạo)'];
+      $('#slotMsg').textContent = '💨 ' + lose[Math.floor(Math.random() * lose.length)];
+      chirp(700);
+    }
+  }, 2400);
+});
+
+/* ================= EGG ================= */
+let eggTaps = 0, eggPaid = false, eggBusy = false;
+$('#eggSvg').addEventListener('click', () => {
+  if(!eggBusy && $('#btnEggReset').style.display !== 'inline-flex') $('#btnEgg').click();
+});
+$('#btnEgg').addEventListener('click', () => {
+  if(eggBusy) return;
+  if(!eggPaid){
+    if(seeds < 10){ toast('🌾 thiếu hạt! cần 10 hạt — đi sân chơi kiếm thêm đi'); chirp(600); return; }
+    addSeeds(-10); eggPaid = true;
+  }
+  press();
+  eggTaps++;
+  $('#eggTaps').textContent = eggTaps;
+  $('#eggBar').style.width = (eggTaps * 10) + '%';
+  const svg = $('#eggSvg');
+  svg.classList.remove('egg-shake'); void svg.offsetWidth; svg.classList.add('egg-shake');
+  chirp(500 + eggTaps * 90);
+  if(eggTaps >= 4) $('#eggWrap').classList.add('egg-stage-' + Math.min(3, Math.floor(eggTaps / 4) + (eggTaps % 4 ? 1 : 0)));
+  burst(innerWidth/2, innerHeight/2, 5);
+  if(eggTaps >= 10){
+    eggBusy = true;
+    $('#btnEgg').style.display = 'none';
+    setTimeout(() => {
+      const pick = Math.floor(Math.random() * 6);
+      $('#hatchBaby').innerHTML = birdSVG(FLOCK[pick]);
+      $('#eggWrap').classList.add('hatched');
+      chirp(2400); setTimeout(() => chirp(2900), 180);
+      const r = $('#eggWrap').getBoundingClientRect();
+      burst(r.left + r.width/2, r.top + r.height/2, 80);
+      unlock('parent'); addXP(8);
+      setTimeout(() => {
+        if(coll.has(pick)){
+          addSeeds(5);
+          $('#eggResult').textContent = '🐦 ' + FLOCK[pick].ten + '... nhưng bạn có rồi. bồi thường +5 🌾';
+        } else {
+          coll.add(pick); saveColl();
+          $('#eggResult').textContent = '🎉 ' + FLOCK[pick].ten + ' đã gia nhập bộ sưu tập!';
+          if(coll.size === 6) unlock('collector');
+        }
+        renderFlock(); renderCollMini();
+        $('#btnEggReset').style.display = 'inline-flex';
+        eggBusy = false;
+      }, 900);
+    }, 500);
+  }
+});
+$('#btnEggReset').addEventListener('click', () => {
+  press();
+  eggTaps = 0; eggPaid = false;
+  $('#eggTaps').textContent = 0;
+  $('#eggBar').style.width = '0';
+  $('#eggResult').textContent = '';
+  $('#eggWrap').classList.remove('hatched', 'egg-stage-1', 'egg-stage-2', 'egg-stage-3');
+  $('#btnEggReset').style.display = 'none';
+  $('#btnEgg').style.display = 'inline-flex';
+});
+
+/* ================= phòng nút ================= */
 $('#btnPhao').addEventListener('click', e => {
   press(); chirp(2100);
   burst(e.clientX, e.clientY, 110);
@@ -904,7 +1630,12 @@ $('#btnVibe').addEventListener('click', () => {
   $('#vibeName').textContent = t.name;
 });
 $('#btnSao').addEventListener('click', () => { press(); chirp(2800); starfall(70); });
-
+const FORTUNES = ['hôm nay bạn sẽ nhặt được 1 hạt... dưới gầm bàn 🌾','một con chim lạ sẽ gáy tên bạn lúc 3 giờ sáng','vận đỏ đang tới... nhưng kẹt xe, tới trễ','đừng tin con chim tím, nó xạo đó','hôm nay thích hợp để... nằm','sắp có người mời bạn ăn, nhưng bạn phải trả tiền','con số may mắn của bạn: 3 lông'];
+$('#btnFortune').addEventListener('click', () => {
+  press(); chirp(1750);
+  $('#fortuneMsg').textContent = '🔮 ' + FORTUNES[Math.floor(Math.random() * FORTUNES.length)];
+  starfall(14);
+});
 let dlBusy = false;
 $('#btnDl').addEventListener('click', () => {
   if(dlBusy) return;
@@ -929,11 +1660,7 @@ $('#btnCam').addEventListener('click', () => {
   document.body.classList.remove('shake'); void document.body.offsetWidth;
   document.body.classList.add('shake');
   alert('đã bảo đừng ấn mà 😤');
-});
-$('#btnAm').addEventListener('click', e => {
-  soundOn = !soundOn; press();
-  e.currentTarget.textContent = soundOn ? '🔊 đang bật' : '🔇 đang tắt';
-  if(soundOn) chirp(2000);
+  unlock('bad');
 });
 let vdCount = 0;
 const VD_MSG = ['không có gì đâu','đã bảo vô dụng rồi mà','lần thứ {n} rồi nha','thôi đi bạn ơi 🥲','bạn rảnh dữ vậy hả','ok ghi nhận sự kiên trì','vẫn không có gì, tin tui đi','chim cũng bó tay với bạn'];
@@ -943,28 +1670,19 @@ $('#btnVd').addEventListener('click', () => {
 });
 
 /* ================= guestbook ================= */
-const LS_KEY = 'chimbe-notes';
-const SEED = [
-  { ten:'Chim Khách',   text:'web nâng cấp xịn quá, nhớ cái nút "ấn vô" hồi xưa ghê 🥹', t: Date.now() - 5 * 3600e3, ci: 1, rot: -1.3 },
-  { ten:'Bé Tím',       text:'mấy cái nút trong phòng nút vui xỉu, cái tải chim là đỉnh =)))', t: Date.now() - 2 * 3600e3, ci: 4, rot: 1.1 },
+const SEED_NOTES = [
+  { ten:'Chim Khách',   text:'web v2 xịn quá, vừa bắt chim vừa ấp trứng, bỏ việc luôn rồi 🥹', t: Date.now() - 5 * 3600e3, ci: 1, rot: -1.3 },
+  { ten:'Bé Tím',       text:'slot machine ăn hết 40 hạt của tui, trả lại đây 😭', t: Date.now() - 2 * 3600e3, ci: 4, rot: 1.1 },
   { ten:'Chim Ẩn Danh', text:'chíp chíp chíp (dịch: chào cả nhà, cho mình làm quen nha)', t: Date.now() - 40 * 60e3, ci: 0, rot: -.6 }
 ];
-let notes = [];
-try{
-  const raw = localStorage.getItem(LS_KEY);
-  notes = raw ? JSON.parse(raw) : SEED.slice();
-}catch(e){ notes = SEED.slice(); }
-function saveNotes(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(notes)); }catch(e){} }
+let notes = store.get('chimbe-notes', null) || SEED_NOTES.slice();
 function fmtTime(t){
   const d = new Date(t);
   return d.toLocaleTimeString('vi-VN', {hour:'2-digit', minute:'2-digit'}) + ' · ' + d.toLocaleDateString('vi-VN');
 }
 function renderNotes(){
   const box = $('#notes');
-  if(!notes.length){
-    box.innerHTML = '<p style="color:var(--ink2);font-style:italic;padding:10px">sổ trống trơn... ghi gì đi chứ 🐦</p>';
-    return;
-  }
+  if(!notes.length){ box.innerHTML = '<p style="color:var(--ink2);font-style:italic;padding:10px">sổ trống trơn... ghi gì đi chứ 🐦</p>'; return; }
   box.innerHTML = notes.map((n, i) => {
     const c = FLOCK[(n.ci || 0) % FLOCK.length];
     return '<div class="note" style="--rot:' + (n.rot || 0) + 'deg">'
@@ -980,44 +1698,23 @@ $('#bookForm').addEventListener('submit', e => {
   const text = $('#fText').value.trim();
   if(!text) return;
   const ten = $('#fName').value.trim() || 'Chim Ẩn Danh';
-  notes.unshift({ ten, text, t: Date.now(), ci: Math.floor(Math.random() * FLOCK.length), rot: (Math.random() * 2.4 - 1.2).toFixed(2) * 1 });
-  saveNotes(); renderNotes();
+  notes.unshift({ ten, text, t: Date.now(), ci: Math.floor(Math.random() * FLOCK.length), rot: +(Math.random() * 2.4 - 1.2).toFixed(2) });
+  store.set('chimbe-notes', notes); renderNotes();
   $('#fText').value = '';
-  press(); chirp(2300);
-  const r = e.submitter ? e.submitter.getBoundingClientRect() : {left: innerWidth/2, top: innerHeight/2, width: 0};
-  burst(r.left + (r.width || 0)/2, r.top, 30);
+  press(); chirp(2300); unlock('writer');
+  burst(innerWidth/2, innerHeight/2, 30);
 });
 $('#notes').addEventListener('click', e => {
   const x = e.target.closest('[data-del]');
-  if(x){ notes.splice(+x.dataset.del, 1); saveNotes(); renderNotes(); press(); }
+  if(x){ notes.splice(+x.dataset.del, 1); store.set('chimbe-notes', notes); renderNotes(); press(); }
 });
 $('#btnXoaSo').addEventListener('click', () => {
   if(notes.length && confirm('xoá hết sổ lưu bút thiệt luôn hả? 🥺')){
-    notes = []; saveNotes(); renderNotes(); press(); chirp(800);
+    notes = []; store.set('chimbe-notes', notes); renderNotes(); press(); chirp(800);
   }
 });
 
-/* ================= online counter jitter ================= */
-let online = 128;
-setInterval(() => {
-  online = Math.max(97, Math.min(214, online + Math.floor(Math.random() * 7) - 3));
-  $('#online').textContent = online;
-}, 3500);
-
 /* ================= KHU TROLL ================= */
-const sleep = ms => new Promise(r => setTimeout(r, ms));
-const ACH = new Set();
-function toast(msg){
-  const t = document.createElement('div');
-  t.className = 'toast'; t.textContent = msg;
-  $('#toasts').appendChild(t);
-  setTimeout(() => { t.classList.add('bye'); setTimeout(() => t.remove(), 380); }, 3600);
-}
-function unlock(id, msg){ if(ACH.has(id)) return; ACH.add(id); toast(msg); chirp(2500); }
-$('#btnCam').addEventListener('click', () => unlock('bad', '💀 thành tựu: đứa không biết nghe lời'));
-$('#bookForm').addEventListener('submit', () => unlock('writer', '✍️ thành tựu: nhà văn chim học'));
-
-/* nút chạy trốn */
 const GOAL = 15;
 let runTries = 0, runCaught = false, runWon = false;
 const runBtn = $('#runBtn'), pg = $('#playground');
@@ -1033,7 +1730,7 @@ runBtn.addEventListener('click', () => {
   if(runCaught){
     if(!runWon){
       runWon = true;
-      unlock('fast', '⚡ thành tựu: nhanh hơn chim — ấn được nút chạy trốn!');
+      unlock('fast');
       const r = runBtn.getBoundingClientRect();
       burst(r.left + r.width/2, r.top + r.height/2, 90);
       chirp(2800);
@@ -1052,11 +1749,10 @@ runBtn.addEventListener('click', () => {
     runBtn.textContent = 'thôi được rồi, ấn đi 😮‍💨';
     runBtn.style.left = '50%'; runBtn.style.top = '50%';
     runBtn.style.transform = 'translate(-50%,-50%)';
-    $('#runCount').textContent = 'nó menyer... à nhầm, đầu hàng rồi. danh dự thuộc về bạn.';
+    $('#runCount').textContent = 'nó đầu hàng rồi. danh dự thuộc về bạn.';
   }
 });
 
-/* giả hack máy */
 const HACK_LINES = ['> kết nối tới máy nạn nhân... ✓','> vượt qua mật khẩu "123456"... dễ ẹc','> đọc trộm tin nhắn... toàn nói xấu tui hả?? 😤','> up lịch sử tìm kiếm lên group lớp...','> đổi wallpaper thành chim 4K...','> LỖI: máy bạn quá dễ thương để hack'];
 let hackBusy = false, hackAbort = false;
 $('#btnHack').addEventListener('click', async () => {
@@ -1077,17 +1773,13 @@ $('#btnHack').addEventListener('click', async () => {
   box.appendChild(j);
   chirp(2400);
   burst(innerWidth/2, innerHeight/2, 90);
-  unlock('hacked', '💻 thành tựu: hacker giả trân');
+  unlock('hacked');
   await sleep(1900);
   if(hackAbort) return;
   ov.classList.remove('show'); hackBusy = false;
 });
-$('#hackOv').addEventListener('click', () => {
-  hackAbort = true; hackBusy = false;
-  $('#hackOv').classList.remove('show');
-});
+$('#hackOv').addEventListener('click', () => { hackAbort = true; hackBusy = false; $('#hackOv').classList.remove('show'); });
 
-/* màn hình xanh CHIM_OS */
 let bsodBusy = false;
 $('#btnBsod').addEventListener('click', () => {
   if(bsodBusy) return;
@@ -1105,18 +1797,17 @@ $('#btnBsod').addEventListener('click', () => {
 });
 $('#btnRevive').addEventListener('click', () => {
   $('#bsodOv').classList.remove('show'); bsodBusy = false;
-  unlock('revive', '😇 thành tựu: chết đi sống lại');
+  unlock('revive');
   chirp(2000);
   burst(innerWidth/2, innerHeight/2, 70);
 });
 
-/* lật web + font kinh dị */
 $('#btnFlip').addEventListener('click', e => {
   press();
   const on = document.body.classList.toggle('flipped');
   e.currentTarget.textContent = on ? 'lật lại cho đàng hoàng 🙃' : 'lật!';
   chirp(on ? 700 : 1600);
-  if(on) unlock('flip', '🙃 thành tựu: nhìn đời theo hướng khác');
+  if(on) unlock('flip');
   toast(on ? '🙃 chúc bạn lộn đầu vui vẻ. ấn lại để hoàn hồn.' : '😮‍💨 hoàn hồn rồi, mọi thứ bình thường trở lại.');
 });
 $('#btnSilly').addEventListener('click', e => {
@@ -1127,7 +1818,6 @@ $('#btnSilly').addEventListener('click', e => {
   toast(on ? '🤡 comic sans đã nhập hồn trang web' : '😮‍💨 font chữ đã được siêu thoát');
 });
 
-/* popup hydra */
 const POP_MSGS = ['chào mấy thằng chim bé 🐦','bạn tưởng tắt được tui hả? 😏','tụi tui sinh sôi nhanh lắm','chíp chíp chíp chíp chíp','đầu hàng đi cho khoẻ','một con chim vừa lọt vào máy bạn','tắt tui đi, nếu bạn có thể','bọn tui không cắn đâu, mổ thôi'];
 function spawnPop(){
   const layer = $('#popLayer');
@@ -1141,21 +1831,17 @@ function spawnPop(){
   chirp(1500 + Math.random() * 900);
 }
 $('#popLayer').addEventListener('click', e => {
-  if(e.target.closest('.tpop-x')){
-    press();
-    e.target.closest('.tpop').remove();
-    spawnPop(); spawnPop();
-  } else if(e.target.closest('.tpop-surrender')){
+  if(e.target.closest('.tpop-x')){ press(); e.target.closest('.tpop').remove(); spawnPop(); spawnPop(); }
+  else if(e.target.closest('.tpop-surrender')){
     press();
     $('#popLayer').innerHTML = '';
-    unlock('surrender', '🏳️ thành tựu: biết người biết ta');
+    unlock('surrender');
     toast('🏳️ bạn đã đầu hàng bầy popup. quyết định khôn ngoan.');
     chirp(800);
   }
 });
 $('#btnHydra').addEventListener('click', () => { press(); spawnPop(); toast('💬 mẹo nhỏ: tắt 1 cái là nó nhân đôi đó nha'); });
 
-/* bão chim */
 $('#btnStorm').addEventListener('click', () => {
   press();
   toast('🌪️ BÃO CHIM ĐỔ BỘ — bám chắc vào!!');
@@ -1167,7 +1853,6 @@ $('#btnStorm').addEventListener('click', () => {
   [1200, 1500, 1800, 2200].forEach((f, i) => setTimeout(() => chirp(f), i * 140));
 });
 
-/* đếm ngược tự huỷ */
 let bombBusy = false;
 $('#btnBomb').addEventListener('click', () => {
   if(bombBusy) return;
@@ -1192,7 +1877,6 @@ $('#btnBomb').addEventListener('click', () => {
   }, 900);
 });
 
-/* copy lời chiêu mộ */
 $('#btnCopy').addEventListener('click', async () => {
   press(); chirp(2200);
   const msg = '🐦 CHIM BREAKING NEWS: bạn vừa được hội Chim Bé Club kết nạp làm thành viên chính thức. không có quyền từ chối. chíp chíp! 🕊️';
@@ -1200,11 +1884,10 @@ $('#btnCopy').addEventListener('click', async () => {
     await navigator.clipboard.writeText(msg);
     toast('📋 đã copy lời chiêu mộ — gửi cho nạn nhân kế tiếp đi!');
   }catch(err){
-    toast('😅 trình duyệt chặn copy rồi. tự gõ lại nha, hoặc ấn lại lần nữa.');
+    toast('😅 trình duyệt chặn copy rồi. tự gõ lại nha.');
   }
 });
 
-/* nút xịn nhất */
 let xinBusy = false;
 $('#btnXin').addEventListener('click', () => {
   if(xinBusy) return;
@@ -1223,13 +1906,11 @@ $('#btnXin').addEventListener('click', () => {
       btn.textContent = 'chờ thì chờ';
       chirp(1000);
       toast('✨ bạn vừa lãng phí 5 giây cuộc đời. đáng không?');
-      unlock('patient', '✨ thành tựu: kiên nhẫn vô nghĩa');
       setTimeout(() => { bar.style.width = '0'; msg.textContent = ''; xinBusy = false; }, 3200);
     }
   }, 130);
 });
 
-/* quà bí ẩn */
 let giftOpened = false;
 $('#btnGift').addEventListener('click', e => {
   press();
@@ -1244,7 +1925,6 @@ $('#btnGift').addEventListener('click', e => {
       const r = btn.getBoundingClientRect();
       burst(r.left + r.width/2, r.top, 50);
       chirp(2600);
-      unlock('gift', '🎁 thành tựu: người được chọn');
     }, 900);
   } else {
     $('#giftMsg').textContent = 'hết quà rồi, mỗi người 1 con thôi 😌';
@@ -1266,7 +1946,7 @@ function closeCookie(){
 $('#ckYes').addEventListener('click', closeCookie);
 $('#ckNo').addEventListener('click', closeCookie);
 
-/* tiêu đề tab kêu gào khi bỏ đi */
+/* tiêu đề tab kêu gào */
 const REAL_TITLE = document.title;
 document.addEventListener('visibilitychange', () => {
   if(document.hidden){
@@ -1277,7 +1957,7 @@ document.addEventListener('visibilitychange', () => {
   }
 });
 
-/* con trỏ chim + vệt lông rơi */
+/* vệt lông rơi theo con trỏ */
 let lastTrail = 0;
 addEventListener('pointermove', e => {
   const now = performance.now();
@@ -1285,6 +1965,23 @@ addEventListener('pointermove', e => {
   lastTrail = now;
   parts.push({ t:'f', x: e.clientX + (Math.random() - .5) * 12, y: e.clientY + (Math.random() - .5) * 12, vx: (Math.random() - .5) * .8, vy: .35 + Math.random() * .5, g: .014, rot: Math.random() * 6.28, vr: (Math.random() - .5) * .14, size: 2.6 + Math.random() * 3.4, life: 100, max: 100, c: PALETTE[Math.floor(Math.random() * PALETTE.length)] });
 });
+
+/* online jitter */
+let online = 128;
+setInterval(() => {
+  online = Math.max(97, Math.min(214, online + Math.floor(Math.random() * 7) - 3));
+  $('#online').textContent = online;
+}, 3500);
+
+/* ================= init ================= */
+renderSeeds(false);
+renderLevel();
+renderFlock();
+renderCollMini();
+renderAch();
+syncSoundBtn();
+observeReveals();
+setTimeout(() => { sizeCatch(); drawCatchHint(); }, 300);
 </script>
 </body>
 </html>
