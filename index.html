@@ -249,6 +249,16 @@ h1 .ch{display:inline-block;animation:chIn .65s cubic-bezier(.2,1.7,.4,1) both}
 .games-duo{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 #aimCanvas{width:100%;height:390px;display:block;border:2px dashed var(--line);border-radius:16px;background:rgba(8,12,40,.5);cursor:crosshair;touch-action:none}
 .aim-controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px}
+.aim-levels{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.aim-levels-label{font-size:.75rem;font-weight:800;color:var(--ink2)}
+.aim-level{border:1px solid var(--line);border-radius:999px;background:var(--panel2);color:var(--ink2);font:800 .75rem var(--body);padding:8px 12px}
+.aim-level.active{background:var(--acc1);border-color:var(--acc1);color:#081030}
+.aim-game:fullscreen{display:flex;flex-direction:column;width:100vw;height:100vh;height:100dvh;max-width:none;margin:0;padding:20px;background:var(--bg0);border:0;border-radius:0;overflow:auto}
+.aim-game:fullscreen #aimCanvas{flex:1 1 auto;height:auto;min-height:220px}
+.aim-game:fullscreen .aim-controls{flex:0 0 auto}
+.aim-game:fullscreen .aim-msg{flex:0 0 auto}
+@media (min-width:941px){#aimCanvas{height:clamp(520px,65vh,800px)}}
+@media (max-width:940px){#aimCanvas{height:clamp(420px,60vh,680px)}}
 .aim-help{color:var(--ink2);font-size:.8rem}
 .theme-settings{background:var(--panel);border:2px solid var(--line);border-radius:20px 20px 20px 7px;padding:22px;margin-bottom:22px}
 .theme-settings h3{font-family:var(--display);font-size:1rem;color:var(--ice);margin-bottom:6px}
@@ -418,7 +428,6 @@ body.silly *{font-family:'Comic Sans MS','Comic Sans','Chalkboard SE','Segoe Pri
   .book-grid{grid-template-columns:1fr}
   .book-form{position:static}
   .games-duo{grid-template-columns:1fr}
-  #aimCanvas{height:320px}
   .egg-grid{grid-template-columns:1fr}
   .tabs{order:3;width:100%}
   .mode-switch{order:4;margin-left:auto}
@@ -624,9 +633,9 @@ body.silly *{font-family:'Comic Sans MS','Comic Sans','Chalkboard SE','Segoe Pri
     <div class="sec-head reveal">
       <span class="kicker">khởi động phản xạ</span>
       <h2>phòng luyện aim shot</h2>
-      <p>ngắm vào tâm bia và bấm nhanh trong 30 giây. mỗi lần bắn trúng, bia xuất hiện ở một vị trí ngẫu nhiên mới — theo dõi điểm, số lần bắn và độ chính xác của bạn.</p>
+      <p>ngắm vào tâm bia và bấm nhanh trong 30 giây. chọn một trong bốn cấp độ — cấp càng cao, bia càng nhỏ. mỗi lần bắn trúng, bia xuất hiện ở một vị trí ngẫu nhiên mới.</p>
     </div>
-    <div class="game-panel reveal">
+    <div class="game-panel reveal aim-game" id="aimGame">
       <div class="gp-top">
         <div><h3>🎯 aim trainer</h3><div class="gp-sub">bia đứng yên; bắn trúng sẽ chuyển bia tới vị trí ngẫu nhiên mới</div></div>
         <div class="gp-score">
@@ -636,9 +645,17 @@ body.silly *{font-family:'Comic Sans MS','Comic Sans','Chalkboard SE','Segoe Pri
           <div class="gp-num"><b id="aimBest">0</b><span>kỷ lục</span></div>
         </div>
       </div>
+      <div class="aim-levels" role="group" aria-label="Chọn cấp độ luyện aim">
+        <span class="aim-levels-label">Cấp độ:</span>
+        <button class="aim-level" type="button" data-aim-level="easy" aria-pressed="false">Dễ</button>
+        <button class="aim-level active" type="button" data-aim-level="normal" aria-pressed="true">Thường</button>
+        <button class="aim-level" type="button" data-aim-level="hard" aria-pressed="false">Khó</button>
+        <button class="aim-level" type="button" data-aim-level="expert" aria-pressed="false">Chuyên gia</button>
+      </div>
       <canvas id="aimCanvas" aria-label="Khu vực luyện ngắm bắn"></canvas>
       <div class="aim-controls">
         <button class="btn btn-primary btn-md" id="btnAim">bắt đầu luyện 🎯</button>
+        <button class="btn btn-ghost btn-md" id="btnAimFullscreen" type="button" aria-label="Mở khu luyện aim toàn màn hình">⛶ Toàn màn hình</button>
         <span class="aim-help">Chuột hoặc chạm vào bia để bắn. Bắt đầu lại bất cứ lúc nào.</span>
       </div>
       <div class="aim-msg" id="aimMsg" role="status" aria-live="polite">Sẵn sàng chưa? Bấm bắt đầu để vào bài tập.</div>
@@ -1640,9 +1657,33 @@ ccv.addEventListener('pointerdown', e => {
 
 /* ================= GAME: aim shot ================= */
 const aimCanvas = $('#aimCanvas'), aimCtx = aimCanvas.getContext('2d');
+const AIM_LEVELS = {
+  easy:{ name:'Dễ', radius:36 },
+  normal:{ name:'Thường', radius:27 },
+  hard:{ name:'Khó', radius:20 },
+  expert:{ name:'Chuyên gia', radius:14 }
+};
+let aimLevel = 'normal';
 const aimState = { running:false, score:0, shots:0, hits:0, time:30, x:0, y:0 };
-let aimBest = storedCount('chimbe-aimbest');
+const aimBestKey = level => level === 'normal' ? 'chimbe-aimbest' : 'chimbe-aimbest-' + level;
+let aimBest = storedCount(aimBestKey(aimLevel));
 $('#aimBest').textContent = aimBest;
+function aimTargetRadius(){ return AIM_LEVELS[aimLevel].radius; }
+function setAimLevelsDisabled(disabled){
+  $$('[data-aim-level]').forEach(button => { button.disabled = disabled; });
+}
+$$('[data-aim-level]').forEach(button => button.addEventListener('click', () => {
+  if(aimState.running) return;
+  aimLevel = button.dataset.aimLevel;
+  aimBest = storedCount(aimBestKey(aimLevel));
+  $('#aimBest').textContent = aimBest;
+  $$('[data-aim-level]').forEach(levelButton => {
+    const selected = levelButton === button;
+    levelButton.classList.toggle('active', selected);
+    levelButton.setAttribute('aria-pressed', String(selected));
+  });
+  if($('#panel-aim').classList.contains('active')) drawAimIdle();
+}));
 function sizeAim(){
   const dpr = Math.min(devicePixelRatio || 1, 2);
   aimCanvas.width = aimCanvas.clientWidth * dpr;
@@ -1658,21 +1699,22 @@ function drawAimIdle(){
   aimCtx.font = '700 15px "Be Vietnam Pro", sans-serif';
   aimCtx.textAlign = 'center';
   aimCtx.textBaseline = 'middle';
-  aimCtx.fillText('bấm "bắt đầu luyện" để hiện mục tiêu 🎯', w/2, h/2);
+  aimCtx.fillText('Cấp ' + AIM_LEVELS[aimLevel].name + ' · bấm "bắt đầu luyện" để hiện mục tiêu 🎯', w/2, h/2);
 }
 function renderAim(){
   const w = aimCanvas.clientWidth, h = aimCanvas.clientHeight;
+  const radius = aimTargetRadius();
   aimCtx.clearRect(0, 0, w, h);
   aimCtx.save();
   aimCtx.translate(aimState.x, aimState.y);
   aimCtx.fillStyle = '#f05b6f';
-  aimCtx.beginPath(); aimCtx.arc(0, 0, 27, 0, Math.PI * 2); aimCtx.fill();
+  aimCtx.beginPath(); aimCtx.arc(0, 0, radius, 0, Math.PI * 2); aimCtx.fill();
   aimCtx.fillStyle = '#fff';
-  aimCtx.beginPath(); aimCtx.arc(0, 0, 19, 0, Math.PI * 2); aimCtx.fill();
+  aimCtx.beginPath(); aimCtx.arc(0, 0, radius * .7, 0, Math.PI * 2); aimCtx.fill();
   aimCtx.fillStyle = '#f05b6f';
-  aimCtx.beginPath(); aimCtx.arc(0, 0, 11, 0, Math.PI * 2); aimCtx.fill();
+  aimCtx.beginPath(); aimCtx.arc(0, 0, radius * .4, 0, Math.PI * 2); aimCtx.fill();
   aimCtx.fillStyle = '#fff';
-  aimCtx.beginPath(); aimCtx.arc(0, 0, 4, 0, Math.PI * 2); aimCtx.fill();
+  aimCtx.beginPath(); aimCtx.arc(0, 0, Math.min(4, radius * .15), 0, Math.PI * 2); aimCtx.fill();
   aimCtx.restore();
 }
 function updateAimStats(){
@@ -1681,20 +1723,22 @@ function updateAimStats(){
 }
 function relocateAimTarget(){
   const w = aimCanvas.clientWidth, h = aimCanvas.clientHeight;
+  const radius = aimTargetRadius();
   const previousX = aimState.x, previousY = aimState.y;
   for(let attempt = 0; attempt < 20; attempt++){
-    aimState.x = 28 + Math.random() * Math.max(0, w - 56);
-    aimState.y = 28 + Math.random() * Math.max(0, h - 56);
-    if(Math.hypot(aimState.x - previousX, aimState.y - previousY) >= 150) break;
+    aimState.x = radius + Math.random() * Math.max(0, w - radius * 2);
+    aimState.y = radius + Math.random() * Math.max(0, h - radius * 2);
+    if(Math.hypot(aimState.x - previousX, aimState.y - previousY) >= Math.max(60, radius * 4)) break;
   }
   renderAim();
 }
 function finishAim(){
   aimState.running = false;
   $('#btnAim').removeAttribute('disabled');
+  setAimLevelsDisabled(false);
   if(aimState.score > aimBest){
     aimBest = aimState.score;
-    store.set('chimbe-aimbest', aimBest);
+    store.set(aimBestKey(aimLevel), aimBest);
     $('#aimBest').textContent = aimBest;
   }
   $('#aimMsg').textContent = 'Hết giờ! ' + aimState.hits + '/' + aimState.shots + ' phát trúng · độ chính xác ' + $('#aimAccuracy').textContent + '. Luyện thêm nhé!';
@@ -1711,6 +1755,7 @@ $('#btnAim').addEventListener('click', () => {
   $('#aimMsg').textContent = 'Bắt đầu! Bắn trúng bia để bia xuất hiện ở vị trí mới.';
   updateAimStats();
   $('#btnAim').setAttribute('disabled', '');
+  setAimLevelsDisabled(true);
   relocateAimTarget();
   const timer = setInterval(() => {
     if(!aimState.running){ clearInterval(timer); return; }
@@ -1724,7 +1769,7 @@ aimCanvas.addEventListener('pointerdown', e => {
   const r = aimCanvas.getBoundingClientRect();
   const x = e.clientX - r.left, y = e.clientY - r.top;
   aimState.shots++;
-  if(Math.hypot(x - aimState.x, y - aimState.y) <= 27){
+  if(Math.hypot(x - aimState.x, y - aimState.y) <= aimTargetRadius()){
     aimState.hits++;
     aimState.score += 10;
     relocateAimTarget();
@@ -1734,6 +1779,27 @@ aimCanvas.addEventListener('pointerdown', e => {
     chirp(650);
   }
   updateAimStats();
+});
+$('#btnAimFullscreen').addEventListener('click', async () => {
+  const game = $('#aimGame');
+  try{
+    if(document.fullscreenElement === game) await document.exitFullscreen();
+    else if(game.requestFullscreen) await game.requestFullscreen();
+    else $('#aimMsg').textContent = 'Trình duyệt này chưa hỗ trợ chế độ toàn màn hình.';
+  }catch(error){
+    $('#aimMsg').textContent = 'Không thể mở toàn màn hình. Hãy thử lại hoặc kiểm tra quyền của trình duyệt.';
+  }
+});
+document.addEventListener('fullscreenchange', () => {
+  const isFullscreen = document.fullscreenElement === $('#aimGame');
+  $('#btnAimFullscreen').textContent = isFullscreen ? '⤢ Thoát toàn màn hình' : '⛶ Toàn màn hình';
+  $('#btnAimFullscreen').setAttribute('aria-label', isFullscreen ? 'Thoát chế độ toàn màn hình' : 'Mở khu luyện aim toàn màn hình');
+  if($('#panel-aim').classList.contains('active')){
+    requestAnimationFrame(() => {
+      if(aimState.running){ sizeAim(); relocateAimTarget(); }
+      else drawAimIdle();
+    });
+  }
 });
 addEventListener('resize', () => {
   if(aimState.running){ sizeAim(); relocateAimTarget(); }
