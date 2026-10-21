@@ -38,7 +38,7 @@ body{cursor:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' widt
 
 /* ============ TICKER ============ */
 .ticker{overflow:hidden;white-space:nowrap;border-bottom:1px solid var(--line);background:rgba(10,15,44,.85);position:relative;z-index:5}
-.ticker .track{display:inline-block;padding:7px 0;font-weight:800;font-size:.76rem;letter-spacing:.18em;color:var(--acc1);animation:marq 28s linear infinite}
+.ticker .track{display:inline-block;padding:7px 0;font-weight:800;font-size:.76rem;letter-spacing:.18em;color:var(--acc1);animation:marq 56s linear infinite}
 .ticker.rev .track{animation-direction:reverse;color:var(--acc2)}
 .ticker .track i{font-style:normal;color:var(--ice);opacity:.85;margin:0 14px}
 @keyframes marq{to{transform:translateX(-50%)}}
@@ -225,7 +225,21 @@ h1 .ch{display:inline-block;animation:chIn .65s cubic-bezier(.2,1.7,.4,1) both}
 .rar-badge{position:absolute;top:12px;right:12px;font-size:.6rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:999px;border:1.5px solid;background:rgba(8,12,40,.55)}
 .bird-card.epic{border-color:rgba(185,166,255,.5)}
 .bird-card.legendary{border-color:rgba(255,212,59,.6)}
+.bird-card.ancestor{border-color:rgba(255,138,216,.72);box-shadow:0 0 24px rgba(255,138,216,.12)}
+#panel-flock:not(.active) .bird-card .bird-wrap,
+#panel-flock:not(.active) .bird-card .wing,
+#panel-flock:not(.active) .bird-card .eye,
+#panel-flock:not(.active) .bird-card.legendary::after{animation-play-state:paused}
 .bird-card.legendary::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;animation:legendGlow 2.4s ease-in-out infinite}
+.upgrade-stock{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px;padding:14px;background:var(--panel);border:1px solid var(--line);border-radius:16px}
+.upgrade-stock strong{width:100%;font-size:.82rem;color:var(--ice)}
+.upgrade-stock .upgrade-note{width:100%;margin:0;color:var(--acc1);font-size:.78rem;font-weight:700;line-height:1.55}
+.upgrade-stock span{font-size:.75rem;font-weight:800;color:var(--ink2);background:var(--panel2);border:1px solid var(--line);border-radius:99px;padding:6px 10px}
+.bird-upgrade{position:relative;z-index:1;margin-top:14px;padding-top:12px;border-top:1px solid var(--line);text-align:left}
+.bird-upgrade p{min-height:0;margin:0 0 8px;font-size:.72rem;line-height:1.45;color:var(--ink2)}
+.bird-upgrade .btn{width:100%;justify-content:center;font-size:.72rem;padding:9px 10px}
+.bird-upgrade small{display:block;margin-top:6px;color:var(--ink2);font-size:.67rem}
+.bird-card.ancestor .rar-badge{color:#ff8ad8!important;border-color:#ff8ad8!important}
 @keyframes legendGlow{
   0%,100%{box-shadow:inset 0 0 18px rgba(255,212,59,.14)}
   50%{box-shadow:inset 0 0 42px rgba(255,180,60,.34),0 0 24px rgba(255,150,60,.22)}
@@ -287,6 +301,16 @@ h1 .ch{display:inline-block;animation:chIn .65s cubic-bezier(.2,1.7,.4,1) both}
 
 /* ============ EGG ============ */
 .egg-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}
+.farm-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:16px 0}
+.farm-stat{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:14px}
+.farm-stat span{display:block;color:var(--ink2);font-size:.7rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.farm-stat b{display:block;color:var(--acc1);font-family:var(--display);font-size:1.15rem;margin-top:4px}
+.farm-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:16px}
+.farm-controls label{color:var(--ink2);font-size:.8rem;font-weight:800}
+.farm-controls select{max-width:100%;background:var(--panel2);border:2px solid var(--line);border-radius:10px;color:var(--ink);font:700 .85rem var(--body);padding:10px 12px}
+.farm-progress{height:12px;background:var(--panel2);border:1px solid var(--line);border-radius:999px;overflow:hidden;margin:12px 0}
+.farm-progress i{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--acc1),var(--acc2))}
+.farm-msg{min-height:24px;color:var(--acc1);font-size:.85rem;font-weight:800;margin-top:10px}
 .egg-zone{position:relative;display:grid;place-items:center;padding:20px 0}
 .egg-svg{width:min(240px,64vw);cursor:pointer;transition:filter .3s;filter:drop-shadow(0 16px 26px rgba(5,9,35,.55))}
 .egg-svg:hover{filter:drop-shadow(0 20px 34px rgba(84,192,255,.35))}
@@ -351,6 +375,7 @@ h1 .ch{display:inline-block;animation:chIn .65s cubic-bezier(.2,1.7,.4,1) both}
 .note-x{position:absolute;top:10px;right:12px;border:0;background:transparent;color:var(--ink2);font-size:.85rem;opacity:0;transition:opacity .2s,color .2s,transform .2s}
 .note:hover .note-x{opacity:1}
 .note-x:hover{color:#ff8fa3;transform:scale(1.25)}
+@media (hover:none){.note-x{opacity:1}}
 .book-actions{display:flex;justify-content:flex-end;margin-top:4px}
 
 /* ============ FOOTER ============ */
@@ -469,6 +494,7 @@ body.silly *{font-family:'Comic Sans MS','Comic Sans','Chalkboard SE','Segoe Pri
       <button class="tab" data-tab="panel-games">🎮 sân chơi</button>
       <button class="tab" data-tab="panel-aim">🎯 luyện aim</button>
       <button class="tab" data-tab="panel-egg">🥚 ấp trứng</button>
+      <button class="tab" data-tab="panel-farm">🌾 nông trại</button>
       <button class="tab" data-tab="panel-buttons">🎛️ phòng nút</button>
       <button class="tab" data-tab="panel-book">📖 lưu bút</button>
       <button class="tab" data-tab="panel-troll">🃏 troll</button>
@@ -503,7 +529,7 @@ body.silly *{font-family:'Comic Sans MS','Comic Sans','Chalkboard SE','Segoe Pri
         <h1 class="display" id="headline">chào mấy thằng <span class="hl">chim bé</span></h1>
         <div class="chips">
           <span class="chip">🎮 3 minigame</span>
-          <span class="chip">🥚 sưu tầm 16 loài chim</span>
+          <span class="chip">🥚 sưu tầm 32 loài chim</span>
           <span class="chip">🌦️ thời tiết thật ảo</span>
           <span class="chip">🏆 18 thành tựu</span>
           <span class="chip">🃏 khu troll nâng cấp</span>
@@ -562,14 +588,23 @@ body.silly *{font-family:'Comic Sans MS','Comic Sans','Chalkboard SE','Segoe Pri
     <div class="sec-head reveal">
       <span class="kicker">đội hình ra sân</span>
       <h2>bầy chim của club</h2>
-      <p>16 loài, 4 bậc hiếm — từ chim se sẻ bình dân tới phượng hoàng lửa huyền thoại 🔥. chọc cho nó gáy, kết bạn, rồi ấp trứng ở tab 🥚 cho đủ bộ.</p>
+      <p>32 loài, 5 cấp chim — ấp trứng trùng để nhận thẻ nguyên liệu, dùng hạt và thẻ nâng chim. Chim thường tối đa Sử thi; chỉ chim Huyền thoại mới lên được Tổ tông.</p>
+    </div>
+    <div class="upgrade-stock" id="upgradeStock" aria-live="polite">
+      <strong>🃏 Thẻ nguyên liệu nâng cấp (nhận khi nở chim trùng)</strong>
+      <p class="upgrade-note">🌸 Muốn lên Tổ tông: chỉ chim đã đạt bậc Huyền thoại mới có nút “Nâng lên Tổ tông” ngay trên thẻ chim đó. Bấm nút ấy để thử nâng cấp; tỉ lệ thành công 50%.</p>
+      <span>Thường: <b data-card-count="common">0</b></span>
+      <span>Hiếm: <b data-card-count="rare">0</b></span>
+      <span>Sử thi: <b data-card-count="epic">0</b></span>
+      <span>Huyền thoại: <b data-card-count="legendary">0</b></span>
     </div>
     <div class="sky-ctrl" id="flockFilter" style="margin-top:0;margin-bottom:22px">
-      <button class="ctl on" data-f="all">tất cả (16)</button>
+      <button class="ctl on" data-f="all">tất cả (32)</button>
       <button class="ctl" data-f="common">⚪ thường</button>
       <button class="ctl" data-f="rare">🔵 hiếm</button>
       <button class="ctl" data-f="epic">🟣 sử thi</button>
       <button class="ctl" data-f="legendary">🟡 huyền thoại</button>
+      <button class="ctl" data-f="ancestor">🌸 tổ tông</button>
     </div>
     <div class="flock" id="flock"></div>
   </section>
@@ -667,7 +702,7 @@ body.silly *{font-family:'Comic Sans MS','Comic Sans','Chalkboard SE','Segoe Pri
     <div class="sec-head reveal">
       <span class="kicker">bỉm sữa chim học</span>
       <h2>lò ấp trứng</h2>
-      <p>bỏ 10 hạt 🌾, gõ 10 cái cho trứng nứt, rồi đón một bé chim ngẫu nhiên về bộ sưu tập. trùng thì được bồi thường 5 hạt.</p>
+      <p>bỏ 10 hạt 🌾, gõ 10 cái cho trứng nứt, rồi đón một bé chim ngẫu nhiên về bộ sưu tập. trùng nhận hạt bồi thường và 1 thẻ nguyên liệu theo bậc hiếm.</p>
     </div>
     <div class="game-panel reveal">
       <div class="egg-grid">
@@ -690,8 +725,8 @@ body.silly *{font-family:'Comic Sans MS','Comic Sans','Chalkboard SE','Segoe Pri
           </div>
         </div>
         <div class="egg-info">
-          <h3>🐣 bộ sưu tập: <span id="collCount">0</span>/16</h3>
-          <p>16 loài chim, 4 bậc hiếm. có thể ra chim se sẻ bình dân, cũng có thể ra <b style="color:#ffd43b">phượng hoàng lửa</b> huyền thoại — tỉ lệ 6%. đời mà, cứ gõ đi.</p>
+          <h3>🐣 bộ sưu tập: <span id="collCount">0</span>/32</h3>
+          <p>32 loài chim, 4 bậc hiếm. có thể ra chim se sẻ bình dân, cũng có thể ra <b style="color:#ffd43b">phượng hoàng lửa</b> huyền thoại — tỉ lệ 6%. đời mà, cứ gõ đi.</p>
           <div class="drop-table">
             <span class="dt-row"><i style="background:#9fb0dd"></i>thường 55%</span>
             <span class="dt-row"><i style="background:#54c0ff"></i>hiếm 27%</span>
@@ -709,7 +744,36 @@ body.silly *{font-family:'Comic Sans MS','Comic Sans','Chalkboard SE','Segoe Pri
     </div>
   </section>
 
-  <!-- ============ TAB 5: PHÒNG NÚT ============ -->
+  <!-- ============ TAB: NÔNG TRẠI ============ -->
+  <section class="panel" id="panel-farm">
+    <div class="sec-head reveal">
+      <span class="kicker">chim siêng năng, hạt đầy kho</span>
+      <h2>nông trại chim</h2>
+      <p>Chọn một chim bạn đã sưu tầm và bắt đầu chuyến farm. Chim tiếp tục làm việc khi bạn rời trang; sản lượng offline được giới hạn tối đa 8 giờ.</p>
+    </div>
+    <div class="game-panel reveal">
+      <div class="gp-top">
+        <div><h3>🌾 chuyến farm</h3><div class="gp-sub">chim hiếm hơn có năng suất hạt mỗi giờ cao hơn</div></div>
+        <div class="gp-score"><div class="gp-num"><b id="farmSeeds">0</b><span>hạt chờ nhận</span></div></div>
+      </div>
+      <div class="farm-controls">
+        <label for="farmBird">Chim đi farm:</label>
+        <select id="farmBird" aria-label="Chọn chim đi farm"></select>
+        <button class="btn btn-primary btn-md" id="btnFarmStart" type="button">bắt đầu chuyến farm</button>
+        <button class="btn btn-violet btn-md" id="btnFarmClaim" type="button" disabled>nhận hạt 🌾</button>
+      </div>
+      <div class="farm-summary">
+        <div class="farm-stat"><span>Chim đang đi farm</span><b id="farmBirdName">Chưa chọn</b></div>
+        <div class="farm-stat"><span>Bậc hiếm</span><b id="farmRarity">—</b></div>
+        <div class="farm-stat"><span>Năng suất</span><b id="farmRate">—</b></div>
+        <div class="farm-stat"><span>Thời gian tích lũy</span><b id="farmTime">0 phút</b></div>
+      </div>
+      <div class="farm-progress" role="progressbar" aria-label="Tiến độ chuyến farm" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="farmBar"></i></div>
+      <div class="farm-msg" id="farmMsg" role="status" aria-live="polite">Chọn chim rồi bắt đầu chuyến farm để tích lũy hạt.</div>
+    </div>
+  </section>
+
+  <!-- ============ TAB PHÒNG NÚT ============ -->
   <section class="panel" id="panel-buttons">
     <div class="sec-head reveal">
       <span class="kicker">yêu cầu đã được lắng nghe</span>
@@ -882,11 +946,12 @@ body.silly *{font-family:'Comic Sans MS','Comic Sans','Chalkboard SE','Segoe Pri
     <button class="ctl" data-tab="panel-games">🎮 chơi</button>
     <button class="ctl" data-tab="panel-aim">🎯 aim</button>
     <button class="ctl" data-tab="panel-egg">🥚 ấp</button>
+    <button class="ctl" data-tab="panel-farm">🌾 farm</button>
     <button class="ctl" data-tab="panel-buttons">🎛️ nút</button>
     <button class="ctl" data-tab="panel-book">📖 sổ</button>
     <button class="ctl" data-tab="panel-troll">🃏 troll</button>
   </div>
-  <p class="foot-line">© 2026 <b>Chim Bé Club v2</b> · 1 file html duy nhất · không framework, chỉ có chim 🐦 · phím <span class="kbd">1</span>–<span class="kbd">8</span> chuyển tab · <span class="kbd">C</span> bắn pháo · <span class="kbd">A</span> thành tựu</p>
+  <p class="foot-line">© 2026 <b>Chim Bé Club v2</b> · 1 file html duy nhất · không framework, chỉ có chim 🐦 · phím <span class="kbd">1</span>–<span class="kbd">9</span> chuyển tab · <span class="kbd">C</span> bắn pháo · <span class="kbd">A</span> thành tựu</p>
 </footer>
 </div><!-- /appWrap -->
 
@@ -1057,7 +1122,7 @@ const ACHS = [
   {id:'genius',e:'🎓',n:'Thiên tài gáy',d:'simon gáy tới vòng 8'},
   {id:'lucky',e:'🎰',n:'Thần tài gõ cửa',d:'nổ jackpot quay số'},
   {id:'parent',e:'🍼',n:'Bỉm sữa',d:'ấp nở quả trứng đầu tiên'},
-  {id:'collector',e:'🗃️',n:'Nhà sưu tầm',d:'sưu tầm đủ 16 loài chim'},
+  {id:'collector',e:'🗃️',n:'Nhà sưu tầm',d:'sưu tầm đủ 32 loài chim'},
   {id:'legend',e:'🔥',n:'Sứ giả huyền thoại',d:'ấp nở một chú chim bậc huyền thoại'},
   {id:'grown',e:'🦅',n:'Chim trưởng thành',d:'đạt cấp 4 trở lên'},
   {id:'rich',e:'🌾',n:'Địa chủ',d:'tích luỹ được 100 hạt'}
@@ -1154,17 +1219,35 @@ const FLOCK = [
   { ten:'Chim Cầu Vồng',  trait:'sau mỗi cơn mưa là nó xuất hiện khoe màu', body:'#7fd0ff', wing:'#b9a6ff', belly:'#ffd6e8', crests:['#ff8fa3','#ffe28e','#7fd0ff'], pitch:1900, rar:'epic' },
   { ten:'Chim Thiên Hà',  trait:'trong bụng chứa cả dải ngân hà (và 2 hạt)', body:'#5a4fcf', wing:'#3d35a4', belly:'#9d94e8', crest:'#7b6fe0', sparkle:'#e6e1ff', pitch:1000, rar:'epic' },
   { ten:'Phượng Hoàng Lửa', trait:'tái sinh từ tro tàn, nhưng rất sợ... nước sôi', body:'#ff8a4d', wing:'#ff5e3a', belly:'#ffd9a0', crests:['#ffd43b','#ff922b','#ff6b4a'], tailFeathers:['#ffd43b','#ff922b','#ff5e3a'], gem:true, gemColor:'#fff3bf', pitch:900, rar:'legendary' },
-  { ten:'Băng Phượng Hoàng', trait:'phượng hoàng hệ lạnh, khóc ra pha lê', body:'#a5e3ff', wing:'#6fc3ff', belly:'#e8f8ff', crests:['#ffffff','#c9efff','#8fd6ff'], tailFeathers:['#eaf9ff','#a5e3ff','#6fc3ff'], sparkle:'#ffffff', pitch:2800, rar:'legendary' }
+  { ten:'Băng Phượng Hoàng', trait:'phượng hoàng hệ lạnh, khóc ra pha lê', body:'#a5e3ff', wing:'#6fc3ff', belly:'#e8f8ff', crests:['#ffffff','#c9efff','#8fd6ff'], tailFeathers:['#eaf9ff','#a5e3ff','#6fc3ff'], sparkle:'#ffffff', pitch:2800, rar:'legendary' },
+  { ten:'Chim Cánh Cụt', trait:'mặc vest cả ngày nhưng không đi họp', body:'#64748b', wing:'#334155', belly:'#f1f5f9', crest:'#cbd5e1', pitch:1200, rar:'common' },
+  { ten:'Hồng Hạc', trait:'đứng một chân để tiết kiệm năng lượng', body:'#ff91b8', wing:'#ef5f9b', belly:'#ffe0ec', crest:'#ffc1d8', pitch:2300, rar:'common' },
+  { ten:'Chim Én', trait:'đưa tin nhanh hơn tốc độ buôn chuyện', body:'#60a5fa', wing:'#1e40af', belly:'#e0f2fe', crest:'#93c5fd', pitch:2500, rar:'common' },
+  { ten:'Bồ Câu Trắng', trait:'sứ giả hòa bình nhưng mê hạt kê', body:'#e2e8f0', wing:'#94a3b8', belly:'#ffffff', crest:'#f8fafc', pitch:1700, rar:'common' },
+  { ten:'Chim Gõ Kiến', trait:'gõ cửa xin hạt rất có nhịp điệu', body:'#ef4444', wing:'#1f2937', belly:'#fef2f2', crest:'#b91c1c', pitch:1350, rar:'common' },
+  { ten:'Chim Sâu Xanh', trait:'nhỏ xíu nhưng làm việc chăm chỉ', body:'#86efac', wing:'#22c55e', belly:'#dcfce7', crest:'#bbf7d0', pitch:2050, rar:'common' },
+  { ten:'Chim San Hô', trait:'thích biển xanh và kho hạt đầy', body:'#fb7185', wing:'#e11d48', belly:'#ffe4e6', crest:'#fda4af', pitch:1850, rar:'rare' },
+  { ten:'Chim Lá', trait:'ngụy trang trong vườn, không ai tìm thấy', body:'#65a30d', wing:'#3f6212', belly:'#ecfccb', crest:'#bef264', pitch:1450, rar:'rare' },
+  { ten:'Chim Sao Băng', trait:'lướt qua bầu trời để nhặt hạt lấp lánh', body:'#818cf8', wing:'#6366f1', belly:'#e0e7ff', crest:'#c4b5fd', sparkle:'#ffffff', pitch:2450, rar:'rare' },
+  { ten:'Chim Bão Tố', trait:'gió lớn tới đâu cũng tha hạt về tổ', body:'#64748b', wing:'#475569', belly:'#e2e8f0', crest:'#94a3b8', pitch:1050, rar:'rare' },
+  { ten:'Chim Pha Lê', trait:'lấp lánh như tuyết, cẩn thận đừng làm rơi', body:'#67e8f9', wing:'#0891b2', belly:'#ecfeff', crests:['#cffafe','#a5f3fc','#e0f2fe'], sparkle:'#ffffff', pitch:2700, rar:'epic' },
+  { ten:'Chim Hổ Phách', trait:'cất nắng mùa hè trong đôi cánh', body:'#f59e0b', wing:'#b45309', belly:'#fef3c7', crest:'#fcd34d', gem:true, gemColor:'#fff7ae', pitch:1250, rar:'epic' },
+  { ten:'Chim Ngân Hà', trait:'đi qua các vì sao để tìm cánh đồng hạt', body:'#7e22ce', wing:'#4c1d95', belly:'#ede9fe', crests:['#f0abfc','#c4b5fd','#93c5fd'], sparkle:'#f5d0fe', pitch:950, rar:'epic' },
+  { ten:'Thanh Long Điểu', trait:'rồng xanh canh giữ kho hạt cổ xưa', body:'#14b8a6', wing:'#0f766e', belly:'#ccfbf1', crests:['#5eead4','#99f6e4','#2dd4bf'], tailFeathers:['#2dd4bf','#14b8a6','#0f766e'], gem:true, gemColor:'#fef08a', sparkle:'#ccfbf1', pitch:800, rar:'legendary' },
+  { ten:'Lôi Điểu', trait:'gọi sấm chớp mỗi khi thu hoạch bội thu', body:'#facc15', wing:'#ca8a04', belly:'#fef9c3', crests:['#fef08a','#fde047','#f59e0b'], tailFeathers:['#fde047','#facc15','#eab308'], sparkle:'#ffffff', pitch:700, rar:'legendary' },
+  { ten:'Phượng Hoàng Ngân Hà', trait:'tái sinh giữa ngân hà, mang theo mưa hạt sao', body:'#c084fc', wing:'#7e22ce', belly:'#fae8ff', crests:['#f0abfc','#c4b5fd','#818cf8'], tailFeathers:['#e879f9','#a855f7','#6366f1'], gem:true, gemColor:'#ffffff', sparkle:'#ffffff', pitch:3000, rar:'legendary' }
 ];
 const RARITY = {
-  common:    { label:'thường',      color:'#9fb0dd', rate:.55, dup:5 },
-  rare:      { label:'hiếm',        color:'#54c0ff', rate:.27, dup:8 },
-  epic:      { label:'sử thi',      color:'#b9a6ff', rate:.12, dup:15 },
-  legendary: { label:'huyền thoại', color:'#ffd43b', rate:.06, dup:40 }
+  common:    { label:'thường',      color:'#9fb0dd', rate:.55, dup:5, farmRate:4 },
+  rare:      { label:'hiếm',        color:'#54c0ff', rate:.27, dup:8, farmRate:7 },
+  epic:      { label:'sử thi',      color:'#b9a6ff', rate:.12, dup:15, farmRate:10 },
+  legendary: { label:'huyền thoại', color:'#ffd43b', rate:.06, dup:40, farmRate:15 },
+  ancestor:  { label:'tổ tông',     color:'#ff8ad8', rate:0,   dup:60, farmRate:20 }
 };
+const HATCH_RARITIES = ['common','rare','epic','legendary'];
 function pickHatch(){
   let r = Math.random(), rar = 'legendary';
-  for(const k in RARITY){
+  for(const k of HATCH_RARITIES){
     if(r < RARITY[k].rate){ rar = k; break; }
     r -= RARITY[k].rate;
   }
@@ -1207,7 +1290,7 @@ $$('.nest-chick').forEach((el, i) => { el.innerHTML = birdSVG(CHICKS[i]); });
 })();
 
 /* tickers */
-const tickText = '🐦 CHÀO MẤY THẰNG CHIM BÉ <i>✦</i> 16 LOÀI CHIM · 4 BẬC HIẾM <i>✦</i> SĂN PHƯỢNG HOÀNG 🔥 TỈ LỆ 6% <i>✦</i> KIẾM HẠT 🌾 ĐỂ ẤP TRỨNG <i>✦</i> CHÍP CHÍP <i>✦</i> ẤN NÚT ĐI <i>✦</i> 1 FILE HTML CHÍNH HÃNG <i>✦</i> ';
+const tickText = '🐦 CHÀO MẤY THẰNG CHIM BÉ <i>✦</i> 32 LOÀI · 4 BẬC ẤP TRỨNG · TỔ TÔNG LÀ CẤP NÂNG CAO NHẤT <i>✦</i> SĂN PHƯỢNG HOÀNG 🔥 TỈ LỆ 6% <i>✦</i> KIẾM HẠT 🌾 ĐỂ ẤP TRỨNG <i>✦</i> CHÍP CHÍP <i>✦</i> ẤN NÚT ĐI <i>✦</i> 1 FILE HTML CHÍNH HÃNG <i>✦</i> ';
 $('#tickTop').innerHTML = tickText.repeat(3) + tickText.repeat(3);
 $('#tickBot').innerHTML = tickText.repeat(3) + tickText.repeat(3);
 
@@ -1223,7 +1306,7 @@ $('#footLinks').addEventListener('click', e => { const b = e.target.closest('[da
 $('#logoHome').addEventListener('click', e => { e.preventDefault(); goTab('panel-home'); });
 document.addEventListener('keydown', e => {
   if(e.target.matches('input,textarea')) return;
-  const map = {'1':'panel-home','2':'panel-flock','3':'panel-games','4':'panel-egg','5':'panel-buttons','6':'panel-book','7':'panel-troll','8':'panel-aim'};
+  const map = {'1':'panel-home','2':'panel-flock','3':'panel-games','4':'panel-egg','5':'panel-buttons','6':'panel-book','7':'panel-troll','8':'panel-aim','9':'panel-farm'};
   if(map[e.key]) goTab(map[e.key]);
   if(e.key === 'c' || e.key === 'C') burst(innerWidth/2, innerHeight*.4, 90);
   if(e.key === 'a' || e.key === 'A'){ renderAch(); $('#achOv').classList.add('show'); }
@@ -1233,6 +1316,7 @@ document.addEventListener('keydown', e => {
 const cv = $('#sky'), cx = cv.getContext('2d');
 const fcv = $('#fx'), fx = fcv.getContext('2d');
 let W, H;
+let lastSkyTime = 0;
 function resize(){
   const dpr = Math.min(devicePixelRatio || 1, 2);
   W = innerWidth; H = innerHeight;
@@ -1246,7 +1330,6 @@ function resize(){
 resize(); addEventListener('resize', resize);
 
 const hx = h => [parseInt(h.slice(1,3),16), parseInt(h.slice(3,5),16), parseInt(h.slice(5,7),16)];
-const mix = (a, b, k) => a.map((v, i) => v + (b[i] - v) * k);
 const rgb = c => 'rgb(' + (c[0]|0) + ',' + (c[1]|0) + ',' + (c[2]|0) + ')';
 const SKYMODES = {
   night:{ sky:['#070c26','#131a46','#241a52'], hillFar:'#10163d', hillNear:'#0b1030', star:1,    cloud:.10 },
@@ -1254,19 +1337,33 @@ const SKYMODES = {
   day:  { sky:['#6fb1e4','#a8d4f2','#e6f4ff'], hillFar:'#3f6ea6', hillNear:'#2c517d', star:0,    cloud:.85 }
 };
 let skyTarget = SKYMODES.night;
-let cur = { sky: SKYMODES.night.sky.map(hx), hillFar: hx(SKYMODES.night.hillFar), hillNear: hx(SKYMODES.night.hillNear), star:1, cloud:.10 };
-function lerpSky(){
-  const k = .035, t = skyTarget;
-  cur.sky = cur.sky.map((c, i) => mix(c, hx(t.sky[i]), k));
-  cur.hillFar = mix(cur.hillFar, hx(t.hillFar), k);
-  cur.hillNear = mix(cur.hillNear, hx(t.hillNear), k);
+const skyColors = Object.fromEntries(Object.entries(SKYMODES).map(([key, mode]) => [key, {
+  sky:mode.sky.map(hx), hillFar:hx(mode.hillFar), hillNear:hx(mode.hillNear)
+}]));
+let skyTargetColors = skyColors.night;
+let cur = { sky: skyColors.night.sky.map(c => c.slice()), hillFar: skyColors.night.hillFar.slice(), hillNear: skyColors.night.hillNear.slice(), star:1, cloud:.10 };
+function mixInto(from, to, k){
+  from[0] += (to[0] - from[0]) * k;
+  from[1] += (to[1] - from[1]) * k;
+  from[2] += (to[2] - from[2]) * k;
+}
+function lerpSky(frameScale){
+  const k = 1 - Math.pow(1 - .035, frameScale), t = skyTarget, colors = skyTargetColors;
+  for(let i = 0; i < cur.sky.length; i++) mixInto(cur.sky[i], colors.sky[i], k);
+  mixInto(cur.hillFar, colors.hillFar, k);
+  mixInto(cur.hillNear, colors.hillNear, k);
   cur.star += (t.star - cur.star) * k;
   cur.cloud += (t.cloud - cur.cloud) * k;
 }
 const stars = Array.from({length: 110}, () => ({ x: Math.random(), y: Math.random() * .72, r: .5 + Math.random() * 1.5, ph: Math.random() * 6.28, sp: .5 + Math.random() * 1.6, c: PALETTE[Math.floor(Math.random() * PALETTE.length)] }));
 const clouds = Array.from({length: 6}, () => ({ x: Math.random(), y: .08 + Math.random() * .34, s: .6 + Math.random() * 1.2, v: .00002 + Math.random() * .00004 }));
 const flyers = [], parts = [];
+const MAX_PARTICLES = 1200;
+function addParticle(p){
+  if(parts.length < MAX_PARTICLES) parts.push(p);
+}
 const snowArr = [], rainArr = [];
+let snowSpawn = 0, rainSpawn = 0;
 let weather = 'clear', mx = .5;
 addEventListener('pointermove', e => { mx = e.clientX / innerWidth; }, { passive: true });
 
@@ -1282,20 +1379,20 @@ function burst(x, y, n){
   if(RM) return;
   for(let i = 0; i < n; i++){
     const a = Math.random() * 6.28, v = 3 + Math.random() * 8;
-    parts.push({ t:'c', x, y, vx: Math.cos(a)*v, vy: Math.sin(a)*v - 3, g:.14, rot: Math.random()*6.28, vr: (Math.random()-.5)*.4, size: 4 + Math.random()*6, life: 70 + Math.random()*50, max: 120, c: PALETTE[Math.floor(Math.random()*PALETTE.length)] });
+    addParticle({ t:'c', x, y, vx: Math.cos(a)*v, vy: Math.sin(a)*v - 3, g:.14, rot: Math.random()*6.28, vr: (Math.random()-.5)*.4, size: 4 + Math.random()*6, life: 70 + Math.random()*50, max: 120, c: PALETTE[Math.floor(Math.random()*PALETTE.length)] });
   }
 }
 function starfall(n){
   if(RM) return;
   for(let i = 0; i < n; i++){
-    parts.push({ t:'s', x: Math.random()*W, y: -10 - Math.random()*80, vx: (Math.random()-.5)*.4, vy: .6 + Math.random()*1.6, g:.004, rot: 0, vr: 0, size: 1 + Math.random()*2.4, life: 220 + Math.random()*120, max: 340, c: PALETTE[Math.floor(Math.random()*PALETTE.length)] });
+    addParticle({ t:'s', x: Math.random()*W, y: -10 - Math.random()*80, vx: (Math.random()-.5)*.4, vy: .6 + Math.random()*1.6, g:.004, rot: 0, vr: 0, size: 1 + Math.random()*2.4, life: 220 + Math.random()*120, max: 340, c: PALETTE[Math.floor(Math.random()*PALETTE.length)] });
   }
 }
 function hill(base, amp, f, ph, off, col){
   cx.fillStyle = col;
   cx.beginPath();
   cx.moveTo(-20, H + 20);
-  for(let x = -20; x <= W + 20; x += 14){
+  for(let x = -20; x <= W + 20; x += 28){
     const y = base + Math.sin(x * f + ph) * amp + Math.sin(x * f * 2.7 + ph * 1.7) * amp * .35;
     cx.lineTo(x + off, y);
   }
@@ -1305,7 +1402,10 @@ function hill(base, amp, f, ph, off, col){
 }
 function loop(t){
   skyFrameId = 0;
-  lerpSky();
+  if(document.hidden){ lastSkyTime = 0; return; }
+  const frameScale = lastSkyTime ? Math.min((t - lastSkyTime) / (1000 / 60), 2) : 1;
+  lastSkyTime = t;
+  lerpSky(frameScale);
   /* sky gradient */
   const g = cx.createLinearGradient(0, 0, 0, H);
   g.addColorStop(0, rgb(cur.sky[0])); g.addColorStop(.55, rgb(cur.sky[1])); g.addColorStop(1, rgb(cur.sky[2]));
@@ -1346,7 +1446,7 @@ function loop(t){
   }
   /* clouds */
   for(const c of clouds){
-    c.x += c.v * 16; if(c.x > 1.25) c.x = -.25;
+    c.x += c.v * 16 * frameScale; if(c.x > 1.25) c.x = -.25;
     const px = c.x * W + (mx - .5) * -22 * c.s, py = c.y * H;
     cx.globalAlpha = cur.cloud;
     cx.fillStyle = '#ffffff';
@@ -1364,7 +1464,7 @@ function loop(t){
   /* flying birds */
   const birdCol = cur.star > .5 ? '210,226,255' : '20,40,80';
   for(let i = flyers.length - 1; i >= 0; i--){
-    const f = flyers[i]; f.x += f.vx;
+    const f = flyers[i]; f.x += f.vx * frameScale;
     const flap = Math.sin(t * .001 * f.fs * 6 + f.ph);
     cx.strokeStyle = 'rgba(' + birdCol + ',' + f.a + ')';
     cx.lineWidth = 2 * f.s; cx.lineCap = 'round';
@@ -1377,32 +1477,45 @@ function loop(t){
   }
   /* weather */
   if(weather === 'snow'){
-    if(snowArr.length < 130 && !RM) for(let i = 0; i < 2; i++) snowArr.push({ x: Math.random() * W, y: -8, v: .5 + Math.random() * 1.2, r: 1.2 + Math.random() * 2.4, ph: Math.random() * 6.28 });
+    if(snowArr.length < 130 && !RM){
+      snowSpawn += 2 * frameScale;
+      while(snowSpawn >= 1 && snowArr.length < 130){
+        snowArr.push({ x: Math.random() * W, y: -8, v: .5 + Math.random() * 1.2, r: 1.2 + Math.random() * 2.4, ph: Math.random() * 6.28 });
+        snowSpawn--;
+      }
+    }
     cx.fillStyle = '#f2f8ff';
     for(let i = snowArr.length - 1; i >= 0; i--){
       const s = snowArr[i];
-      s.y += s.v; s.x += Math.sin(t * .001 + s.ph) * .5;
+      s.y += s.v * frameScale; s.x += Math.sin(t * .001 + s.ph) * .5 * frameScale;
       cx.globalAlpha = .8;
       cx.beginPath(); cx.arc(s.x, s.y, s.r, 0, 6.28); cx.fill();
       if(s.y > H + 10) snowArr.splice(i, 1);
     }
     cx.globalAlpha = 1;
-  } else snowArr.length = 0;
+  } else { snowArr.length = 0; snowSpawn = 0; }
   if(weather === 'rain'){
-    if(rainArr.length < 110 && !RM) for(let i = 0; i < 3; i++) rainArr.push({ x: Math.random() * W, y: -12, v: 9 + Math.random() * 7, l: 10 + Math.random() * 12 });
+    if(rainArr.length < 110 && !RM){
+      rainSpawn += 3 * frameScale;
+      while(rainSpawn >= 1 && rainArr.length < 110){
+        rainArr.push({ x: Math.random() * W, y: -12, v: 9 + Math.random() * 7, l: 10 + Math.random() * 12 });
+        rainSpawn--;
+      }
+    }
     cx.strokeStyle = 'rgba(150,200,255,.5)'; cx.lineWidth = 1.4;
     for(let i = rainArr.length - 1; i >= 0; i--){
       const r = rainArr[i];
-      r.y += r.v; r.x += 1.4;
+      r.y += r.v * frameScale; r.x += 1.4 * frameScale;
       cx.beginPath(); cx.moveTo(r.x, r.y); cx.lineTo(r.x - 2.5, r.y - r.l); cx.stroke();
       if(r.y > H + 14) rainArr.splice(i, 1);
     }
-  } else rainArr.length = 0;
+  } else { rainArr.length = 0; rainSpawn = 0; }
   /* fx particles (layer trên) */
   fx.clearRect(0, 0, W, H);
   for(let i = parts.length - 1; i >= 0; i--){
     const p = parts[i];
-    p.vy += p.g; p.x += p.vx; p.y += p.vy; p.rot += p.vr; p.life--;
+    p.vy += p.g * frameScale; p.x += p.vx * frameScale; p.y += p.vy * frameScale;
+    p.rot += p.vr * frameScale; p.life -= frameScale;
     const al = Math.max(p.life / p.max, 0);
     if(p.life <= 0 || p.y > H + 40){ parts.splice(i, 1); continue; }
     fx.globalAlpha = al;
@@ -1428,13 +1541,17 @@ function loop(t){
   fx.globalAlpha = 1;
   if(!RM) skyFrameId = requestAnimationFrame(loop);
 }
-if(!RM && !skyFrameId) skyFrameId = requestAnimationFrame(loop);
+if(!RM && !document.hidden && !skyFrameId) skyFrameId = requestAnimationFrame(loop);
+document.addEventListener('visibilitychange', () => {
+  if(!document.hidden && !RM && !skyFrameId) skyFrameId = requestAnimationFrame(loop);
+});
 
 /* sky + weather controls */
 $$('.ctl[data-sky]').forEach(b => b.addEventListener('click', () => {
   press();
   $$('.ctl[data-sky]').forEach(x => x.classList.toggle('on', x === b));
   skyTarget = SKYMODES[b.dataset.sky];
+  skyTargetColors = skyColors[b.dataset.sky];
   chirp(1600);
 }));
 $$('.ctl[data-weather]').forEach(b => b.addEventListener('click', () => {
@@ -1504,12 +1621,87 @@ $('#btnDem').addEventListener('click', e => {
 const savedCollection = store.get('chimbe-coll', [0, 1]);
 let coll = new Set(Array.isArray(savedCollection) ? savedCollection.filter(i => Number.isInteger(i) && i >= 0 && i < FLOCK.length) : [0, 1]);
 function saveColl(){ store.set('chimbe-coll', [...coll]); }
+const RARITY_ORDER = ['common','rare','epic','legendary','ancestor'];
+const MAX_BIRD_RARITY = { common:'epic', rare:'legendary', epic:'legendary', legendary:'ancestor' };
+const UPGRADE_COSTS = {
+  rare:{ seeds:1000, cards:3, cardRarity:'rare' },
+  epic:{ seeds:1500, cards:5, cardRarity:'epic' },
+  legendary:{ seeds:2000, cards:10, cardRarity:'legendary' },
+  ancestor:{ seeds:3000, cards:20, cardRarity:'legendary', failureChance:.5 }
+};
+const savedCards = store.get('chimbe-bird-cards', {});
+const birdCards = { common:0, rare:0, epic:0, legendary:0 };
+if(savedCards && typeof savedCards === 'object' && !Array.isArray(savedCards)){
+  for(const tier of Object.keys(birdCards)){
+    const amount = savedCards[tier];
+    if(Number.isSafeInteger(amount) && amount >= 0) birdCards[tier] = amount;
+  }
+}
+function saveBirdCards(){ store.set('chimbe-bird-cards', birdCards); }
+function addBirdCard(tier, amount = 1){
+  if(!Object.prototype.hasOwnProperty.call(birdCards, tier) || !Number.isSafeInteger(amount) || amount < 1) return;
+  birdCards[tier] += amount;
+  saveBirdCards();
+  renderBirdCards();
+}
+function renderBirdCards(){
+  $$('[data-card-count]').forEach(el => { el.textContent = birdCards[el.dataset.cardCount] || 0; });
+}
+const maxRarityForBird = index => MAX_BIRD_RARITY[FLOCK[index].rar];
+const maxTierIndexForBird = index => RARITY_ORDER.indexOf(maxRarityForBird(index));
+const birdRarity = index => {
+  const tier = birdUpgrades[index]?.rarity;
+  return tier && RARITY[tier] ? tier : FLOCK[index].rar;
+};
+const rarityPosition = tier => RARITY_ORDER.indexOf(tier);
+function birdsByRarity(){
+  return FLOCK.map((bird, index) => index)
+    .sort((a, b) => rarityPosition(birdRarity(a)) - rarityPosition(birdRarity(b)) || a - b);
+}
+const upgradeRuleFor = index => {
+  const tier = birdRarity(index);
+  const next = RARITY_ORDER[rarityPosition(tier) + 1];
+  if(!next || rarityPosition(next) > maxTierIndexForBird(index)) return null;
+  return { tier:next, ...UPGRADE_COSTS[next] };
+};
+const savedBirdUpgrades = store.get('chimbe-bird-upgrades', {});
+const birdUpgrades = {};
+if(savedBirdUpgrades && typeof savedBirdUpgrades === 'object' && !Array.isArray(savedBirdUpgrades)){
+  for(const [key, value] of Object.entries(savedBirdUpgrades)){
+    const index = Number(key);
+    if(!Number.isInteger(index) || index < 0 || index >= FLOCK.length ||
+       !value || typeof value !== 'object' || !RARITY_ORDER.includes(value.rarity)) continue;
+    const tier = rarityPosition(value.rarity);
+    const base = rarityPosition(FLOCK[index].rar);
+    if(tier < base || tier > maxTierIndexForBird(index)) continue;
+    const failures = Number.isInteger(value.failures) ? Math.min(9, Math.max(0, value.failures)) : 0;
+    if(tier !== base || failures > 0){
+      birdUpgrades[index] = {
+        rarity:value.rarity,
+        failures:tier === rarityPosition('legendary') ? failures : 0,
+        broken:tier === rarityPosition('legendary') && failures > 0 && value.broken === true
+      };
+    }
+  }
+}
+function saveBirdUpgrades(){ store.set('chimbe-bird-upgrades', birdUpgrades); }
 let flockFilter = 'all';
+const FARM_KEY = 'chimbe-farm';
+const FARM_CAP_MS = 8 * 60 * 60 * 1000;
+const FARM_HOUR_MS = 60 * 60 * 1000;
+let farmState = store.get(FARM_KEY, null);
+if(!farmState || !Number.isInteger(farmState.bird) || !coll.has(farmState.bird) ||
+   !Number.isFinite(farmState.startedAt) || farmState.startedAt <= 0){
+  farmState = null;
+}
 function renderFlock(){
-  $('#flock').innerHTML = FLOCK.map((b, i) => {
-    const r = RARITY[b.rar];
-    const show = flockFilter === 'all' || b.rar === flockFilter;
-    return '<article class="bird-card reveal' + (b.rar === 'legendary' ? ' legendary' : b.rar === 'epic' ? ' epic' : '') + '" data-rar="' + b.rar + '" style="--rot:' + (i % 2 ? 1.1 : -1.1) + 'deg;' + (show ? '' : 'display:none') + '">'
+  $('#flock').innerHTML = birdsByRarity().map(i => {
+    const b = FLOCK[i];
+    const tier = birdRarity(i), r = RARITY[tier];
+    const show = flockFilter === 'all' || tier === flockFilter;
+    const rarityClass = tier === 'ancestor' ? ' ancestor' : tier === 'legendary' ? ' legendary' : tier === 'epic' ? ' epic' : '';
+    const upgrade = getUpgradeMarkup(i);
+    return '<article class="bird-card reveal' + rarityClass + '" data-rar="' + tier + '" style="--rot:' + (i % 2 ? 1.1 : -1.1) + 'deg;' + (show ? '' : 'display:none') + '">'
     + '<span class="own-badge ' + (coll.has(i) ? 'yes' : 'no') + '">' + (coll.has(i) ? '✓ đã sở hữu' : '🔒 ấp trứng đi') + '</span>'
     + '<span class="rar-badge" style="color:' + r.color + ';border-color:' + r.color + '">' + r.label + '</span>'
     + '<div class="bird-wrap bob" style="animation-delay:' + (i * .3) + 's">' + birdSVG(b) + '</div>'
@@ -1518,12 +1710,55 @@ function renderFlock(){
     + '<div class="card-btns">'
     + '<button class="btn btn-sm btn-primary" data-chip="' + i + '">chíp! 🔊</button>'
     + '<button class="btn btn-sm btn-ghost" data-befriend="' + i + '">kết bạn</button>'
-    + '</div></article>';
+    + '</div>' + upgrade + '</article>';
   }).join('');
+  renderBirdCards();
   observeReveals();
+}
+function getUpgradeMarkup(index){
+  if(!coll.has(index)){
+    const base = FLOCK[index].rar, maxTier = maxRarityForBird(index);
+    const upgradePath = RARITY_ORDER
+      .slice(rarityPosition(base) + 1, rarityPosition(maxTier) + 1)
+      .map(tier => {
+        const cost = UPGRADE_COSTS[tier];
+        const special = tier === 'ancestor' ? ' · tỉ lệ thành công 50%' : '';
+        return RARITY[tier].label + ': ' + cost.seeds.toLocaleString('vi-VN') + ' 🌾 + '
+          + cost.cards + ' thẻ ' + RARITY[cost.cardRarity].label + special;
+      });
+    return '<div class="bird-upgrade"><p>🔒 Sưu tầm chim này để nâng cấp. ' + RARITY[base].label
+      + ' có thể lên tối đa ' + RARITY[maxTier].label + '.'
+      + (upgradePath.length ? '<br>' + upgradePath.join('<br>') : '') + '</p>'
+      + '<button class="btn btn-ghost" type="button" disabled>cần sở hữu chim</button></div>';
+  }
+  const tier = birdRarity(index), rule = upgradeRuleFor(index);
+  const progress = birdUpgrades[index] || { rarity:tier, failures:0, broken:false };
+  if(!rule){
+    return '<div class="bird-upgrade"><p>Đã đạt giới hạn nâng cấp: ' + RARITY[maxRarityForBird(index)].label + '.</p></div>';
+  }
+  if(farmState && farmState.bird === index){
+    return '<div class="bird-upgrade"><p>Nhận hạt farm trước khi nâng chim đang đi farm.</p></div>';
+  }
+  const costText = rule.seeds.toLocaleString('vi-VN') + ' 🌾 + ' + rule.cards + ' thẻ ' + RARITY[rule.cardRarity].label;
+  const failureText = rule.failureChance
+    ? '50% thất bại; hỏng 10 lần sẽ mất chim. Mỗi lần hỏng cần sửa bằng ' + costText + '. Lần hỏng: ' + progress.failures + '/10.'
+    : 'Chi phí: ' + costText + '.';
+  if(progress.broken){
+    return '<div class="bird-upgrade"><p>Chim đang bị hỏng sau lần nâng thất bại. ' + failureText + '</p>'
+      + '<button class="btn btn-ghost" data-upgrade="' + index + '" data-repair="true">sửa chim · ' + costText + '</button></div>';
+  }
+  const enough = seeds >= rule.seeds && birdCards[rule.cardRarity] >= rule.cards;
+  return '<div class="bird-upgrade"><p>Nâng lên ' + RARITY[rule.tier].label + ' · ' + failureText + '</p>'
+    + '<button class="btn btn-primary" data-upgrade="' + index + '"' + (enough ? '' : ' disabled') + '>'
+    + (rule.tier === 'ancestor' ? 'nâng lên Tổ tông' : 'nâng cấp chim') + '</button></div>';
 }
 $('#flock').addEventListener('click', e => {
   const chip = e.target.closest('[data-chip]'), bf = e.target.closest('[data-befriend]');
+  const upgrade = e.target.closest('[data-upgrade]');
+  if(upgrade){
+    handleBirdUpgrade(Number(upgrade.dataset.upgrade), upgrade.dataset.repair === 'true');
+    return;
+  }
   if(chip){
     const i = +chip.dataset.chip;
     press(); chirp(FLOCK[i].pitch);
@@ -1541,6 +1776,68 @@ $('#flock').addEventListener('click', e => {
     }
   }
 });
+function spendUpgradeCost(rule){
+  if(seeds < rule.seeds || birdCards[rule.cardRarity] < rule.cards) return false;
+  addSeeds(-rule.seeds);
+  birdCards[rule.cardRarity] -= rule.cards;
+  saveBirdCards();
+  return true;
+}
+function handleBirdUpgrade(index, repair){
+  if(!Number.isInteger(index) || !coll.has(index) || !FLOCK[index]) return;
+  if(farmState && farmState.bird === index){
+    toast('🌾 Nhận hạt farm trước khi nâng chim này.');
+    return;
+  }
+  const data = birdUpgrades[index] || { rarity:FLOCK[index].rar, failures:0, broken:false };
+  const rule = upgradeRuleFor(index);
+  if(!rule) return;
+  if(repair){
+    if(!data.broken || !spendUpgradeCost(rule)){
+      toast('Thiếu hạt hoặc thẻ để sửa chim: cần ' + rule.seeds + ' hạt và ' + rule.cards + ' thẻ ' + RARITY[rule.cardRarity].label + '.');
+      return;
+    }
+    data.broken = false;
+    birdUpgrades[index] = data;
+    saveBirdUpgrades();
+    toast('🛠️ Đã sửa ' + FLOCK[index].ten + '. Có thể thử nâng cấp lại.');
+  } else {
+    if(data.broken) return;
+    if(!spendUpgradeCost(rule)){
+      toast('Thiếu nguyên liệu: cần ' + rule.seeds + ' hạt và ' + rule.cards + ' thẻ ' + RARITY[rule.cardRarity].label + '.');
+      return;
+    }
+    press();
+    if(rule.failureChance && Math.random() < rule.failureChance){
+      data.failures = (data.failures || 0) + 1;
+      if(data.failures >= 10){
+        coll.delete(index);
+        delete birdUpgrades[index];
+        saveColl();
+        saveBirdUpgrades();
+        toast('💥 ' + FLOCK[index].ten + ' hỏng vĩnh viễn sau 10 lần thất bại và đã rời bộ sưu tập.');
+      } else {
+        data.broken = true;
+        birdUpgrades[index] = data;
+        saveBirdUpgrades();
+        toast('💥 Nâng cấp thất bại! Chim hỏng (' + data.failures + '/10). Hãy sửa để thử lại.');
+      }
+      chirp(500);
+      renderFlock();
+      renderCollMini();
+      return;
+    }
+    data.rarity = rule.tier;
+    data.failures = 0;
+    data.broken = false;
+    birdUpgrades[index] = data;
+    saveBirdUpgrades();
+    toast('✨ ' + FLOCK[index].ten + ' đã nâng lên bậc ' + RARITY[rule.tier].label + '!');
+  }
+  chirp(2200);
+  renderFlock();
+  renderFarmBirds();
+}
 $('#flockFilter').addEventListener('click', e => {
   const b = e.target.closest('[data-f]');
   if(!b) return;
@@ -1550,11 +1847,104 @@ $('#flockFilter').addEventListener('click', e => {
   renderFlock();
 });
 function renderCollMini(){
-  $('#collMini').innerHTML = FLOCK.map((b, i) =>
-    '<span class="' + (coll.has(i) ? 'got' : 'miss') + '" title="' + b.ten + '">' + birdSVG(b) + '</span>'
-  ).join('');
+  $('#collMini').innerHTML = birdsByRarity().map(i => {
+    const b = FLOCK[i];
+    return '<span class="' + (coll.has(i) ? 'got' : 'miss') + '" title="' + b.ten + '">' + birdSVG(b) + '</span>';
+  }).join('');
   $('#collCount').textContent = coll.size;
+  renderFarmBirds();
 }
+function farmRateFor(index){ return RARITY[birdRarity(index)].farmRate; }
+function renderFarmBirds(){
+  const select = $('#farmBird');
+  if(!select) return;
+  const previous = Number(select.value);
+  const available = [...coll].filter(i => i >= 0 && i < FLOCK.length).sort((a,b) => a-b);
+  select.innerHTML = available.length
+    ? available.map(i => '<option value="' + i + '">' + esc(FLOCK[i].ten) + ' · ' + RARITY[birdRarity(i)].label + '</option>').join('')
+    : '<option value="">ấp trứng để có chim đi farm</option>';
+  if(farmState){
+    select.value = String(farmState.bird);
+    select.disabled = true;
+  } else {
+    select.disabled = false;
+    if(available.includes(previous)) select.value = String(previous);
+    else if(available.length) select.value = String(available[0]);
+  }
+  renderFarmStatus();
+}
+function farmElapsedMs(now = Date.now()){
+  if(!farmState) return 0;
+  return Math.min(FARM_CAP_MS, Math.max(0, now - farmState.startedAt));
+}
+function renderFarmStatus(){
+  const select = $('#farmBird');
+  if(!select) return;
+  const selected = farmState ? farmState.bird : select.value === '' ? NaN : Number(select.value);
+  const bird = Number.isInteger(selected) && FLOCK[selected] ? FLOCK[selected] : null;
+  const elapsed = farmElapsedMs();
+  const rate = bird
+    ? (farmState && Number.isFinite(farmState.rate) ? farmState.rate : farmRateFor(selected))
+    : 0;
+  const earned = Math.floor(elapsed * rate / FARM_HOUR_MS);
+  const capped = elapsed >= FARM_CAP_MS;
+  $('#farmBirdName').textContent = farmState && bird ? bird.ten : bird ? 'Chưa xuất phát' : 'Chưa có chim';
+  $('#farmRarity').textContent = bird ? RARITY[bird.rar].label : '—';
+  $('#farmRate').textContent = bird ? rate + ' hạt/giờ' : '—';
+  $('#farmTime').textContent = farmState ? (capped ? '8 giờ · tối đa' : Math.floor(elapsed / 60000) + ' phút') : '0 phút';
+  $('#farmSeeds').textContent = earned;
+  $('#farmBar').style.width = farmState ? Math.min(100, elapsed / FARM_CAP_MS * 100) + '%' : '0%';
+  $('.farm-progress').setAttribute('aria-valuenow', farmState ? String(Math.floor(elapsed / FARM_CAP_MS * 100)) : '0');
+  $('#btnFarmStart').disabled = Boolean(farmState) || !bird;
+  $('#btnFarmClaim').disabled = !farmState || earned < 1;
+  if(farmState){
+    $('#farmMsg').textContent = capped
+      ? 'Đã đạt giới hạn offline 8 giờ. Nhận ' + earned + ' hạt để bắt đầu chuyến mới.'
+      : earned > 0
+        ? 'Chim đang farm' + (document.hidden ? ' khi bạn rời trang' : '') + '. Tối đa 8 giờ tích lũy; bạn có thể nhận hạt ngay.'
+        : 'Chuyến farm đang chạy. Hạt đầu tiên sẽ sẵn sàng sau khi đủ thời gian.';
+  } else {
+    $('#farmMsg').textContent = bird
+      ? 'Chọn chim rồi bắt đầu. Tốc độ farm phụ thuộc bậc hiếm; hạt offline giới hạn 8 giờ.'
+      : 'Bạn chưa có chim. Hãy ấp trứng để mở khóa chim đi farm.';
+  }
+}
+$('#farmBird').addEventListener('change', renderFarmStatus);
+$('#btnFarmStart').addEventListener('click', () => {
+  if(farmState) return;
+  const bird = Number($('#farmBird').value);
+  if(!Number.isInteger(bird) || !coll.has(bird) || !FLOCK[bird]){
+    $('#farmMsg').textContent = 'Hãy chọn một chim đã sưu tầm trước khi bắt đầu.';
+    return;
+  }
+  farmState = { bird, startedAt:Date.now() };
+  farmState.rate = farmRateFor(bird);
+  store.set(FARM_KEY, farmState);
+  press();
+  chirp(FLOCK[bird].pitch);
+  renderFarmBirds();
+  renderFlock();
+});
+$('#btnFarmClaim').addEventListener('click', () => {
+  if(!farmState) return;
+  const rate = Number.isFinite(farmState.rate) ? farmState.rate : farmRateFor(farmState.bird);
+  const earned = Math.floor(farmElapsedMs() * rate / FARM_HOUR_MS);
+  if(earned < 1){
+    renderFarmStatus();
+    return;
+  }
+  const birdName = FLOCK[farmState.bird].ten;
+  farmState = null;
+  store.set(FARM_KEY, null);
+  addSeeds(earned);
+  press();
+  chirp(2000);
+  $('#farmMsg').textContent = birdName + ' mang về ' + earned + ' hạt. Chọn chim và bắt đầu chuyến mới khi sẵn sàng.';
+  renderFarmBirds();
+  renderFlock();
+});
+setInterval(renderFarmStatus, 15000);
+document.addEventListener('visibilitychange', renderFarmStatus);
 
 /* ================= scroll reveals ================= */
 let io = null;
@@ -1569,6 +1959,7 @@ let catchBest = storedCount('chimbe-catchbest');
 $('#catchBest').textContent = catchBest;
 const CATCH_EMO = [['🐦',1],['🐤',1],['🕊️',2],['🐧',2],['🦅',3],['🔥',5]];
 const catchState = { running:false, birds:[], score:0, time:30, spawnT:0 };
+let catchLastFrame = 0;
 function sizeCatch(){
   const dpr = Math.min(devicePixelRatio || 1, 2);
   ccv.width = ccv.clientWidth * dpr; ccv.height = ccv.clientHeight * dpr;
@@ -1584,10 +1975,12 @@ function drawCatchHint(){
   ccx.fillText('bấm "bắt đầu!" rồi click chim đang bay 🏹', ccv.clientWidth/2, ccv.clientHeight/2);
 }
 drawCatchHint();
-function catchFrame(){
+function catchFrame(timestamp){
   if(!catchState.running) return;
+  const frameScale = catchLastFrame ? Math.min((timestamp - catchLastFrame) / (1000 / 60), 2) : 1;
+  catchLastFrame = timestamp;
   const w = ccv.clientWidth, h = ccv.clientHeight;
-  catchState.spawnT--;
+  catchState.spawnT -= frameScale;
   if(catchState.spawnT <= 0 && catchState.birds.length < 6){
     catchState.spawnT = 34 + Math.random() * 30;
     const rr = Math.random();
@@ -1600,7 +1993,7 @@ function catchFrame(){
   ccx.textAlign = 'center'; ccx.textBaseline = 'middle';
   for(let i = catchState.birds.length - 1; i >= 0; i--){
     const b = catchState.birds[i];
-    b.x += b.vx; b.ph += .09;
+    b.x += b.vx * frameScale; b.ph += .09 * frameScale;
     const y = b.y + Math.sin(b.ph) * 9;
     ccx.save();
     ccx.translate(b.x, y);
@@ -1615,16 +2008,21 @@ $('#btnCatch').addEventListener('click', () => {
   if(catchState.running) return;
   press(); chirp(1800);
   sizeCatch();
-  catchState.running = true; catchState.birds = []; catchState.score = 0; catchState.time = 30; catchState.spawnT = 0;
+  catchState.running = true; catchState.birds = []; catchState.score = 0; catchState.time = 30; catchState.spawnT = 0; catchLastFrame = 0;
   $('#catchScore').textContent = 0; $('#catchTime').textContent = 30;
   $('#btnCatch').setAttribute('disabled', '');
+  const deadline = performance.now() + 30000;
   const timer = setInterval(() => {
-    catchState.time--;
-    $('#catchTime').textContent = catchState.time;
-    if(catchState.time <= 10) chirp(500 + catchState.time * 40);
-    if(catchState.time <= 0){
+    const remaining = Math.max(0, Math.ceil((deadline - performance.now()) / 1000));
+    if(remaining !== catchState.time){
+      catchState.time = remaining;
+      $('#catchTime').textContent = remaining;
+      if(remaining > 0 && remaining <= 10) chirp(500 + remaining * 40);
+    }
+    if(remaining === 0){
       clearInterval(timer);
       catchState.running = false;
+      catchLastFrame = 0;
       $('#btnCatch').removeAttribute('disabled');
       if(catchState.score > catchBest){ catchBest = catchState.score; store.set('chimbe-catchbest', catchBest); $('#catchBest').textContent = catchBest; }
       toast('🏹 hết giờ! bắt được ' + catchState.score + ' chim — ' + (catchState.score >= 8 ? 'xịn đó!' : 'chơi lại đi cho giỏi 😌'));
@@ -1632,7 +2030,7 @@ $('#btnCatch').addEventListener('click', () => {
       if(catchState.score >= 12) unlock('aim');
       drawCatchHint();
     }
-  }, 1000);
+  }, 100);
   requestAnimationFrame(catchFrame);
 });
 ccv.addEventListener('pointerdown', e => {
@@ -1757,12 +2155,13 @@ $('#btnAim').addEventListener('click', () => {
   $('#btnAim').setAttribute('disabled', '');
   setAimLevelsDisabled(true);
   relocateAimTarget();
+  const deadline = performance.now() + aimState.time * 1000;
   const timer = setInterval(() => {
     if(!aimState.running){ clearInterval(timer); return; }
-    aimState.time--;
+    aimState.time = Math.max(0, Math.ceil((deadline - performance.now()) / 1000));
     $('#aimTime').textContent = aimState.time;
-    if(aimState.time <= 0){ clearInterval(timer); finishAim(); }
-  }, 1000);
+    if(aimState.time === 0){ clearInterval(timer); finishAim(); }
+  }, 100);
 });
 aimCanvas.addEventListener('pointerdown', e => {
   if(!aimState.running) return;
@@ -1974,7 +2373,8 @@ $('#btnEgg').addEventListener('click', () => {
       setTimeout(() => {
         if(coll.has(pick)){
           addSeeds(rar.dup);
-          $('#eggResult').textContent = '🐦 ' + FLOCK[pick].ten + '... bạn có rồi. bồi thường +' + rar.dup + ' 🌾';
+          addBirdCard(FLOCK[pick].rar);
+          $('#eggResult').textContent = '🐦 ' + FLOCK[pick].ten + '... bạn có rồi. bồi thường +' + rar.dup + ' 🌾 và +1 thẻ ' + rar.label + '.';
         } else {
           coll.add(pick); saveColl();
           $('#eggResult').textContent = '🎉 ' + FLOCK[pick].ten + ' [' + rar.label + '] đã gia nhập bộ sưu tập!';
@@ -2317,7 +2717,7 @@ $('#btnStorm').addEventListener('click', () => {
   toast('🌪️ BÃO CHIM ĐỔ BỘ — bám chắc vào!!');
   for(let i = 0; i < 15; i++) setTimeout(() => spawnFlyer(true), i * 130);
   for(let i = 0; i < 70; i++){
-    parts.push({ t:'f', x: Math.random() * W, y: -20 - Math.random() * 240, vx: (Math.random() - .5) * 1.4, vy: 1 + Math.random() * 2.6, g: .012, rot: Math.random() * 6.28, vr: (Math.random() - .5) * .18, size: 4 + Math.random() * 5, life: 300, max: 300, c: PALETTE[Math.floor(Math.random() * PALETTE.length)] });
+    addParticle({ t:'f', x: Math.random() * W, y: -20 - Math.random() * 240, vx: (Math.random() - .5) * 1.4, vy: 1 + Math.random() * 2.6, g: .012, rot: Math.random() * 6.28, vr: (Math.random() - .5) * .18, size: 4 + Math.random() * 5, life: 300, max: 300, c: PALETTE[Math.floor(Math.random() * PALETTE.length)] });
   }
   document.body.classList.remove('shake'); void document.body.offsetWidth; document.body.classList.add('shake');
   [1200, 1500, 1800, 2200].forEach((f, i) => setTimeout(() => chirp(f), i * 140));
@@ -2433,7 +2833,7 @@ addEventListener('pointermove', e => {
   const now = performance.now();
   if(RM || now - lastTrail < 55) return;
   lastTrail = now;
-  parts.push({ t:'f', x: e.clientX + (Math.random() - .5) * 12, y: e.clientY + (Math.random() - .5) * 12, vx: (Math.random() - .5) * .8, vy: .35 + Math.random() * .5, g: .014, rot: Math.random() * 6.28, vr: (Math.random() - .5) * .14, size: 2.6 + Math.random() * 3.4, life: 100, max: 100, c: PALETTE[Math.floor(Math.random() * PALETTE.length)] });
+  addParticle({ t:'f', x: e.clientX + (Math.random() - .5) * 12, y: e.clientY + (Math.random() - .5) * 12, vx: (Math.random() - .5) * .8, vy: .35 + Math.random() * .5, g: .014, rot: Math.random() * 6.28, vr: (Math.random() - .5) * .14, size: 2.6 + Math.random() * 3.4, life: 100, max: 100, c: PALETTE[Math.floor(Math.random() * PALETTE.length)] });
 });
 
 /* online jitter */
