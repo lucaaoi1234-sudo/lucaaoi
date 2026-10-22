@@ -496,8 +496,9 @@ body.page-hidden *,body.page-hidden *::before,body.page-hidden *::after{animatio
 /* Calm visual treatment */
 .ticker{background:rgba(10,15,44,.62);border-color:rgba(42,53,112,.55)}
 .ticker .track{font-size:.7rem;letter-spacing:.1em;opacity:.72}
-header{border-bottom-width:1px}
-.tabs{gap:2px;background:linear-gradient(160deg, rgba(10,15,44,.38), rgba(23,16,70,.38));border-color:rgba(159,176,221,.14)}
+header{border-bottom-width:1px;background:linear-gradient(160deg,rgba(10,15,44,.88),rgba(19,26,70,.88) 55%,rgba(23,16,70,.88));backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.tabs{gap:2px;background:transparent;border-color:rgba(159,176,221,.12);box-shadow:none}
+.mode-switch{background:transparent;border-color:rgba(159,176,221,.12);box-shadow:none}
 .tab{transition:background .18s,color .18s}
 .tab:hover{transform:none;background:rgba(84,192,255,.12)}
 .tab.active{box-shadow:none;transform:none}
