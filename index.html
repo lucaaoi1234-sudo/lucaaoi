@@ -377,6 +377,13 @@ h1 .ch{display:inline-block;animation:chIn .65s cubic-bezier(.2,1.7,.4,1) both}
 .note-x:hover{color:#ff8fa3;transform:scale(1.25)}
 @media (hover:none){.note-x{opacity:1}}
 .book-actions{display:flex;justify-content:flex-end;margin-top:4px}
+.mail-card{max-width:720px;margin:0 auto;padding:24px;background:linear-gradient(135deg,rgba(255,212,59,.1),rgba(155,123,255,.1)),var(--panel);border:2px solid rgba(255,212,59,.48);border-radius:20px 20px 6px 20px;box-shadow:0 12px 32px rgba(5,9,35,.32)}
+.mail-card h3{color:var(--ice);font-size:1.15rem}
+.mail-card p{margin:10px 0;color:var(--ink2);line-height:1.65}
+.mail-card .btn{margin-top:8px}
+.mail-empty{text-align:center;padding:28px;background:var(--panel);border:1px dashed var(--line);border-radius:16px;color:var(--ink2)}
+.mail-badge{display:inline-grid;place-items:center;min-width:17px;height:17px;margin-left:4px;padding:0 4px;border-radius:50%;background:#ff6b82;color:#fff;font-size:.62rem;font-weight:900;vertical-align:middle}
+.mail-badge[hidden]{display:none}
 
 /* ============ FOOTER ============ */
 footer{position:relative;z-index:1;border-top:2px solid var(--line);background:rgba(10,15,44,.9)}
@@ -473,6 +480,85 @@ body.silly *{font-family:'Comic Sans MS','Comic Sans','Chalkboard SE','Segoe Pri
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
+body.page-hidden *,body.page-hidden *::before,body.page-hidden *::after{animation-play-state:paused!important}
+
+/* Calm visual treatment */
+.ticker{background:rgba(10,15,44,.62);border-color:rgba(42,53,112,.55)}
+.ticker .track{font-size:.7rem;letter-spacing:.1em;opacity:.72}
+header{border-bottom-width:1px}
+.tabs{gap:2px;background:rgba(13,19,52,.78);border-color:rgba(42,53,112,.7)}
+.tab{transition:background .18s,color .18s}
+.tab:hover{transform:none;background:rgba(84,192,255,.08)}
+.tab.active{box-shadow:none;transform:none}
+.panel.active > *{animation:none}
+h1.display,h1 .hl{text-shadow:0 0 14px rgba(84,192,255,.18)}
+.btn{transition:transform .16s,background .18s,color .18s,border-color .18s}
+.btn-primary,.btn-violet,.btn-ice{box-shadow:0 3px 0 rgba(6,10,40,.35)}
+.btn-primary:hover,.btn-violet:hover,.btn-ice:hover{transform:translateY(-1px);box-shadow:0 4px 0 rgba(6,10,40,.3)}
+.btn-ghost:hover{transform:translateY(-1px);box-shadow:none}
+.bird-card{transform:none;box-shadow:0 6px 18px rgba(5,9,35,.2)}
+.bird-card:hover{transform:translateY(-2px);box-shadow:0 9px 22px rgba(5,9,35,.3)}
+.bird-card.legendary::after{animation-duration:8s}
+.game-panel{box-shadow:0 8px 22px rgba(5,9,35,.28)}
+.game-panel::after{opacity:.55}
+.guide-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:14px}
+.guide-card{display:flex;gap:14px;align-items:flex-start;padding:18px;background:rgba(17,24,64,.82);border:1px solid var(--line);border-radius:16px}
+.guide-step{flex:none;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:rgba(84,192,255,.12);color:var(--acc1);font-weight:900}
+.guide-card h3{margin-bottom:6px;color:var(--ice);font-size:.95rem}
+.guide-card p{color:var(--ink2);font-size:.82rem;line-height:1.65}
+.guide-card .guide-action{margin-top:10px}
+.guide-note{margin-top:16px;padding:14px 16px;border-left:3px solid var(--acc1);background:rgba(84,192,255,.06);border-radius:0 12px 12px 0;color:var(--ink2);font-size:.82rem;line-height:1.65}
+@media (max-width:600px){.guide-card{padding:15px}.guide-grid{gap:10px}}
+.graphics-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:14px}
+.graphics-option{width:100%;padding:18px;text-align:left;background:rgba(17,24,64,.82);border:1px solid var(--line);border-radius:16px;color:var(--ink)}
+.graphics-option:hover,.graphics-option.active{border-color:var(--acc1);background:rgba(84,192,255,.08)}
+.graphics-option.active{box-shadow:inset 0 0 0 1px var(--acc1)}
+.graphics-option[data-graphics-quality="spectacular"]{background:linear-gradient(120deg,rgba(84,192,255,.1),rgba(255,212,59,.1),rgba(185,166,255,.12));border-color:rgba(255,212,59,.45)}
+.graphics-option[data-graphics-quality="spectacular"]:hover,.graphics-option[data-graphics-quality="spectacular"].active{border-color:#ffd43b;box-shadow:inset 0 0 0 1px #ffd43b,0 0 22px rgba(255,212,59,.16)}
+.graphics-option b{display:block;margin-bottom:7px;color:var(--ice);font-size:.95rem}
+.graphics-option span{display:block;color:var(--ink2);font-size:.8rem;line-height:1.6}
+.graphics-status{margin-top:16px;color:var(--acc1);font-size:.86rem;font-weight:800}
+body[data-graphics-quality="balanced"] .ticker .track,
+body[data-graphics-quality="balanced"] .bird-wrap.bob,
+body[data-graphics-quality="balanced"] .dot,
+body[data-graphics-quality="balanced"] .ring,
+body[data-graphics-quality="balanced"] .bird-card.legendary::after{animation-play-state:paused}
+body[data-graphics-quality="low"] #sky,
+body[data-graphics-quality="low"] #fx{display:none}
+body[data-graphics-quality="low"] *,
+body[data-graphics-quality="low"] *::before,
+body[data-graphics-quality="low"] *::after{animation:none!important;transition:none!important}
+@keyframes spectacleTabIn{
+  0%{opacity:0;transform:perspective(900px) translateY(34px) rotateX(8deg) scale(.975);filter:blur(8px)}
+  65%{opacity:1;transform:perspective(900px) translateY(-4px) rotateX(-1deg) scale(1.005);filter:blur(0)}
+  100%{opacity:1;transform:none;filter:none}
+}
+@keyframes spectacleGlow{
+  0%,100%{box-shadow:0 0 18px rgba(84,192,255,.16),0 0 36px rgba(155,123,255,.08)}
+  50%{box-shadow:0 0 30px rgba(84,192,255,.28),0 0 56px rgba(155,123,255,.18)}
+}
+@keyframes spectacleBirdBob{
+  0%,100%{transform:translateY(0) rotate(-1deg)}
+  50%{transform:translateY(-7px) rotate(1deg)}
+}
+@keyframes spectacleCardFloat{
+  0%,100%{transform:translateY(0) rotate(var(--rot,0deg))}
+  50%{transform:translateY(-5px) rotate(calc(var(--rot,0deg) * -1))}
+}
+@media (prefers-reduced-motion:no-preference){
+  body[data-graphics-quality="spectacular"]:not(.mobile-lite) .panel.active > *{animation:spectacleTabIn .78s cubic-bezier(.2,.9,.3,1) both}
+  body[data-graphics-quality="spectacular"]:not(.mobile-lite) .panel.active > *:nth-child(2){animation-delay:.1s}
+  body[data-graphics-quality="spectacular"]:not(.mobile-lite) .panel.active > *:nth-child(3){animation-delay:.2s}
+  body[data-graphics-quality="spectacular"]:not(.mobile-lite) .panel.active > *:nth-child(4){animation-delay:.3s}
+  body[data-graphics-quality="spectacular"]:not(.mobile-lite) .bird-card{animation:spectacleCardFloat 3.8s ease-in-out infinite,spectacleGlow 4s ease-in-out infinite}
+  body[data-graphics-quality="spectacular"]:not(.mobile-lite) .bird-card:nth-child(3n){animation-delay:-1.2s,-2s}
+  body[data-graphics-quality="spectacular"]:not(.mobile-lite) .bird-card:nth-child(3n + 1){animation-delay:-2.4s,-1s}
+  body[data-graphics-quality="spectacular"]:not(.mobile-lite) .bird-card .bird-wrap{filter:drop-shadow(0 0 9px rgba(84,192,255,.48));animation:spectacleBirdBob 2.8s ease-in-out infinite}
+  body[data-graphics-quality="spectacular"]:not(.mobile-lite) .bird-card.legendary .bird-wrap,
+  body[data-graphics-quality="spectacular"]:not(.mobile-lite) .bird-card.ancestor .bird-wrap{filter:drop-shadow(0 0 13px rgba(255,212,59,.65))}
+  body[data-graphics-quality="spectacular"]:not(.mobile-lite) .bird-card:hover{animation:none;transform:rotate(0deg) translateY(-8px) scale(1.04)}
+  body[data-graphics-quality="spectacular"]:not(.mobile-lite) .tab.active{box-shadow:0 0 18px rgba(84,192,255,.28),inset 0 0 14px rgba(155,123,255,.12)}
+}
 </style>
 </head>
 <body>
@@ -497,7 +583,10 @@ body.silly *{font-family:'Comic Sans MS','Comic Sans','Chalkboard SE','Segoe Pri
       <button class="tab" data-tab="panel-farm">🌾 nông trại</button>
       <button class="tab" data-tab="panel-buttons">🎛️ phòng nút</button>
       <button class="tab" data-tab="panel-book">📖 lưu bút</button>
+      <button class="tab" data-tab="panel-mailbox">📬 hộp thư <span class="mail-badge" id="mailboxBadge" hidden>!</span></button>
       <button class="tab" data-tab="panel-troll">🃏 troll</button>
+      <button class="tab" data-tab="panel-graphics">⚙️ đồ họa</button>
+      <button class="tab" data-tab="panel-guide">📘 hướng dẫn</button>
     </nav>
     <div class="hcluster">
       <div class="seed-chip" title="hạt — tiền của chim">🌾 <b id="hSeeds">0</b></div>
@@ -583,6 +672,81 @@ body.silly *{font-family:'Comic Sans MS','Comic Sans','Chalkboard SE','Segoe Pri
     </div>
   </section>
 
+  <!-- ============ TAB: HƯỚNG DẪN ============ -->
+  <section class="panel" id="panel-guide">
+    <div class="sec-head reveal">
+      <span class="kicker">bắt đầu chơi trong vài bước</span>
+      <h2>hướng dẫn chơi</h2>
+      <p>Mục tiêu chính: kiếm hạt, ấp trứng lấy chim, sưu tầm thẻ trùng và nâng cấp bầy chim.</p>
+    </div>
+    <div class="guide-grid">
+      <article class="guide-card">
+        <span class="guide-step">1</span>
+        <div>
+          <h3>Kiếm hạt và ấp trứng</h3>
+          <p>Chơi bắt chim để nhận 1 hạt mỗi lần bắt trúng; Simon thưởng hạt khi hoàn thành vòng. Một quả trứng tốn 10 hạt và cần 10 lần gõ để nở. Chim trùng được đổi hạt và thêm 1 thẻ theo bậc hiếm.</p>
+          <button class="btn btn-ghost btn-sm guide-action" type="button" data-guide-tab="panel-egg">đến lò ấp</button>
+          <button class="btn btn-ghost btn-sm guide-action" type="button" data-guide-tab="panel-games">đến trò chơi</button>
+        </div>
+      </article>
+      <article class="guide-card">
+        <span class="guide-step">2</span>
+        <div>
+          <h3>Sưu tầm và nâng chim</h3>
+          <p>Dùng hạt và thẻ cùng bậc để nâng: Thường → Hiếm (1.000 hạt + 3 thẻ Hiếm); Hiếm → Sử thi (1.500 + 5 thẻ Sử thi); Sử thi → Huyền thoại (2.000 + 10 thẻ Huyền thoại). Chim Thường tối đa Sử thi; chim Hiếm/Sử thi tối đa Huyền thoại.</p>
+          <p class="guide-note">Chỉ chim Huyền thoại mới nâng lên Tổ tông: 3.000 hạt + 20 thẻ Huyền thoại, tỉ lệ thành công 50%. Khi hỏng, trả lại chi phí đó để sửa; hỏng 10 lần thì mất chim.</p>
+          <button class="btn btn-ghost btn-sm guide-action" type="button" data-guide-tab="panel-flock">xem bầy chim</button>
+        </div>
+      </article>
+      <article class="guide-card">
+        <span class="guide-step">3</span>
+        <div>
+          <h3>Cho chim đi farm</h3>
+          <p>Chọn chim đã sưu tầm rồi bắt đầu chuyến. Chim farm khi bạn rời trang; sản lượng tối đa tính trong 8 giờ. Năng suất theo cấp hiện tại: Thường 4, Hiếm 7, Sử thi 10, Huyền thoại 15, Tổ tông 20 hạt/giờ.</p>
+          <button class="btn btn-ghost btn-sm guide-action" type="button" data-guide-tab="panel-farm">đến nông trại</button>
+        </div>
+      </article>
+      <article class="guide-card">
+        <span class="guide-step">4</span>
+        <div>
+          <h3>Luyện phản xạ và khám phá</h3>
+          <p>Aim Shot là bài tập ngắm bia 30 giây với 4 cấp độ; bắn trúng để bia xuất hiện ở vị trí ngẫu nhiên. Tab Phòng nút có cài đặt màu; các tab khác chứa minigame và hoạt động giải trí.</p>
+          <button class="btn btn-ghost btn-sm guide-action" type="button" data-guide-tab="panel-aim">đến Aim Shot</button>
+        </div>
+      </article>
+    </div>
+    <p class="guide-note">Phím tắt: <span class="kbd">1</span> tổ chim · <span class="kbd">2</span> bầy chim · <span class="kbd">3</span> sân chơi · <span class="kbd">4</span> aim · <span class="kbd">5</span> ấp trứng · <span class="kbd">6</span> phòng nút · <span class="kbd">7</span> lưu bút · <span class="kbd">8</span> troll · <span class="kbd">9</span> nông trại · <span class="kbd">M</span> hộp thư · <span class="kbd">G</span> đồ họa · <span class="kbd">0</span> hướng dẫn.</p>
+  </section>
+
+  <section class="panel" id="panel-graphics">
+    <div class="sec-head reveal">
+      <span class="kicker">chọn mức hiệu ứng phù hợp thiết bị</span>
+      <h2>cài đặt đồ họa</h2>
+      <p>Giảm hiệu ứng nền để trang chạy nhẹ hơn trên laptop hoặc điện thoại yếu. Cài đặt này độc lập với nút chọn giao diện PC / Mobile.</p>
+    </div>
+    <div class="game-panel reveal">
+      <div class="graphics-options" role="group" aria-label="Mức đồ họa">
+        <button class="graphics-option" type="button" data-graphics-quality="full" aria-pressed="false">
+          <b>✨ Đầy đủ</b>
+          <span>Giữ nền động, thời tiết và hiệu ứng hạt ở mức tối đa.</span>
+        </button>
+        <button class="graphics-option" type="button" data-graphics-quality="spectacular" aria-pressed="false">
+          <b>🌟 Tuyệt cảnh</b>
+          <span>Như Đầy đủ, thêm chuyển tab kiểu điện ảnh, ánh sáng rực rỡ và thẻ chim chuyển động vui mắt.</span>
+        </button>
+        <button class="graphics-option" type="button" data-graphics-quality="balanced" aria-pressed="false">
+          <b>⚖️ Cân bằng</b>
+          <span>Giảm độ phân giải nền, hạt và hiệu ứng trang trí; trò chơi vẫn hoạt động bình thường.</span>
+        </button>
+        <button class="graphics-option" type="button" data-graphics-quality="low" aria-pressed="false">
+          <b>🍃 Tiết kiệm</b>
+          <span>Tắt nền canvas và chuyển động trang trí để ưu tiên hiệu năng; không ảnh hưởng điểm, hạt hay tiến trình.</span>
+        </button>
+      </div>
+      <p class="graphics-status" id="graphicsStatus" role="status" aria-live="polite"></p>
+    </div>
+  </section>
+
   <!-- ============ TAB 2: BẦY CHIM ============ -->
   <section class="panel" id="panel-flock">
     <div class="sec-head reveal">
@@ -591,9 +755,9 @@ body.silly *{font-family:'Comic Sans MS','Comic Sans','Chalkboard SE','Segoe Pri
       <p>32 loài, 5 cấp chim — ấp trứng trùng để nhận thẻ nguyên liệu, dùng hạt và thẻ nâng chim. Chim thường tối đa Sử thi; chỉ chim Huyền thoại mới lên được Tổ tông.</p>
     </div>
     <div class="upgrade-stock" id="upgradeStock" aria-live="polite">
-      <strong>🃏 Thẻ nguyên liệu nâng cấp (nhận khi nở chim trùng)</strong>
+      <strong>🃏 Thẻ tăng trọng / nguyên liệu nâng cấp (nhận khi nở chim trùng)</strong>
       <p class="upgrade-note">🌸 Muốn lên Tổ tông: chỉ chim đã đạt bậc Huyền thoại mới có nút “Nâng lên Tổ tông” ngay trên thẻ chim đó. Bấm nút ấy để thử nâng cấp; tỉ lệ thành công 50%.</p>
-      <span>Thường: <b data-card-count="common">0</b></span>
+      <span>Thẻ tăng trọng · thường: <b data-card-count="common">0</b></span>
       <span>Hiếm: <b data-card-count="rare">0</b></span>
       <span>Sử thi: <b data-card-count="epic">0</b></span>
       <span>Huyền thoại: <b data-card-count="legendary">0</b></span>
@@ -864,6 +1028,15 @@ body.silly *{font-family:'Comic Sans MS','Comic Sans','Chalkboard SE','Segoe Pri
     </div>
   </section>
 
+  <section class="panel" id="panel-mailbox">
+    <div class="sec-head reveal">
+      <span class="kicker">thư chim chuyển phát</span>
+      <h2>hộp thư</h2>
+      <p>Thư và quà của bạn được lưu trên thiết bị này.</p>
+    </div>
+    <div id="mailboxList" aria-live="polite"></div>
+  </section>
+
   <!-- ============ TAB 7: TROLL ============ -->
   <section class="panel" id="panel-troll">
     <div class="sec-head reveal">
@@ -949,9 +1122,12 @@ body.silly *{font-family:'Comic Sans MS','Comic Sans','Chalkboard SE','Segoe Pri
     <button class="ctl" data-tab="panel-farm">🌾 farm</button>
     <button class="ctl" data-tab="panel-buttons">🎛️ nút</button>
     <button class="ctl" data-tab="panel-book">📖 sổ</button>
+    <button class="ctl" data-tab="panel-mailbox">📬 hộp thư</button>
     <button class="ctl" data-tab="panel-troll">🃏 troll</button>
+    <button class="ctl" data-tab="panel-graphics">⚙️ đồ họa</button>
+    <button class="ctl" data-tab="panel-guide">📘 hướng dẫn</button>
   </div>
-  <p class="foot-line">© 2026 <b>Chim Bé Club v2</b> · 1 file html duy nhất · không framework, chỉ có chim 🐦 · phím <span class="kbd">1</span>–<span class="kbd">9</span> chuyển tab · <span class="kbd">C</span> bắn pháo · <span class="kbd">A</span> thành tựu</p>
+  <p class="foot-line">© 2026 <b>Chim Bé Club v2</b> · 1 file html duy nhất · không framework, chỉ có chim 🐦 · phím <span class="kbd">1</span>–<span class="kbd">9</span> chuyển tab · <span class="kbd">M</span> hộp thư · <span class="kbd">G</span> đồ họa · <span class="kbd">0</span> hướng dẫn · <span class="kbd">C</span> bắn pháo · <span class="kbd">A</span> thành tựu</p>
 </footer>
 </div><!-- /appWrap -->
 
@@ -1025,6 +1201,36 @@ const storedCount = (key, fallback = 0) => {
   const value = store.get(key, fallback);
   return Number.isSafeInteger(value) && value >= 0 ? value : fallback;
 };
+const GRAPHICS_LEVELS = {
+  full:{ label:'Đồ họa đầy đủ' },
+  spectacular:{ label:'Đồ họa tuyệt cảnh' },
+  balanced:{ label:'Đồ họa cân bằng' },
+  low:{ label:'Đồ họa tiết kiệm' }
+};
+let graphicsQuality = store.get('chimbe-graphics-quality', 'full');
+if(!Object.prototype.hasOwnProperty.call(GRAPHICS_LEVELS, graphicsQuality)) graphicsQuality = 'full';
+document.body.dataset.graphicsQuality = graphicsQuality;
+function applyGraphicsQuality(quality){
+  if(!Object.prototype.hasOwnProperty.call(GRAPHICS_LEVELS, quality)) return;
+  graphicsQuality = quality;
+  document.body.dataset.graphicsQuality = quality;
+  store.set('chimbe-graphics-quality', quality);
+  $$('[data-graphics-quality]').forEach(button => {
+    const selected = button.dataset.graphicsQuality === quality;
+    button.classList.toggle('active', selected);
+    button.setAttribute('aria-pressed', String(selected));
+  });
+  $('#graphicsStatus').textContent = GRAPHICS_LEVELS[quality].label + ' đang bật. Cài đặt được lưu trên thiết bị này.';
+  window.dispatchEvent(new Event('resize'));
+  syncSkyLoop();
+}
+$$('[data-graphics-quality]').forEach(button => button.addEventListener('click', () => applyGraphicsQuality(button.dataset.graphicsQuality)));
+$$('[data-graphics-quality]').forEach(button => {
+  const selected = button.dataset.graphicsQuality === graphicsQuality;
+  button.classList.toggle('active', selected);
+  button.setAttribute('aria-pressed', String(selected));
+});
+$('#graphicsStatus').textContent = GRAPHICS_LEVELS[graphicsQuality].label + ' đang bật. Cài đặt được lưu trên thiết bị này.';
 let uiMode = store.get('chimbe-ui-mode', matchMedia('(max-width: 760px)').matches ? 'mobile-lite' : 'pc');
 if(uiMode !== 'pc' && uiMode !== 'mobile-lite') uiMode = 'pc';
 let RM = prefersReducedMotion || uiMode === 'mobile-lite';
@@ -1041,7 +1247,7 @@ function applyUiMode(mode){
   });
   store.set('chimbe-ui-mode', uiMode);
   window.dispatchEvent(new Event('resize'));
-  if(!RM && !skyFrameId) skyFrameId = requestAnimationFrame(loop);
+  if(!RM && graphicsQuality !== 'low' && !skyFrameId) skyFrameId = requestAnimationFrame(loop);
 }
 $$('[data-ui-mode]').forEach(button => button.addEventListener('click', () => applyUiMode(button.dataset.uiMode)));
 applyUiMode(uiMode);
@@ -1303,10 +1509,14 @@ function goTab(id){
 }
 $('#tabs').addEventListener('click', e => { const b = e.target.closest('.tab'); if(b){ goTab(b.dataset.tab); press(); } });
 $('#footLinks').addEventListener('click', e => { const b = e.target.closest('[data-tab]'); if(b){ goTab(b.dataset.tab); press(); } });
+$('#panel-guide').addEventListener('click', e => {
+  const b = e.target.closest('[data-guide-tab]');
+  if(b){ goTab(b.dataset.guideTab); press(); }
+});
 $('#logoHome').addEventListener('click', e => { e.preventDefault(); goTab('panel-home'); });
 document.addEventListener('keydown', e => {
   if(e.target.matches('input,textarea')) return;
-  const map = {'1':'panel-home','2':'panel-flock','3':'panel-games','4':'panel-egg','5':'panel-buttons','6':'panel-book','7':'panel-troll','8':'panel-aim','9':'panel-farm'};
+  const map = {'1':'panel-home','2':'panel-flock','3':'panel-games','4':'panel-aim','5':'panel-egg','6':'panel-buttons','7':'panel-book','8':'panel-troll','9':'panel-farm','0':'panel-guide','m':'panel-mailbox','M':'panel-mailbox','g':'panel-graphics','G':'panel-graphics'};
   if(map[e.key]) goTab(map[e.key]);
   if(e.key === 'c' || e.key === 'C') burst(innerWidth/2, innerHeight*.4, 90);
   if(e.key === 'a' || e.key === 'A'){ renderAch(); $('#achOv').classList.add('show'); }
@@ -1318,7 +1528,7 @@ const fcv = $('#fx'), fx = fcv.getContext('2d');
 let W, H;
 let lastSkyTime = 0;
 function resize(){
-  const dpr = Math.min(devicePixelRatio || 1, 2);
+  const dpr = Math.min(devicePixelRatio || 1, graphicsQuality === 'spectacular' ? 2.5 : graphicsQuality === 'full' ? 2 : 1);
   W = innerWidth; H = innerHeight;
   cv.width = W * dpr; cv.height = H * dpr;
   cv.style.width = W + 'px'; cv.style.height = H + 'px';
@@ -1358,9 +1568,9 @@ function lerpSky(frameScale){
 const stars = Array.from({length: 110}, () => ({ x: Math.random(), y: Math.random() * .72, r: .5 + Math.random() * 1.5, ph: Math.random() * 6.28, sp: .5 + Math.random() * 1.6, c: PALETTE[Math.floor(Math.random() * PALETTE.length)] }));
 const clouds = Array.from({length: 6}, () => ({ x: Math.random(), y: .08 + Math.random() * .34, s: .6 + Math.random() * 1.2, v: .00002 + Math.random() * .00004 }));
 const flyers = [], parts = [];
-const MAX_PARTICLES = 1200;
+const PARTICLE_LIMITS = { full:1200, spectacular:1800, balanced:300, low:0 };
 function addParticle(p){
-  if(parts.length < MAX_PARTICLES) parts.push(p);
+  if(parts.length < PARTICLE_LIMITS[graphicsQuality]) parts.push(p);
 }
 const snowArr = [], rainArr = [];
 let snowSpawn = 0, rainSpawn = 0;
@@ -1368,22 +1578,22 @@ let weather = 'clear', mx = .5;
 addEventListener('pointermove', e => { mx = e.clientX / innerWidth; }, { passive: true });
 
 function spawnFlyer(force){
-  if(RM) return;
-  if(!force && flyers.length > 3) return;
+  if(RM || graphicsQuality === 'low' || document.hidden) return;
+  if(!force && flyers.length > (graphicsQuality === 'balanced' ? 1 : graphicsQuality === 'spectacular' ? 5 : 3)) return;
   const dir = Math.random() < .5 ? 1 : -1;
   flyers.push({ x: dir === 1 ? -30 : W + 30, y: H * (.06 + Math.random() * .38), vx: dir * (1 + Math.random() * 1.4), s: .7 + Math.random() * .9, ph: Math.random() * 6.28, fs: 6 + Math.random() * 4, a: .3 + Math.random() * .4 });
 }
 setInterval(spawnFlyer, 4200); spawnFlyer();
 
 function burst(x, y, n){
-  if(RM) return;
+  if(RM || graphicsQuality === 'low') return;
   for(let i = 0; i < n; i++){
     const a = Math.random() * 6.28, v = 3 + Math.random() * 8;
     addParticle({ t:'c', x, y, vx: Math.cos(a)*v, vy: Math.sin(a)*v - 3, g:.14, rot: Math.random()*6.28, vr: (Math.random()-.5)*.4, size: 4 + Math.random()*6, life: 70 + Math.random()*50, max: 120, c: PALETTE[Math.floor(Math.random()*PALETTE.length)] });
   }
 }
 function starfall(n){
-  if(RM) return;
+  if(RM || graphicsQuality === 'low') return;
   for(let i = 0; i < n; i++){
     addParticle({ t:'s', x: Math.random()*W, y: -10 - Math.random()*80, vx: (Math.random()-.5)*.4, vy: .6 + Math.random()*1.6, g:.004, rot: 0, vr: 0, size: 1 + Math.random()*2.4, life: 220 + Math.random()*120, max: 340, c: PALETTE[Math.floor(Math.random()*PALETTE.length)] });
   }
@@ -1477,9 +1687,10 @@ function loop(t){
   }
   /* weather */
   if(weather === 'snow'){
-    if(snowArr.length < 130 && !RM){
-      snowSpawn += 2 * frameScale;
-      while(snowSpawn >= 1 && snowArr.length < 130){
+    const snowLimit = graphicsQuality === 'balanced' ? 35 : graphicsQuality === 'spectacular' ? 180 : 130;
+    if(snowArr.length < snowLimit && !RM){
+      snowSpawn += (graphicsQuality === 'balanced' ? 1 : graphicsQuality === 'spectacular' ? 3 : 2) * frameScale;
+      while(snowSpawn >= 1 && snowArr.length < snowLimit){
         snowArr.push({ x: Math.random() * W, y: -8, v: .5 + Math.random() * 1.2, r: 1.2 + Math.random() * 2.4, ph: Math.random() * 6.28 });
         snowSpawn--;
       }
@@ -1495,9 +1706,10 @@ function loop(t){
     cx.globalAlpha = 1;
   } else { snowArr.length = 0; snowSpawn = 0; }
   if(weather === 'rain'){
-    if(rainArr.length < 110 && !RM){
-      rainSpawn += 3 * frameScale;
-      while(rainSpawn >= 1 && rainArr.length < 110){
+    const rainLimit = graphicsQuality === 'balanced' ? 30 : graphicsQuality === 'spectacular' ? 160 : 110;
+    if(rainArr.length < rainLimit && !RM){
+      rainSpawn += (graphicsQuality === 'balanced' ? 1.5 : graphicsQuality === 'spectacular' ? 4 : 3) * frameScale;
+      while(rainSpawn >= 1 && rainArr.length < rainLimit){
         rainArr.push({ x: Math.random() * W, y: -12, v: 9 + Math.random() * 7, l: 10 + Math.random() * 12 });
         rainSpawn--;
       }
@@ -1539,11 +1751,39 @@ function loop(t){
     }
   }
   fx.globalAlpha = 1;
-  if(!RM) skyFrameId = requestAnimationFrame(loop);
+  if(!RM && graphicsQuality !== 'low') skyFrameId = requestAnimationFrame(loop);
 }
-if(!RM && !document.hidden && !skyFrameId) skyFrameId = requestAnimationFrame(loop);
+function canRenderSky(){ return !RM && graphicsQuality !== 'low' && !document.hidden; }
+function syncSkyLoop(){
+  if(!canRenderSky()){
+    if(skyFrameId){
+      cancelAnimationFrame(skyFrameId);
+      skyFrameId = 0;
+    }
+    if(graphicsQuality === 'low'){
+      flyers.length = 0;
+      parts.length = 0;
+      snowArr.length = 0;
+      rainArr.length = 0;
+      cx.clearRect(0, 0, W, H);
+      fx.clearRect(0, 0, W, H);
+    }
+    return;
+  }
+  if(!skyFrameId) skyFrameId = requestAnimationFrame(loop);
+}
+if(canRenderSky() && !skyFrameId) skyFrameId = requestAnimationFrame(loop);
 document.addEventListener('visibilitychange', () => {
-  if(!document.hidden && !RM && !skyFrameId) skyFrameId = requestAnimationFrame(loop);
+  document.body.classList.toggle('page-hidden', document.hidden);
+  if(document.hidden){
+    lastSkyTime = 0;
+    if(skyFrameId){
+      cancelAnimationFrame(skyFrameId);
+      skyFrameId = 0;
+    }
+    return;
+  }
+  syncSkyLoop();
 });
 
 /* sky + weather controls */
@@ -1582,7 +1822,11 @@ function say(txt){
   b.classList.add('swap');
   setTimeout(() => { b.textContent = txt; b.classList.remove('swap'); }, 240);
 }
-setInterval(() => { phIdx = (phIdx + 1) % PHRASES.length; say(PHRASES[phIdx]); }, 4200);
+setInterval(() => {
+  if(document.hidden || !$('#panel-home').classList.contains('active')) return;
+  phIdx = (phIdx + 1) % PHRASES.length;
+  say(PHRASES[phIdx]);
+}, 4200);
 $('#nestFamily').addEventListener('click', e => {
   const bw = e.target.closest('.bird-wrap');
   if(!bw) return;
@@ -1943,7 +2187,7 @@ $('#btnFarmClaim').addEventListener('click', () => {
   renderFarmBirds();
   renderFlock();
 });
-setInterval(renderFarmStatus, 15000);
+setInterval(() => { if(!document.hidden) renderFarmStatus(); }, 15000);
 document.addEventListener('visibilitychange', renderFarmStatus);
 
 /* ================= scroll reveals ================= */
@@ -2536,6 +2780,31 @@ let notes = Array.isArray(savedNotes)
       rot:Math.max(-1.2, Math.min(1.2, n.rot))
     }))
   : SEED_NOTES.slice();
+const LIGHTNING_BIRD_INDEX = FLOCK.findIndex(bird => bird.ten === 'Lôi Điểu');
+const MAILBOX_REWARD_KEY = 'chimbe-mailbox-luaaoi-reward';
+const LEGACY_GUESTBOOK_REWARD_KEY = 'chimbe-guestbook-luaaoi-reward';
+let mailboxRewardStatus = store.get(MAILBOX_REWARD_KEY, null);
+if(mailboxRewardStatus !== 'pending' && mailboxRewardStatus !== 'claimed') mailboxRewardStatus = null;
+if(!mailboxRewardStatus && store.get(LEGACY_GUESTBOOK_REWARD_KEY, false) === true){
+  mailboxRewardStatus = 'claimed';
+  store.set(MAILBOX_REWARD_KEY, mailboxRewardStatus);
+}
+function renderMailbox(){
+  const box = $('#mailboxList');
+  $('#mailboxBadge').hidden = mailboxRewardStatus !== 'pending';
+  if(mailboxRewardStatus === 'pending'){
+    box.innerHTML = '<article class="mail-card">'
+      + '<h3>📨 Thư quà từ Bầy chim</h3>'
+      + '<p>🌩️ Lôi Điểu Tổ tông · 🌾 100 hạt · 🃏 20 thẻ tăng trọng (bậc thường)</p>'
+      + '<button class="btn btn-primary btn-md" type="button" data-claim-mail>🎁 Mở phần quà</button>'
+      + '</article>';
+  } else if(mailboxRewardStatus === 'claimed'){
+    box.innerHTML = '<article class="mail-card"><h3>✅ Đã nhận quà</h3><p>Quà trong thư đã được chuyển vào bộ sưu tập và kho vật phẩm.</p></article>';
+  } else {
+    box.innerHTML = '<div class="mail-empty">📭 Hộp thư chưa có thư mới.</div>';
+  }
+}
+renderMailbox();
 function fmtTime(t){
   const d = new Date(t);
   return d.toLocaleTimeString('vi-VN', {hour:'2-digit', minute:'2-digit'}) + ' · ' + d.toLocaleDateString('vi-VN');
@@ -2558,11 +2827,47 @@ $('#bookForm').addEventListener('submit', e => {
   const text = $('#fText').value.trim();
   if(!text) return;
   const ten = $('#fName').value.trim() || 'Chim Ẩn Danh';
+  const earnsSecretReward = ten.toLowerCase() === 'luaaoi' && text.toLowerCase() === 'set free';
   notes.unshift({ ten, text, t: Date.now(), ci: Math.floor(Math.random() * FLOCK.length), rot: +(Math.random() * 2.4 - 1.2).toFixed(2) });
   store.set('chimbe-notes', notes); renderNotes();
   $('#fText').value = '';
   press(); chirp(2300); unlock('writer');
   burst(innerWidth/2, innerHeight/2, 30);
+  if(earnsSecretReward){
+    if(mailboxRewardStatus === 'claimed'){
+      toast('📬 Bạn đã nhận phần quà trong Hộp thư rồi.');
+    } else {
+      if(mailboxRewardStatus !== 'pending'){
+        mailboxRewardStatus = 'pending';
+        store.set(MAILBOX_REWARD_KEY, mailboxRewardStatus);
+      }
+      renderMailbox();
+      toast('📬 Bạn có thư quà mới trong Hộp thư!');
+    }
+  }
+});
+$('#mailboxList').addEventListener('click', e => {
+  const button = e.target.closest('[data-claim-mail]');
+  if(!button || mailboxRewardStatus !== 'pending') return;
+  if(LIGHTNING_BIRD_INDEX < 0) throw new Error('Không tìm thấy chim Lôi Điểu để cấp phần thưởng lưu bút.');
+  button.disabled = true;
+  mailboxRewardStatus = 'claimed';
+  store.set(MAILBOX_REWARD_KEY, mailboxRewardStatus);
+  coll.add(LIGHTNING_BIRD_INDEX);
+  saveColl();
+  birdUpgrades[LIGHTNING_BIRD_INDEX] = { rarity:'ancestor', failures:0, broken:false };
+  saveBirdUpgrades();
+  addSeeds(100);
+  addBirdCard('common', 20);
+  renderFlock();
+  renderCollMini();
+  renderMailbox();
+  toast('🎁 Đã nhận Lôi Điểu Tổ tông, 100 hạt và 20 thẻ tăng trọng thường!');
+  const birdCard = $('#flock [data-rar="ancestor"]');
+  if(birdCard){
+    const rect = birdCard.getBoundingClientRect();
+    burst(rect.left + rect.width / 2, rect.top + rect.height / 2, 100);
+  }
 });
 $('#notes').addEventListener('click', e => {
   const x = e.target.closest('[data-del]');
@@ -2831,7 +3136,7 @@ document.addEventListener('visibilitychange', () => {
 let lastTrail = 0;
 addEventListener('pointermove', e => {
   const now = performance.now();
-  if(RM || now - lastTrail < 55) return;
+  if(RM || graphicsQuality !== 'full' || now - lastTrail < 55) return;
   lastTrail = now;
   addParticle({ t:'f', x: e.clientX + (Math.random() - .5) * 12, y: e.clientY + (Math.random() - .5) * 12, vx: (Math.random() - .5) * .8, vy: .35 + Math.random() * .5, g: .014, rot: Math.random() * 6.28, vr: (Math.random() - .5) * .14, size: 2.6 + Math.random() * 3.4, life: 100, max: 100, c: PALETTE[Math.floor(Math.random() * PALETTE.length)] });
 });
@@ -2839,6 +3144,7 @@ addEventListener('pointermove', e => {
 /* online jitter */
 let online = 128;
 setInterval(() => {
+  if(document.hidden) return;
   online = Math.max(97, Math.min(214, online + Math.floor(Math.random() * 7) - 3));
   $('#online').textContent = online;
 }, 3500);
