@@ -2,7 +2,14 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0f2c">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#131a46">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=no">
 <title>Chim Bé Club — chào mấy thằng chim bé</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐦</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,14 +24,29 @@
   --acc1:#54c0ff; --acc2:#9b7bff; --ice:#eaf6ff; --glow:rgba(84,192,255,.30);
   --display:'Bungee','Paytone One','Be Vietnam Pro',sans-serif;
   --body:'Be Vietnam Pro',system-ui,sans-serif;
+  /* adaptive tokens */
+  --ui-scale:1;
+  --tap-min:38px;
+  --safe-t:env(safe-area-inset-top,0px);
+  --safe-b:env(safe-area-inset-bottom,0px);
+  --safe-l:env(safe-area-inset-left,0px);
+  --safe-r:env(safe-area-inset-right,0px);
+  --pad-x:clamp(12px,3.2vw,20px);
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{
+  scroll-behavior:smooth;
+  font-size:calc(16px * var(--ui-scale));
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+}
 body{
   font-family:var(--body); color:var(--ink);
   background:linear-gradient(160deg, var(--bg0) 0%, #0e1440 55%, #171046 100%);
   background-attachment:fixed;
-  min-height:100vh; overflow-x:hidden;
+  min-height:100vh; min-height:100dvh; overflow-x:hidden;
+  overscroll-behavior-y:contain;
+  -webkit-tap-highlight-color:transparent;
 }
 ::selection{background:var(--acc2); color:#140b33}
 ::-webkit-scrollbar{width:11px}
@@ -73,44 +95,25 @@ header{position:sticky;top:0;z-index:50;background:rgba(11,16,45,.92);backdrop-f
 .mode-btn{border:0;border-radius:999px;background:transparent;color:var(--ink2);font-size:.68rem;font-weight:800;padding:7px 9px;white-space:nowrap;transition:background .2s,color .2s}
 .mode-btn.active{background:var(--acc1);color:#081030}
 .mode-label-compact{display:none}
-body.mobile-lite{background-attachment:scroll;cursor:auto}
-body.mobile-lite #appWrap{width:min(100%,430px);min-height:100vh;margin-inline:auto;overflow:hidden;container-type:inline-size;box-shadow:0 0 0 1px var(--line),0 18px 60px rgba(5,9,35,.45)}
-body.pc-mode #appWrap{width:100%;max-width:none;min-height:100vh;margin:0;overflow:visible;container-type:normal;box-shadow:none}
-body.mobile-lite #sky,body.mobile-lite #fx{display:none}
-body.mobile-lite header{backdrop-filter:none}
-body.mobile-lite .ticker .track{animation:none}
-body.mobile-lite .reveal{opacity:1;transform:none}
-body.mobile-lite *,body.mobile-lite *::before,body.mobile-lite *::after{animation:none!important;scroll-behavior:auto!important;transition:none!important}
-body.mobile-lite .dot{opacity:1}
-body.mobile-lite .home-grid,body.mobile-lite .games-duo,body.mobile-lite .egg-grid,body.mobile-lite .book-grid{grid-template-columns:1fr}
-body.mobile-lite .home-grid{gap:8px}
-body.mobile-lite .nest-stage{order:-1;padding-top:10px}
-body.mobile-lite .book-form{position:static}
-body.mobile-lite .tabs{order:3;width:100%}
-body.mobile-lite .mode-switch{order:4;margin-left:auto}
-body.mobile-lite .online{display:none}
-body.mobile-lite .lvl-chip{min-width:110px}
-body.mobile-lite .mode-label-full{display:none}
-body.mobile-lite .mode-label-compact{display:inline}
-body.mobile-lite .btn-big{font-size:.92rem;padding:14px 22px}
-body.mobile-lite .ring{width:240px;height:240px}
-body.mobile-lite .nest-bubble{right:-6px;max-width:170px}
-body.mobile-lite .lvl-chip .lvl-top span{display:none}
-body.mobile-lite .hwrap{gap:8px;padding:9px 12px}
-body.mobile-lite .mode-switch{gap:2px;padding:2px}
-body.mobile-lite .mode-btn{font-size:.65rem;padding:6px 8px}
-body.mobile-lite h1.display{font-size:2.1rem}
-body.mobile-lite .sec-head h2{font-size:1.5rem}
-body.mobile-lite .hack-joke{font-size:1.9rem}
-body.mobile-lite .bomb-num{font-size:6rem}
-body.mobile-lite #bombEnd{font-size:1.5rem}
-@supports (font-size:1cqi){
-  body.mobile-lite h1.display{font-size:clamp(2.1rem,8cqi,3.9rem)}
-  body.mobile-lite .sec-head h2{font-size:clamp(1.5rem,5.6cqi,2.3rem)}
-  body.mobile-lite .hack-joke{font-size:clamp(1.9rem,5.5cqi,3.2rem)}
-  body.mobile-lite .bomb-num{font-size:clamp(6rem,24cqi,13rem)}
-  body.mobile-lite #bombEnd{font-size:clamp(1.5rem,5cqi,2.5rem)}
+
+/* ============ ADAPTIVE CORE — đa thiết bị ============ */
+/* ui-mobile: bố cục & thao tác cho điện thoại · ui-lite: tắt hiệu ứng nặng cho máy yếu */
+#appWrap{container-type:inline-size;container-name:app}
+body.ui-mobile{background-attachment:scroll;cursor:auto}
+body.ui-mobile #appWrap{
+  width:min(100%,430px); min-height:100dvh; margin-inline:auto;
+  overflow-x:clip;
+  box-shadow:0 0 0 1px var(--line),0 18px 60px rgba(5,9,35,.45);
 }
+body.ui-pc #appWrap{width:100%;max-width:none;min-height:100dvh;margin:0;box-shadow:none}
+body.ui-lite #sky,body.ui-lite #fx{display:none}
+body.ui-lite header{backdrop-filter:none}
+body.ui-lite .ticker .track{animation:none}
+body.ui-lite .reveal{opacity:1;transform:none}
+body.ui-lite *,body.ui-lite *::before,body.ui-lite *::after{animation:none!important;scroll-behavior:auto!important;transition:none!important}
+body.ui-lite .dot{opacity:1}
+body.ui-mobile .mode-label-full{display:none}
+body.ui-mobile .mode-label-compact{display:inline}
 .online{display:flex;align-items:center;gap:7px;font-size:.78rem;font-weight:700;color:var(--ink2);background:var(--panel2);border:1px solid var(--line);padding:8px 12px;border-radius:999px}
 .online b{color:var(--ice)}
 .dot{width:8px;height:8px;border-radius:50%;background:#69e6a6;box-shadow:0 0 10px #69e6a6;animation:pulse 1.6s ease-in-out infinite}
@@ -259,7 +262,7 @@ h1 .ch{display:inline-block;animation:chIn .65s cubic-bezier(.2,1.7,.4,1) both}
 .gp-num b{font-family:var(--display);font-size:1.7rem;color:var(--acc1);display:block;line-height:1}
 .gp-num span{font-size:.62rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)}
 .gp-num.time b{color:var(--acc2)}
-#catchCanvas{width:100%;height:320px;display:block;border:2px dashed var(--line);border-radius:16px;background:rgba(8,12,40,.5);cursor:crosshair;touch-action:manipulation}
+#catchCanvas{width:100%;height:320px;display:block;border:2px dashed var(--line);border-radius:16px;background:rgba(8,12,40,.5);cursor:crosshair;touch-action:none}
 .games-duo{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 #aimCanvas{width:100%;height:390px;display:block;border:2px dashed var(--line);border-radius:16px;background:rgba(8,12,40,.5);cursor:crosshair;touch-action:none}
 .aim-controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px}
@@ -271,8 +274,11 @@ h1 .ch{display:inline-block;animation:chIn .65s cubic-bezier(.2,1.7,.4,1) both}
 .aim-game:fullscreen #aimCanvas{flex:1 1 auto;height:auto;min-height:220px}
 .aim-game:fullscreen .aim-controls{flex:0 0 auto}
 .aim-game:fullscreen .aim-msg{flex:0 0 auto}
-@media (min-width:941px){#aimCanvas{height:clamp(520px,65vh,800px)}}
-@media (max-width:940px){#aimCanvas{height:clamp(420px,60vh,680px)}}
+/* dự phòng "toàn màn hình" cho trình duyệt không hỗ trợ Fullscreen API (vd: iOS Safari) */
+.aim-game.immersive{position:fixed;inset:0;z-index:600;display:flex;flex-direction:column;width:100vw;height:100vh;height:100dvh;max-width:none;margin:0;padding:calc(14px + var(--safe-t)) calc(14px + var(--safe-r)) calc(14px + var(--safe-b)) calc(14px + var(--safe-l));background:var(--bg0);border:0;border-radius:0;overflow:auto}
+.aim-game.immersive #aimCanvas{flex:1 1 auto;height:auto;min-height:220px}
+.aim-game.immersive .aim-controls{flex:0 0 auto}
+.aim-game.immersive .aim-msg{flex:0 0 auto}
 .aim-help{color:var(--ink2);font-size:.8rem}
 .theme-settings{background:var(--panel);border:2px solid var(--line);border-radius:20px 20px 20px 7px;padding:22px;margin-bottom:22px}
 .theme-settings h3{font-family:var(--display);font-size:1rem;color:var(--ice);margin-bottom:6px}
@@ -454,29 +460,7 @@ body.silly *{font-family:'Comic Sans MS','Comic Sans','Chalkboard SE','Segoe Pri
 .shake{animation:shake .45s}
 @keyframes shake{10%,90%{transform:translate(-4px,1px)}20%,80%{transform:translate(6px,-2px) rotate(.4deg)}30%,70%{transform:translate(-9px,2px) rotate(-.5deg)}40%,60%{transform:translate(9px,-1px)}50%{transform:translate(-6px,2px) rotate(.4deg)}}
 
-@media (max-width:940px){
-  .home-grid{grid-template-columns:1fr;gap:8px}
-  .nest-stage{order:-1;padding-top:10px}
-  .book-grid{grid-template-columns:1fr}
-  .book-form{position:static}
-  .games-duo{grid-template-columns:1fr}
-  .egg-grid{grid-template-columns:1fr}
-  .tabs{order:3;width:100%}
-  .mode-switch{order:4;margin-left:auto}
-  .online{display:none}
-  .lvl-chip{min-width:110px}
-}
-@media (max-width:560px){
-  .btn-big{font-size:.92rem;padding:14px 22px}
-  .ring{width:240px;height:240px}
-  .nest-bubble{right:-6px;max-width:170px}
-  .lvl-chip .lvl-top span{display:none}
-  .hwrap{gap:8px;padding:9px 12px}
-  .mode-switch{gap:2px;padding:2px}
-  .mode-btn{font-size:.65rem;padding:6px 8px}
-  .mode-label-full{display:none}
-  .mode-label-compact{display:inline}
-}
+
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
@@ -508,7 +492,6 @@ h1.display,h1 .hl{text-shadow:0 0 14px rgba(84,192,255,.18)}
 .guide-card p{color:var(--ink2);font-size:.82rem;line-height:1.65}
 .guide-card .guide-action{margin-top:10px}
 .guide-note{margin-top:16px;padding:14px 16px;border-left:3px solid var(--acc1);background:rgba(84,192,255,.06);border-radius:0 12px 12px 0;color:var(--ink2);font-size:.82rem;line-height:1.65}
-@media (max-width:600px){.guide-card{padding:15px}.guide-grid{gap:10px}}
 .graphics-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:14px}
 .graphics-option{width:100%;padding:18px;text-align:left;background:rgba(17,24,64,.82);border:1px solid var(--line);border-radius:16px;color:var(--ink)}
 .graphics-option:hover,.graphics-option.active{border-color:var(--acc1);background:rgba(84,192,255,.08)}
@@ -518,6 +501,131 @@ h1.display,h1 .hl{text-shadow:0 0 14px rgba(84,192,255,.18)}
 .graphics-option b{display:block;margin-bottom:7px;color:var(--ice);font-size:.95rem}
 .graphics-option span{display:block;color:var(--ink2);font-size:.8rem;line-height:1.6}
 .graphics-status{margin-top:16px;color:var(--acc1);font-size:.86rem;font-weight:800}
+/* device adaptation panel */
+.device-readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:10px;margin-bottom:18px}
+.device-readout .dr-cell{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:11px 13px}
+.device-readout .dr-cell span{display:block;font-size:.66rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
+.device-readout .dr-cell b{display:block;margin-top:3px;font-size:.86rem;color:var(--ice);font-weight:800}
+.adapt-group{margin-top:14px}
+.adapt-label{display:block;font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);margin-bottom:8px}
+.adapt-row{display:flex;flex-wrap:wrap;gap:8px}
+.adapt-row .ctl.on{border-color:var(--acc1);color:#081030;background:var(--acc1);box-shadow:0 4px 16px var(--glow)}
+
+/* ============ ADAPTIVE LAYOUT — container queries theo khung ứng dụng ============ */
+/* Giao diện tự co đúng cả khi thu nhỏ cửa sổ PC lẫn khi dùng khung mobile */
+@container app (max-width: 980px){
+  .home-grid{grid-template-columns:1fr;gap:14px}
+  .nest-stage{order:-1;padding-top:10px}
+  .book-grid{grid-template-columns:1fr}
+  .book-form{position:static}
+  .games-duo{grid-template-columns:1fr}
+  .egg-grid{grid-template-columns:1fr}
+}
+@container app (max-width: 820px){
+  .hwrap{gap:10px;padding:10px 14px}
+  .tabs{order:3;width:100%}
+  .mode-switch{order:4;margin-left:auto}
+  .online{display:none}
+  .lvl-chip{min-width:110px}
+  .stat-strip{gap:10px 14px;padding:13px 16px}
+  .gp-top{gap:10px}
+  .gp-score{gap:12px}
+}
+@container app (max-width: 620px){
+  .btn-big{font-size:.92rem;padding:14px 22px}
+  .ring{width:240px;height:240px}
+  .nest-bubble{right:-6px;max-width:170px}
+  .lvl-chip .lvl-top span{display:none}
+  .hwrap{gap:8px;padding:9px 12px}
+  .mode-switch{gap:2px;padding:2px}
+  .mode-btn{font-size:.65rem;padding:6px 8px}
+  .mode-label-full{display:none}
+  .mode-label-compact{display:inline}
+  .flock{grid-template-columns:1fr}
+  .tiles{grid-template-columns:1fr}
+  .guide-grid{grid-template-columns:1fr;gap:10px}
+  .guide-card{padding:15px}
+  .ach-grid{grid-template-columns:1fr}
+  .graphics-options{grid-template-columns:1fr}
+  .farm-summary{grid-template-columns:1fr 1fr}
+  .theme-presets{gap:8px}
+  .ov{padding:14px}
+  .ach-box{padding:18px}
+  .book-form{padding:18px}
+  .game-panel{padding:18px 16px}
+  main{padding:8px var(--pad-x) 48px}
+}
+
+/* ============ ADAPTIVE TYPE — chữ co mượt theo khung ============ */
+@supports (font-size:1cqi){
+  h1.display{font-size:clamp(2.1rem,8cqi,3.9rem)}
+  .sec-head h2{font-size:clamp(1.5rem,5.6cqi,2.3rem)}
+  .hack-joke{font-size:clamp(1.9rem,5.5cqi,3.2rem)}
+  .bomb-num{font-size:clamp(6rem,24cqi,13rem)}
+  #bombEnd{font-size:clamp(1.5rem,5cqi,2.5rem)}
+}
+
+/* ============ ADAPTIVE CHROME — safe area, header, thanh tab ============ */
+header{padding-top:var(--safe-t);padding-left:var(--safe-l);padding-right:var(--safe-r)}
+main{padding-left:max(var(--pad-x),var(--safe-l));padding-right:max(var(--pad-x),var(--safe-r))}
+footer{padding-bottom:var(--safe-b)}
+.hwrap{transition:padding .25s,gap .25s}
+body.hdr-compact .hwrap{padding-top:6px;padding-bottom:6px;gap:10px}
+body.hdr-compact .logo-bird{width:32px;height:32px;border-radius:11px 11px 11px 3px}
+body.hdr-compact .logo-txt{font-size:.78rem}
+body.hdr-compact .lvl-chip{min-width:0;padding:5px 10px}
+body.hdr-compact .lvl-emoji{font-size:1.05rem}
+.tabs{
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 14px,#000 calc(100% - 14px),transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 14px,#000 calc(100% - 14px),transparent);
+  scroll-snap-type:x proximity;
+  overscroll-behavior-x:contain;
+}
+.tab{scroll-snap-align:center;min-height:var(--tap-min);touch-action:manipulation}
+#toasts{left:max(18px,var(--safe-l));bottom:max(18px,var(--safe-b));right:var(--safe-r);align-items:flex-start}
+.toast{max-width:min(340px,calc(100vw - 36px))}
+#cookieModal{left:max(18px,var(--safe-l));bottom:max(18px,var(--safe-b));max-width:min(360px,calc(100vw - 36px))}
+.tpop{max-width:min(242px,calc(100vw - 20px))}
+
+/* ============ ADAPTIVE INPUT — chuột vs cảm ứng ============ */
+.btn,.ctl,.icon-btn,.mode-btn,.aim-level,.theme-preset,.graphics-option{touch-action:manipulation}
+@media (pointer:coarse){
+  :root{--tap-min:44px}
+  body{cursor:auto}
+  .btn,.ctl{min-height:44px}
+  .icon-btn{width:44px;height:44px}
+  .tab{min-height:44px}
+  .note-x{opacity:1}
+  .chip:hover,.tab:hover,.ctl:hover,.btn:hover,.icon-btn:hover,.bird-card:hover,.tile:hover,.note:hover,.theme-preset:hover,.aim-level:hover{transform:none}
+  .nest-parent:hover,.nest-chick:hover,.egg-svg:hover{transform:none;filter:drop-shadow(0 16px 26px rgba(5,9,35,.55))}
+}
+@media (hover:hover) and (pointer:fine){
+  .btn:hover{transition-duration:.18s}
+}
+body.big-tap{--tap-min:46px}
+body.big-tap .btn,body.big-tap .ctl{min-height:46px}
+body.big-tap .icon-btn{width:46px;height:46px}
+body.big-tap .tab{min-height:46px;font-size:.82rem;padding:10px 14px}
+@media (prefers-contrast:more){
+  :root{--line:#4a5cb0;--ink2:#c3d0f5}
+  .btn-ghost,.tab{border-width:2px}
+}
+
+/* ============ ADAPTIVE VIEWPORT — xoay màn hình, máy landscape ============ */
+@media (max-height:520px) and (orientation:landscape){
+  .hwrap{padding-top:6px;padding-bottom:6px}
+  .logo-txt em{display:none}
+  main{padding-bottom:32px}
+  .ring{width:200px;height:200px}
+  .nest-family{height:230px}
+  h1.display{font-size:clamp(1.7rem,5.5cqi,2.6rem)}
+  .kicker{margin:18px 0 10px}
+  .sec-head{margin:22px 0 14px}
+  #catchCanvas{height:240px}
+  #aimCanvas{height:clamp(220px,55vh,360px)}
+}
+@media (min-width:1024px){#aimCanvas{height:clamp(520px,65vh,800px)}}
+@media (max-width:1023px){#aimCanvas{height:clamp(420px,60vh,680px)}}
 body[data-graphics-quality="balanced"] .ticker .track,
 body[data-graphics-quality="balanced"] .bird-wrap.bob,
 body[data-graphics-quality="balanced"] .dot,
@@ -546,18 +654,18 @@ body[data-graphics-quality="low"] *::after{animation:none!important;transition:n
   50%{transform:translateY(-5px) rotate(calc(var(--rot,0deg) * -1))}
 }
 @media (prefers-reduced-motion:no-preference){
-  body[data-graphics-quality="spectacular"]:not(.mobile-lite) .panel.active > *{animation:spectacleTabIn .78s cubic-bezier(.2,.9,.3,1) both}
-  body[data-graphics-quality="spectacular"]:not(.mobile-lite) .panel.active > *:nth-child(2){animation-delay:.1s}
-  body[data-graphics-quality="spectacular"]:not(.mobile-lite) .panel.active > *:nth-child(3){animation-delay:.2s}
-  body[data-graphics-quality="spectacular"]:not(.mobile-lite) .panel.active > *:nth-child(4){animation-delay:.3s}
-  body[data-graphics-quality="spectacular"]:not(.mobile-lite) .bird-card{animation:spectacleCardFloat 3.8s ease-in-out infinite,spectacleGlow 4s ease-in-out infinite}
-  body[data-graphics-quality="spectacular"]:not(.mobile-lite) .bird-card:nth-child(3n){animation-delay:-1.2s,-2s}
-  body[data-graphics-quality="spectacular"]:not(.mobile-lite) .bird-card:nth-child(3n + 1){animation-delay:-2.4s,-1s}
-  body[data-graphics-quality="spectacular"]:not(.mobile-lite) .bird-card .bird-wrap{filter:drop-shadow(0 0 9px rgba(84,192,255,.48));animation:spectacleBirdBob 2.8s ease-in-out infinite}
-  body[data-graphics-quality="spectacular"]:not(.mobile-lite) .bird-card.legendary .bird-wrap,
-  body[data-graphics-quality="spectacular"]:not(.mobile-lite) .bird-card.ancestor .bird-wrap{filter:drop-shadow(0 0 13px rgba(255,212,59,.65))}
-  body[data-graphics-quality="spectacular"]:not(.mobile-lite) .bird-card:hover{animation:none;transform:rotate(0deg) translateY(-8px) scale(1.04)}
-  body[data-graphics-quality="spectacular"]:not(.mobile-lite) .tab.active{box-shadow:0 0 18px rgba(84,192,255,.28),inset 0 0 14px rgba(155,123,255,.12)}
+  body[data-graphics-quality="spectacular"]:not(.ui-lite) .panel.active > *{animation:spectacleTabIn .78s cubic-bezier(.2,.9,.3,1) both}
+  body[data-graphics-quality="spectacular"]:not(.ui-lite) .panel.active > *:nth-child(2){animation-delay:.1s}
+  body[data-graphics-quality="spectacular"]:not(.ui-lite) .panel.active > *:nth-child(3){animation-delay:.2s}
+  body[data-graphics-quality="spectacular"]:not(.ui-lite) .panel.active > *:nth-child(4){animation-delay:.3s}
+  body[data-graphics-quality="spectacular"]:not(.ui-lite) .bird-card{animation:spectacleCardFloat 3.8s ease-in-out infinite,spectacleGlow 4s ease-in-out infinite}
+  body[data-graphics-quality="spectacular"]:not(.ui-lite) .bird-card:nth-child(3n){animation-delay:-1.2s,-2s}
+  body[data-graphics-quality="spectacular"]:not(.ui-lite) .bird-card:nth-child(3n + 1){animation-delay:-2.4s,-1s}
+  body[data-graphics-quality="spectacular"]:not(.ui-lite) .bird-card .bird-wrap{filter:drop-shadow(0 0 9px rgba(84,192,255,.48));animation:spectacleBirdBob 2.8s ease-in-out infinite}
+  body[data-graphics-quality="spectacular"]:not(.ui-lite) .bird-card.legendary .bird-wrap,
+  body[data-graphics-quality="spectacular"]:not(.ui-lite) .bird-card.ancestor .bird-wrap{filter:drop-shadow(0 0 13px rgba(255,212,59,.65))}
+  body[data-graphics-quality="spectacular"]:not(.ui-lite) .bird-card:hover{animation:none;transform:rotate(0deg) translateY(-8px) scale(1.04)}
+  body[data-graphics-quality="spectacular"]:not(.ui-lite) .tab.active{box-shadow:0 0 18px rgba(84,192,255,.28),inset 0 0 14px rgba(155,123,255,.12)}
 }
 </style>
 </head>
@@ -602,9 +710,10 @@ body[data-graphics-quality="low"] *::after{animation:none!important;transition:n
       <button class="icon-btn" id="btnSound" title="bật/tắt tiếng chíp">🔊</button>
     </div>
     <div class="online"><span class="dot"></span><b id="online">128</b>&nbsp;chim online</div>
-    <div class="mode-switch" role="group" aria-label="Chế độ hiển thị">
+    <div class="mode-switch" role="group" aria-label="Chế độ hiển thị đa thiết bị">
+      <button class="mode-btn" type="button" data-ui-mode="auto" aria-pressed="false" aria-label="Tự động theo thiết bị" title="Tự động chọn bố cục theo kích thước màn hình và loại thiết bị">⚙️ <span class="mode-label-full">Tự động</span><span class="mode-label-compact">Auto</span></button>
       <button class="mode-btn" type="button" data-ui-mode="pc" aria-pressed="false" aria-label="PC / Laptop" title="Giao diện đầy đủ cho PC và laptop">🖥️ <span class="mode-label-full">PC / Laptop</span><span class="mode-label-compact">PC</span></button>
-      <button class="mode-btn" type="button" data-ui-mode="mobile-lite" aria-pressed="false" aria-label="Mobile nhẹ" title="Giảm hiệu ứng để chạy nhẹ trên điện thoại">📱 <span class="mode-label-full">Mobile nhẹ</span><span class="mode-label-compact">Nhẹ</span></button>
+      <button class="mode-btn" type="button" data-ui-mode="mobile-lite" aria-pressed="false" aria-label="Mobile nhẹ" title="Bố cục điện thoại, giảm hiệu ứng để chạy nhẹ trên máy yếu">📱 <span class="mode-label-full">Mobile nhẹ</span><span class="mode-label-compact">Nhẹ</span></button>
     </div>
   </div>
 </header>
@@ -722,7 +831,7 @@ body[data-graphics-quality="low"] *::after{animation:none!important;transition:n
     <div class="sec-head reveal">
       <span class="kicker">chọn mức hiệu ứng phù hợp thiết bị</span>
       <h2>cài đặt đồ họa</h2>
-      <p>Giảm hiệu ứng nền để trang chạy nhẹ hơn trên laptop hoặc điện thoại yếu. Cài đặt này độc lập với nút chọn giao diện PC / Mobile.</p>
+      <p>Giảm hiệu ứng nền để trang chạy nhẹ hơn trên laptop hoặc điện thoại yếu. Cài đặt này độc lập với chế độ giao diện ở mục "Thích ứng đa thiết bị" bên dưới.</p>
     </div>
     <div class="game-panel reveal">
       <div class="graphics-options" role="group" aria-label="Mức đồ họa">
@@ -744,6 +853,41 @@ body[data-graphics-quality="low"] *::after{animation:none!important;transition:n
         </button>
       </div>
       <p class="graphics-status" id="graphicsStatus" role="status" aria-live="polite"></p>
+    </div>
+
+    <div class="sec-head reveal" style="margin-top:42px">
+      <span class="kicker">một trang web — mọi màn hình</span>
+      <h2>thích ứng đa thiết bị</h2>
+      <p>Trang tự nhận diện điện thoại, tablet, laptop và màn hình lớn để chọn bố cục, cỡ chạm và mức hiệu ứng phù hợp. Muốn tự tay quyết định thì chỉnh ở đây — còn không cứ để "Tự động" cho khỏe.</p>
+    </div>
+    <div class="game-panel reveal" id="devicePanel">
+      <div class="device-readout" id="deviceReadout" aria-live="polite"></div>
+      <div class="adapt-group" role="group" aria-label="Chế độ giao diện">
+        <span class="adapt-label">Chế độ giao diện</span>
+        <div class="adapt-row">
+          <button class="ctl" type="button" data-ui-mode="auto" aria-pressed="false">⚙️ Tự động</button>
+          <button class="ctl" type="button" data-ui-mode="pc" aria-pressed="false">🖥️ PC / Laptop</button>
+          <button class="ctl" type="button" data-ui-mode="mobile-lite" aria-pressed="false">📱 Mobile nhẹ</button>
+        </div>
+      </div>
+      <div class="adapt-group" role="group" aria-label="Cỡ giao diện">
+        <span class="adapt-label">Cỡ giao diện</span>
+        <div class="adapt-row">
+          <button class="ctl" type="button" data-ui-scale="90" aria-pressed="false">90%</button>
+          <button class="ctl" type="button" data-ui-scale="100" aria-pressed="false">100%</button>
+          <button class="ctl" type="button" data-ui-scale="110" aria-pressed="false">110%</button>
+          <button class="ctl" type="button" data-ui-scale="125" aria-pressed="false">125%</button>
+        </div>
+      </div>
+      <div class="adapt-group" role="group" aria-label="Vùng chạm">
+        <span class="adapt-label">Vùng chạm lớn hơn (ngón tay to, người lớn tuổi)</span>
+        <div class="adapt-row">
+          <button class="ctl" type="button" data-ui-tap="auto" aria-pressed="false">Tự động</button>
+          <button class="ctl" type="button" data-ui-tap="on" aria-pressed="false">Bật</button>
+          <button class="ctl" type="button" data-ui-tap="off" aria-pressed="false">Tắt</button>
+        </div>
+      </div>
+      <p class="graphics-status" id="deviceStatus" role="status" aria-live="polite"></p>
     </div>
   </section>
 
@@ -1231,26 +1375,183 @@ $$('[data-graphics-quality]').forEach(button => {
   button.setAttribute('aria-pressed', String(selected));
 });
 $('#graphicsStatus').textContent = GRAPHICS_LEVELS[graphicsQuality].label + ' đang bật. Cài đặt được lưu trên thiết bị này.';
-let uiMode = store.get('chimbe-ui-mode', matchMedia('(max-width: 760px)').matches ? 'mobile-lite' : 'pc');
-if(uiMode !== 'pc' && uiMode !== 'mobile-lite') uiMode = 'pc';
-let RM = prefersReducedMotion || uiMode === 'mobile-lite';
+/* ================= device adaptation engine =================
+   Máy thích ứng đa thiết bị: tự nhận diện điện thoại / tablet / máy tính,
+   chọn bố cục, cỡ chạm, cỡ chữ và mức hiệu ứng phù hợp — có thể ghi đè tay. */
+const UI_MODES = { auto:'Tự động', pc:'PC / Laptop', 'mobile-lite':'Mobile nhẹ' };
+const TAP_MODES = { auto:'Tự động theo thiết bị', on:'Luôn bật', off:'Luôn tắt' };
+const UI_SCALES = [90, 100, 110, 125];
+const BREAKPOINTS = [
+  { id:'xs',  max:480,  label:'Điện thoại nhỏ' },
+  { id:'sm',  max:640,  label:'Điện thoại lớn' },
+  { id:'md',  max:820,  label:'Tablet dọc / cửa sổ hẹp' },
+  { id:'lg',  max:1024, label:'Tablet ngang / laptop nhỏ' },
+  { id:'xl',  max:1280, label:'Laptop' },
+  { id:'xxl', max:Infinity, label:'Màn hình lớn' }
+];
+const mqCompact = matchMedia('(max-width: 820px), (pointer: coarse) and (max-width: 1100px)');
+const mqCoarse  = matchMedia('(pointer: coarse)');
+const mqPortrait = matchMedia('(orientation: portrait)');
+const mqLandscapePhone = matchMedia('(max-height: 520px) and (orientation: landscape)');
+const netInfo = (navigator.connection || navigator.webkitConnection || null);
+const deviceHint = {
+  touch: (navigator.maxTouchPoints || 0) > 0 || 'ontouchstart' in window,
+  memory: navigator.deviceMemory || null,
+  cores: navigator.hardwareConcurrency || null,
+  saveData: !!(netInfo && netInfo.saveData)
+};
+function isWeakDevice(){
+  return deviceHint.saveData
+    || (deviceHint.memory !== null && deviceHint.memory <= 2)
+    || (deviceHint.cores !== null && deviceHint.cores <= 2);
+}
+function currentBreakpoint(){ return BREAKPOINTS.find(bp => innerWidth <= bp.max) || BREAKPOINTS[BREAKPOINTS.length - 1]; }
+function deviceClass(){
+  if(mqCoarse.matches && innerWidth < 640) return 'phone';
+  if(mqCoarse.matches && innerWidth < 1100) return 'tablet';
+  return 'desktop';
+}
+const DEVICE_CLASS_LABEL = { phone:'📱 Điện thoại', tablet:'📟 Tablet', desktop:'🖥️ Máy tính' };
+function resolveLayout(){
+  if(uiMode === 'pc') return 'pc';
+  if(uiMode === 'mobile-lite') return 'mobile';
+  return mqCompact.matches ? 'mobile' : 'pc';
+}
+function resolvePerfLite(){
+  if(uiMode === 'mobile-lite') return true;
+  if(uiMode === 'auto') return mqCompact.matches && isWeakDevice();
+  return false;
+}
+let uiMode = store.get('chimbe-ui-mode', 'auto');
+if(!Object.prototype.hasOwnProperty.call(UI_MODES, uiMode)) uiMode = 'auto';
+let uiScale = storedCount('chimbe-ui-scale', 100);
+if(!UI_SCALES.includes(uiScale)) uiScale = 100;
+let tapMode = store.get('chimbe-tap-mode', 'auto');
+if(!Object.prototype.hasOwnProperty.call(TAP_MODES, tapMode)) tapMode = 'auto';
+let RM = prefersReducedMotion || resolvePerfLite();
 let skyFrameId = 0;
-function applyUiMode(mode){
-  uiMode = mode;
-  RM = prefersReducedMotion || uiMode === 'mobile-lite';
-  document.body.classList.toggle('mobile-lite', uiMode === 'mobile-lite');
-  document.body.classList.toggle('pc-mode', uiMode === 'pc');
+let lastAppliedLayout = null;
+
+function applyUiScale(){
+  document.documentElement.style.setProperty('--ui-scale', String(uiScale / 100));
+  $$('[data-ui-scale]').forEach(button => {
+    const selected = Number(button.dataset.uiScale) === uiScale;
+    button.classList.toggle('on', selected);
+    button.setAttribute('aria-pressed', String(selected));
+  });
+}
+function applyTapMode(){
+  const big = tapMode === 'on' || (tapMode === 'auto' && mqCoarse.matches);
+  document.body.classList.toggle('big-tap', big);
+  $$('[data-ui-tap]').forEach(button => {
+    const selected = button.dataset.uiTap === tapMode;
+    button.classList.toggle('on', selected);
+    button.setAttribute('aria-pressed', String(selected));
+  });
+}
+function renderDeviceReadout(){
+  const bp = currentBreakpoint();
+  const layout = resolveLayout();
+  const perfLite = resolvePerfLite();
+  const cells = [
+    ['Thiết bị', DEVICE_CLASS_LABEL[deviceClass()]],
+    ['Màn hình', innerWidth + ' × ' + innerHeight + ' px · DPR ' + (devicePixelRatio || 1)],
+    ['Kích thước', bp.label + ' (' + bp.id + ')'],
+    ['Bố cục', (layout === 'mobile' ? 'Cột gọn (mobile)' : 'Rộng (PC)') + ' · ' + UI_MODES[uiMode]],
+    ['Điều khiển', mqCoarse.matches ? 'Cảm ứng' : (deviceHint.touch ? 'Cảm ứng + chuột' : 'Chuột + bàn phím')],
+    ['Hướng màn hình', mqPortrait.matches ? 'Dọc' : (mqLandscapePhone.matches ? 'Ngang (máy nằm)' : 'Ngang')],
+    ['Hiệu ứng', perfLite ? 'Tiết kiệm (máy yếu)' : 'Bình thường'],
+    ['Dữ liệu mạng', deviceHint.saveData ? 'Đang tiết kiệm dữ liệu' : 'Bình thường']
+  ];
+  const box = $('#deviceReadout');
+  if(box) box.innerHTML = cells.map(c => '<div class="dr-cell"><span>' + c[0] + '</span><b>' + c[1] + '</b></div>').join('');
+  const status = $('#deviceStatus');
+  if(status) status.textContent = 'Đang dùng chế độ "' + UI_MODES[uiMode] + '" · bố cục ' + (layout === 'mobile' ? 'mobile' : 'PC')
+    + ' · vùng chạm ' + TAP_MODES[tapMode].toLowerCase() + '. Cài đặt được lưu trên thiết bị này.';
+}
+function applyAdapt(){
+  const layout = resolveLayout();
+  const perfLite = resolvePerfLite();
+  RM = prefersReducedMotion || perfLite;
+  document.body.classList.toggle('ui-mobile', layout === 'mobile');
+  document.body.classList.toggle('ui-pc', layout === 'pc');
+  document.body.classList.toggle('ui-lite', perfLite);
+  document.body.dataset.layout = layout;
+  document.body.dataset.bp = currentBreakpoint().id;
+  document.body.dataset.device = deviceClass();
+  document.body.dataset.input = mqCoarse.matches ? 'touch' : 'mouse';
+  document.body.dataset.orient = mqPortrait.matches ? 'portrait' : 'landscape';
   $$('[data-ui-mode]').forEach(button => {
     const active = button.dataset.uiMode === uiMode;
     button.classList.toggle('active', active);
+    button.classList.toggle('on', active);
     button.setAttribute('aria-pressed', String(active));
   });
   store.set('chimbe-ui-mode', uiMode);
-  window.dispatchEvent(new Event('resize'));
+  applyUiScale();
+  applyTapMode();
+  renderDeviceReadout();
+  if(lastAppliedLayout && lastAppliedLayout !== layout && uiMode === 'auto'){
+    toast('🔄 màn hình đổi kích thước — tự chuyển sang bố cục ' + (layout === 'mobile' ? 'mobile gọn nhẹ' : 'PC rộng rãi'));
+  }
+  lastAppliedLayout = layout;
+  /* báo cho các canvas tự fit lại (có guard để không lặp vô hạn) */
+  if(!adaptSyncing){
+    adaptSyncing = true;
+    window.dispatchEvent(new Event('resize'));
+    adaptSyncing = false;
+  }
   if(!RM && graphicsQuality !== 'low' && !skyFrameId) skyFrameId = requestAnimationFrame(loop);
+  else if(skyFrameId && (RM || graphicsQuality === 'low')){ cancelAnimationFrame(skyFrameId); skyFrameId = 0; }
 }
-$$('[data-ui-mode]').forEach(button => button.addEventListener('click', () => applyUiMode(button.dataset.uiMode)));
-applyUiMode(uiMode);
+let adaptSyncing = false;
+let adaptRaf = 0;
+function scheduleAdapt(){
+  if(adaptRaf) return;
+  adaptRaf = requestAnimationFrame(() => { adaptRaf = 0; applyAdapt(); });
+}
+[mqCompact, mqCoarse, mqPortrait, mqLandscapePhone, matchMedia('(prefers-reduced-motion: reduce)')].forEach(m => {
+  m.addEventListener('change', scheduleAdapt);
+});
+let adaptResizeTimer = 0;
+addEventListener('resize', () => {
+  if(adaptSyncing) return;
+  clearTimeout(adaptResizeTimer);
+  adaptResizeTimer = setTimeout(scheduleAdapt, 120);
+}, { passive: true });
+addEventListener('orientationchange', scheduleAdapt, { passive: true });
+
+$$('[data-ui-mode]').forEach(button => button.addEventListener('click', () => {
+  uiMode = button.dataset.uiMode;
+  applyAdapt();
+  toast('🖥️📱 chế độ giao diện: ' + UI_MODES[uiMode]);
+}));
+$$('[data-ui-scale]').forEach(button => button.addEventListener('click', () => {
+  uiScale = Number(button.dataset.uiScale);
+  if(!UI_SCALES.includes(uiScale)) return;
+  store.set('chimbe-ui-scale', uiScale);
+  applyUiScale();
+  renderDeviceReadout();
+  toast('🔡 cỡ giao diện: ' + uiScale + '%');
+}));
+$$('[data-ui-tap]').forEach(button => button.addEventListener('click', () => {
+  tapMode = button.dataset.uiTap;
+  if(!Object.prototype.hasOwnProperty.call(TAP_MODES, tapMode)) return;
+  store.set('chimbe-tap-mode', tapMode);
+  applyTapMode();
+  renderDeviceReadout();
+}));
+applyAdapt();
+
+/* header thu gọn khi cuộn (đỡ chiếm màn hình điện thoại) */
+let hdrRaf = 0;
+addEventListener('scroll', () => {
+  if(hdrRaf) return;
+  hdrRaf = requestAnimationFrame(() => {
+    hdrRaf = 0;
+    document.body.classList.toggle('hdr-compact', scrollY > 40);
+  });
+}, { passive: true });
 
 /* ================= stats + seeds + level ================= */
 const stats = { chim:0, gay:0, nut:0 };
@@ -1505,6 +1806,10 @@ function goTab(id){
   $$('.tab').forEach(b => b.classList.toggle('active', b.dataset.tab === id));
   $$('.panel').forEach(p => p.classList.toggle('active', p.id === id));
   window.scrollTo({ top: 0 });
+  const activeTab = $('#tabs .tab.active');
+  if(activeTab && activeTab.scrollIntoView){
+    activeTab.scrollIntoView({ inline:'center', block:'nearest', behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+  }
   if(id === 'panel-aim') requestAnimationFrame(drawAimIdle);
 }
 $('#tabs').addEventListener('click', e => { const b = e.target.closest('.tab'); if(b){ goTab(b.dataset.tab); press(); } });
@@ -1515,7 +1820,7 @@ $('#panel-guide').addEventListener('click', e => {
 });
 $('#logoHome').addEventListener('click', e => { e.preventDefault(); goTab('panel-home'); });
 document.addEventListener('keydown', e => {
-  if(e.target.matches('input,textarea')) return;
+  if(e.target && e.target.matches && e.target.matches('input,textarea')) return;
   const map = {'1':'panel-home','2':'panel-flock','3':'panel-games','4':'panel-aim','5':'panel-egg','6':'panel-buttons','7':'panel-book','8':'panel-troll','9':'panel-farm','0':'panel-guide','m':'panel-mailbox','M':'panel-mailbox','g':'panel-graphics','G':'panel-graphics'};
   if(map[e.key]) goTab(map[e.key]);
   if(e.key === 'c' || e.key === 'C') burst(innerWidth/2, innerHeight*.4, 90);
@@ -2216,7 +2521,7 @@ function drawCatchHint(){
   ccx.fillStyle = 'rgba(159,176,221,.6)';
   ccx.font = '700 15px "Be Vietnam Pro", sans-serif';
   ccx.textAlign = 'center';
-  ccx.fillText('bấm "bắt đầu!" rồi click chim đang bay 🏹', ccv.clientWidth/2, ccv.clientHeight/2);
+  ccx.fillText((mqCoarse.matches ? 'chạm' : 'click') + ' chim đang bay để bắt 🏹 — bấm "bắt đầu!" trước nhé', ccv.clientWidth/2, ccv.clientHeight/2);
 }
 drawCatchHint();
 function catchFrame(timestamp){
@@ -2281,10 +2586,12 @@ ccv.addEventListener('pointerdown', e => {
   if(!catchState.running) return;
   const r = ccv.getBoundingClientRect();
   const x = e.clientX - r.left, y = e.clientY - r.top;
+  /* ngón tay cần vùng trúng rộng hơn con trỏ chuột */
+  const hitSlop = e.pointerType === 'touch' ? 20 : 8;
   for(let i = 0; i < catchState.birds.length; i++){
     const b = catchState.birds[i];
     const by = b.y + Math.sin(b.ph) * 9;
-    if(Math.hypot(b.x - x, by - y) < b.r + 8){
+    if(Math.hypot(b.x - x, by - y) < b.r + hitSlop){
       catchState.birds.splice(i, 1);
       catchState.score += b.v;
       $('#catchScore').textContent = catchState.score;
@@ -2412,7 +2719,9 @@ aimCanvas.addEventListener('pointerdown', e => {
   const r = aimCanvas.getBoundingClientRect();
   const x = e.clientX - r.left, y = e.clientY - r.top;
   aimState.shots++;
-  if(Math.hypot(x - aimState.x, y - aimState.y) <= aimTargetRadius()){
+  /* cảm ứng được cộng thêm sai số trúng để bắn dễ tay hơn */
+  const hitSlop = e.pointerType === 'touch' ? 12 : 0;
+  if(Math.hypot(x - aimState.x, y - aimState.y) <= aimTargetRadius() + hitSlop){
     aimState.hits++;
     aimState.score += 10;
     relocateAimTarget();
@@ -2423,18 +2732,34 @@ aimCanvas.addEventListener('pointerdown', e => {
   }
   updateAimStats();
 });
+function setAimImmersive(on){
+  const game = $('#aimGame');
+  game.classList.toggle('immersive', on);
+  $('#btnAimFullscreen').textContent = on ? '⤢ Thoát toàn màn hình' : '⛶ Toàn màn hình';
+  $('#btnAimFullscreen').setAttribute('aria-label', on ? 'Thoát chế độ toàn màn hình' : 'Mở khu luyện aim toàn màn hình');
+  requestAnimationFrame(() => {
+    if(aimState.running){ sizeAim(); relocateAimTarget(); }
+    else if($('#panel-aim').classList.contains('active')) drawAimIdle();
+  });
+}
 $('#btnAimFullscreen').addEventListener('click', async () => {
   const game = $('#aimGame');
+  if(game.classList.contains('immersive')){ setAimImmersive(false); return; }
   try{
-    if(document.fullscreenElement === game) await document.exitFullscreen();
-    else if(game.requestFullscreen) await game.requestFullscreen();
-    else $('#aimMsg').textContent = 'Trình duyệt này chưa hỗ trợ chế độ toàn màn hình.';
+    if(document.fullscreenElement === game){ await document.exitFullscreen(); return; }
+    if(game.requestFullscreen){ await game.requestFullscreen(); return; }
+    /* trình duyệt không có Fullscreen API (iOS Safari) — dùng phương án dự phòng */
+    setAimImmersive(true);
+    $('#aimMsg').textContent = 'Đã mở toàn màn hình dự phòng cho thiết bị này.';
   }catch(error){
-    $('#aimMsg').textContent = 'Không thể mở toàn màn hình. Hãy thử lại hoặc kiểm tra quyền của trình duyệt.';
+    setAimImmersive(true);
+    $('#aimMsg').textContent = 'Trình duyệt chặn toàn màn hình gốc — trang chuyển sang chế độ toàn màn hình dự phòng.';
   }
 });
 document.addEventListener('fullscreenchange', () => {
-  const isFullscreen = document.fullscreenElement === $('#aimGame');
+  const game = $('#aimGame');
+  const isFullscreen = document.fullscreenElement === game;
+  if(isFullscreen) game.classList.remove('immersive');
   $('#btnAimFullscreen').textContent = isFullscreen ? '⤢ Thoát toàn màn hình' : '⛶ Toàn màn hình';
   $('#btnAimFullscreen').setAttribute('aria-label', isFullscreen ? 'Thoát chế độ toàn màn hình' : 'Mở khu luyện aim toàn màn hình');
   if($('#panel-aim').classList.contains('active')){
@@ -2443,6 +2768,9 @@ document.addEventListener('fullscreenchange', () => {
       else drawAimIdle();
     });
   }
+});
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape' && $('#aimGame').classList.contains('immersive')) setAimImmersive(false);
 });
 addEventListener('resize', () => {
   if(aimState.running){ sizeAim(); relocateAimTarget(); }
