@@ -39,6 +39,7 @@ html{
   font-size:calc(16px * var(--ui-scale));
   -webkit-text-size-adjust:100%;
   text-size-adjust:100%;
+  scrollbar-gutter:stable;
 }
 body{
   font-family:var(--body); color:var(--ink);
@@ -135,18 +136,28 @@ body.ui-mobile .mode-label-compact{display:inline}
 main{max-width:1180px;margin:auto;padding:8px 20px 60px;position:relative;z-index:1}
 .panel{display:none}
 .panel.active{display:block}
-.panel.active > *{animation:rise .42s cubic-bezier(.2,.9,.3,1) both}
-.panel.active > *:nth-child(2){animation-delay:.05s}
-.panel.active > *:nth-child(3){animation-delay:.1s}
-.panel.active > *:nth-child(4){animation-delay:.15s}
-.panel.active > *:nth-child(5){animation-delay:.2s}
+.panels{position:relative;view-transition-name:main-content}
+/* chuyển tab kiểu TAN BIẾN (dissolve): panel mới hiện ngay đầy đủ bên dưới,
+   panel cũ tan dần đè lên trên — lúc nào cũng có nội dung, không bao giờ có khoảng đen */
+.panel.panel-ghost{
+  display:block; position:absolute; top:0; left:0; right:0;
+  z-index:5; pointer-events:none; opacity:1;
+  transition:opacity .18s ease; will-change:opacity;
+}
+.panel.panel-ghost.fade{opacity:0}
+/* View Transitions API: panel mới hòa dần đè lên ảnh panel cũ — không tối nền */
+@media (prefers-reduced-motion:no-preference){
+  ::view-transition-old(main-content){animation:none}
+  ::view-transition-new(main-content){animation:tabFadeIn .24s cubic-bezier(.2,.8,.3,1) both}
+}
+@keyframes tabFadeIn{from{opacity:0}}
 @keyframes rise{
   from{opacity:0;transform:translateY(26px)}
   32%{opacity:1}
   to{opacity:1;transform:none}
 }
-.reveal{opacity:0;transform:translateY(26px)}
-.reveal.in{opacity:1;transform:none;transition:opacity .7s cubic-bezier(.2,.8,.3,1),transform .7s cubic-bezier(.2,.8,.3,1)}
+.reveal{opacity:0;transform:translateY(18px)}
+.reveal.in{opacity:1;transform:none;transition:opacity .45s cubic-bezier(.2,.8,.3,1),transform .45s cubic-bezier(.2,.8,.3,1)}
 
 .kicker{display:inline-flex;align-items:center;gap:8px;font-size:.73rem;font-weight:800;letter-spacing:.28em;text-transform:uppercase;color:var(--acc2);margin:34px 0 14px}
 .kicker::before,.kicker::after{content:"✦";color:var(--acc1)}
@@ -490,7 +501,6 @@ header{border-bottom-width:1px}
 .tab{transition:background .18s,color .18s}
 .tab:hover{transform:none;background:rgba(84,192,255,.12)}
 .tab.active{box-shadow:none;transform:none}
-.panel.active > *{animation:none}
 h1.display,h1 .hl{text-shadow:0 0 14px rgba(84,192,255,.18)}
 .btn{transition:transform .16s,background .18s,color .18s,border-color .18s}
 .btn-primary,.btn-violet,.btn-ice{box-shadow:0 3px 0 rgba(6,10,40,.35)}
@@ -736,6 +746,7 @@ body[data-graphics-quality="low"] *::after{animation:none!important;transition:n
 </header>
 
 <main>
+<div class="panels">
   <!-- ============ TAB 1: TỔ CHIM ============ -->
   <section class="panel active" id="panel-home">
     <div class="home-grid">
@@ -1270,6 +1281,7 @@ body[data-graphics-quality="low"] *::after{animation:none!important;transition:n
       </div>
     </div>
   </section>
+</div><!-- /panels -->
 </main>
 
 <footer>
@@ -1819,16 +1831,57 @@ $('#tickTop').innerHTML = tickText.repeat(3) + tickText.repeat(3);
 $('#tickBot').innerHTML = tickText.repeat(3) + tickText.repeat(3);
 
 /* ================= tabs ================= */
-function goTab(id){
-  $$('.tab').forEach(b => b.classList.toggle('active', b.dataset.tab === id));
-  $$('.panel').forEach(p => p.classList.toggle('active', p.id === id));
-  /* cuộn lên đầu NGAY LẬP TỨC — cuộn mượt qua khung hình trống là một nguyên nhân gây chớp đen */
-  try{ window.scrollTo({ top: 0, behavior: 'instant' }); }catch(e){ window.scrollTo(0, 0); }
-  /* hiện ngay nội dung ở gần khung nhìn, không chờ IntersectionObserver (hết chớp đen khi chuyển tab) */
-  const panel = $('#' + id);
-  if(panel) panel.querySelectorAll('.reveal:not(.in)').forEach(el => {
+/* ================= tabs — chuyển tab kiểu tan biến, không khoảng đen ================= */
+let ghostEl = null, ghostTimer = 0;
+function finalizeGhost(){
+  if(ghostTimer){ clearTimeout(ghostTimer); ghostTimer = 0; }
+  if(ghostEl){ ghostEl.classList.remove('panel-ghost', 'fade'); ghostEl = null; }
+}
+function revealNearFold(panel){
+  panel.querySelectorAll('.reveal:not(.in)').forEach(el => {
     if(el.getBoundingClientRect().top < innerHeight * 1.4) el.classList.add('in');
   });
+}
+function goTab(id){
+  const next = $('#' + id);
+  if(!next) return;
+  const prev = $('.panel.active');
+  if(prev === next) return;
+  $$('.tab').forEach(b => b.classList.toggle('active', b.dataset.tab === id));
+  /* cuộn về đầu khi panel CŨ còn hiển thị — tránh cuộn bị kẹp khi chiều cao trang đổi */
+  try{ window.scrollTo({ top: 0, behavior: 'instant' }); }catch(e){ window.scrollTo(0, 0); }
+  finalizeGhost();
+  const noMotion = prefersReducedMotion || document.body.classList.contains('ui-lite');
+  const swap = () => {
+    if(prev) prev.classList.remove('active');
+    next.classList.add('active');
+    revealNearFold(next); /* hiện ngay nội dung gần khung nhìn, không chờ IntersectionObserver */
+  };
+  const canVT = typeof document.startViewTransition === 'function' && !noMotion;
+  if(canVT){
+    /* cách tốt nhất: View Transitions API — trình duyệt tự hòa panel mới đè lên ảnh panel cũ */
+    document.startViewTransition(swap);
+  }else if(prev && !noMotion){
+    /* fallback: panel mới hiện ngay đầy đủ bên dưới, panel cũ tan biến đè lên trên */
+    next.classList.add('active');
+    revealNearFold(next);
+    prev.classList.remove('active');
+    prev.classList.add('panel-ghost');
+    const ghost = prev;
+    requestAnimationFrame(() => {
+      if(!ghost.classList.contains('panel-ghost')) return;
+      void ghost.offsetWidth; /* chốt trạng thái opacity:1 để transition tan biến chạy đúng */
+      ghost.classList.add('fade');
+      ghostTimer = setTimeout(() => {
+        ghost.classList.remove('panel-ghost', 'fade');
+        if(ghostEl === ghost) ghostEl = null;
+        ghostTimer = 0;
+      }, 260);
+    });
+    ghostEl = ghost;
+  }else{
+    swap();
+  }
   const activeTab = $('#tabs .tab.active');
   if(activeTab && activeTab.scrollIntoView){
     activeTab.scrollIntoView({ inline:'center', block:'nearest', behavior: prefersReducedMotion ? 'auto' : 'smooth' });
