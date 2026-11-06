@@ -1,0 +1,85 @@
+// AimForge database schema (PostgreSQL).
+// Chỉ lưu dữ liệu của người dùng ĐÃ ĐĂNG NHẬP. Khách chơi lưu lịch sử trong localStorage của trình duyệt.
+
+generator client {
+  provider        = "prisma-client-js"
+  // queryCompiler + driverAdapters: client không cần binary Rust của Prisma khi chạy (chạy được trong Docker/serverless).
+  previewFeatures = ["queryCompiler", "driverAdapters"]
+  engineType      = "client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TrainingMode {
+  FLICK
+  TRACKING
+  REACTION
+  PRECISION
+}
+
+enum Difficulty {
+  EASY
+  NORMAL
+  HARD
+}
+
+enum GraphicsQuality {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique @db.VarChar(254)
+  displayName  String   @db.VarChar(24)
+  passwordHash String   @db.VarChar(100)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  settings UserSettings?
+  sessions TrainingSession[]
+}
+
+model TrainingSession {
+  id              String       @id @default(cuid())
+  userId          String
+  mode            TrainingMode
+  difficulty      Difficulty
+  durationSec     Int
+  score           Int
+  shots           Int
+  hits            Int
+  misses          Int
+  accuracy        Float // phần trăm 0..100
+  maxStreak       Int
+  targetsSpawned  Int
+  avgReactionMs   Float?
+  bestReactionMs  Int?
+  avgTimeToHitMs  Float?
+  trackingPct     Float? // phần trăm thời gian bám trúng 0..100
+  precisionPct    Float? // độ chính xác tâm bia 0..100
+  createdAt       DateTime     @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@index([mode, durationSec, score])
+}
+
+model UserSettings {
+  id                String          @id @default(cuid())
+  userId            String          @unique
+  sensitivity       Float           @default(1)
+  crosshairSize     Int             @default(14)
+  crosshairColor    String          @default("#7ff7ff") @db.VarChar(7)
+  volume            Int             @default(60)
+  fov               Int             @default(70)
+  graphicsQuality   GraphicsQuality @default(MEDIUM)
+  updatedAt         DateTime        @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}

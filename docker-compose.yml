@@ -1,0 +1,23 @@
+# PostgreSQL cho môi trường phát triển/chạy thử AimForge.
+# Chạy: docker compose up -d db
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: aimforge-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: aimforge
+      POSTGRES_PASSWORD: aimforge_dev_password
+      POSTGRES_DB: aimforge
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - aimforge-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aimforge -d aimforge"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  aimforge-pgdata:

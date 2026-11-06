@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+    sans-serif;
+  --font-display: ui-sans-serif, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+  --color-void: #04060c;
+  --color-panel: #0a1122;
+  --color-panel-2: #0e1830;
+  --color-neon: #22d3ee;
+  --color-neon-2: #e879f9;
+  --color-lime: #a3e635;
+  --color-danger: #fb7185;
+  --color-warn: #fbbf24;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    @apply min-h-screen bg-void text-slate-100 antialiased;
+    background-image:
+      radial-gradient(900px 500px at 15% -10%, rgba(34, 211, 238, 0.12), transparent 60%),
+      radial-gradient(800px 500px at 100% 0%, rgba(232, 121, 249, 0.1), transparent 60%),
+      linear-gradient(rgba(34, 211, 238, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34, 211, 238, 0.035) 1px, transparent 1px);
+    background-size: auto, auto, 48px 48px, 48px 48px;
+    background-attachment: fixed;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-neon);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply rounded-2xl border border-cyan-400/15 bg-panel/80 backdrop-blur;
+    box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.04), 0 20px 50px -20px rgba(0, 0, 0, 0.6);
+  }
+  .neon-text {
+    text-shadow: 0 0 12px rgba(34, 211, 238, 0.55);
+  }
+}
+
+@keyframes hitmarker {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.7);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.35);
+  }
+}
+
+@keyframes popup {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 0) scale(0.8);
+  }
+  15% {
+    opacity: 1;
+    transform: translate(-50%, -12px) scale(1.05);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -48px) scale(1);
+  }
+}
+
+@keyframes pulse-ring {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-hitmarker {
+  animation: hitmarker 220ms ease-out forwards;
+}
+.animate-popup {
+  animation: popup 700ms ease-out forwards;
+}
+.animate-pulse-ring {
+  animation: pulse-ring 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-hitmarker,
+  .animate-popup,
+  .animate-pulse-ring {
+    animation-duration: 1ms;
+    animation-iteration-count: 1;
+  }
+}
